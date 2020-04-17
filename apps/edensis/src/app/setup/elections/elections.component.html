@@ -1,0 +1,51 @@
+<div class="first-column tables">
+  <table border="1" cellspacing="10" cellpadding="5">
+    <thead>
+      <tr>
+        <th>Election</th>
+        <th>School</th>
+        <th>No. of Positions</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let election of electionSrv.$elections | async; let i = index">
+        <td align="center">{{ election.title }}</td>
+        <td align="center">{{ election.school }}</td>
+        <td align="center">{{ election?.positions.length }}</td>
+        <td align="center">
+          <button type="button" class="primary" (click)="useElection(election)">
+            Use Election
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="last-column">
+  <form [formGroup]="electionForm" (ngSubmit)="submitForm()">
+    <fieldset>
+      <legend>Add New Election</legend>
+
+      <div class="fields">
+        <div class="field">
+          <label for="title">Title</label>
+          <input type="text" name="title" id="title" placeholder="Enter title" formControlName="title" [ngClass]="{
+                invalid: (title.dirty || title.touched) && title.invalid,
+                valid: (title.dirty || title.touched) && title.valid
+              }" />
+        </div>
+        <div class="field">
+          <label for="school">School Name</label>
+          <input type="text" name="school" id="school" placeholder="Enter school's name" formControlName="school" />
+        </div>
+        <div class="field">
+          <label for="academicYear">Academic Year</label>
+          <input type="text" name="academicYear" id="academicYear" placeholder="eg. 2020/2021"
+            formControlName="academicYear" />
+        </div>
+      </div>
+      <input type="submit" value="Save Election" name="submit" [disabled]="!electionForm.valid" />
+    </fieldset>
+  </form>
+</div>

@@ -1,0 +1,27 @@
+:host {
+  display: flex;
+  padding: 20px;
+  justify-content: space-between;
+  background-color: #111;
+
+  a {
+    color: white;
+    text-decoration: none;
+    padding: 3px 5px;
+  }
+}
+
+// Logout Button Settings
+.logout {
+  border: 1px solid red;
+  background-color: red;
+  color: white;
+  text-transform: uppercase;
+  cursor: pointer;
+
+  &:hover {
+    color: red;
+    background-color: white;
+    border-color: red;
+  }
+}

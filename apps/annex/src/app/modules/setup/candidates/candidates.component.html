@@ -1,0 +1,167 @@
+  <div class="tables left-column">
+    <div class="action" *ngIf="!(electionService.election | async)">
+      <p>
+        Choose an election to see the candidates per positions for that
+        election!
+      </p>
+    </div>
+    <table border="1" cellspacing="10" cellpadding="5" *ngIf="!(electionService.election | async)">
+      <thead>
+        <tr>
+          <th>Election</th>
+          <th>School</th>
+          <th>No. of Positions</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let election of electionService.$elections | async; let i = index">
+          <td align="center">{{ election.title }}</td>
+          <td align="center">{{ election.school }}</td>
+          <td align="center">{{ election?.positions.length }}</td>
+          <td align="center">
+            <button type="button" class="primary" (click)="useElection(election)">
+              Use Election
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table border="1" cellspacing="10" cellpadding="5" *ngIf="electionService.election | async as Election">
+      <thead>
+        <tr>
+          <th rowspan="2">Position</th>
+          <th colspan="5">Candidate</th>
+          <th rowspan="2">Actions</th>
+        </tr>
+        <tr>
+          <th>Photo</th>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>DOB</th>
+          <th>Class</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let position of Election?.positions; let i = index">
+          <tr>
+            <td align="center" [rowSpan]="position?.candidates.length + 1">
+              {{ position.title }}
+            </td>
+            <td *ngIf="position.candidates.length === 0" [colSpan]="6">
+              <b>No Candidates Yet</b>
+            </td>
+          </tr>
+          <tr *ngFor="let candidate of position?.candidates; let i = index">
+            <td align="center" class="hasImage">
+              <img *ngIf="candidate?.photo" src="{{ 'data:image/jpg;base64,' + candidate?.photo }}"
+                [alt]="candidate.name" />
+            </td>
+            <td align="center">
+              <a class="links blue" [title]="'Update ' + candidate?.name"
+                (click)="editCandidate(candidate, position._id)">{{ candidate.name }}</a>
+              <br>
+              <b style="display:block; margin-top: 7px; color: rgba(255,255,255,0.7);">
+                aka: {{candidate?.nickname}}
+              </b>
+            </td>
+            <td align="center">{{ candidate.gender }}</td>
+            <!-- <td align="center">{{ candidate.nickname }}</td> -->
+            <td align="center">{{ candidate.dob }}</td>
+            <td align="center">{{ candidate.room }}</td>
+            <td align="center">
+              <a class="links red" (click)="
+                  removeCandidate(candidate._id, position._id, Election._id)
+                " [title]="'Remove ' + candidate?.name">Delete</a>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+
+
+  </div>
+  <div class="right-column">
+    <div *ngIf="electionService.election | async as Election">
+      <form [formGroup]="form" (ngSubmit)="submit(Election?._id)">
+        <fieldset>
+          <legend>
+            {{ isEdit !== true ? "Add New Candidate" : "Update Candidate" }}
+          </legend>
+          <div *ngIf="errors && !info" class="error">{{ errors }}</div>
+          <div *ngIf="info && !errors" class="info">{{ info }}</div>
+          <div class="fields">
+            <div class="field">
+              <!-- Automatically send the selected class and reload the page
+                    with the students in that class for the candidate's selection
+                -->
+              <label for="room">Class</label>
+              <select name="room" id="room" formControlName="room">
+                <option value="">Choose Class</option>
+                <option value="2A1">2A1</option>
+                <option value="2A2">2A2</option>
+                <option value="2A3">2A3</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="name">Full Name</label>
+              <input type="text" name="name" id="name" placeholder="Enter full name" formControlName="name" />
+            </div>
+            <div class="field">
+              <label for="gender">Gender</label>
+              <select name="name" id="name" formControlName="gender">
+                <option value="">Choose Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="dob">Birth Date</label>
+              <input type="date" name="dob" id="dob" formControlName="dob" />
+            </div>
+            <div class="field">
+              <label for="nickname">Nickname</label>
+              <input type="text" name="nickname" id="nickname" placeholder="Enter Nickname if any"
+                formControlName="nickname" />
+            </div>
+            <div class="field" *ngIf="isEdit === true">
+              <label for="change_positio">Change Position</label>
+              <input type="checkbox" id="nickname" #position (change)="changePosition(position.checked)" />
+              <span style="color: yellow; font-weight:bold;">(Want to change position)</span>
+            </div>
+            <div class="field">
+              <label for="nickname">Aspiring For</label>
+              <select id="position" name="position" formControlName="position">
+                <option value="">Chose Position</option>
+                <option *ngFor="
+                    let position of (electionService.election | async)
+                      ?.positions
+                  " [value]="position?._id">
+                  {{ position?.title }}</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="photo">Photo</label>
+              <input type="file" name="photo" id="photo" formControlName="photo" (change)="previewImage($event)" />
+            </div>
+            <div class="field">
+              <label for="">Candidate's <br />
+                Photo</label>
+              <div class="imagebox">
+                <img id="candidate_photo" alt="Candidate Photo Here" [src]="imageUrl" />
+              </div>
+            </div>
+          </div>
+          <input type="submit" class="primary" [disabled]="form.invalid"
+            [value]="isEdit !== true ? 'Save Candidate' : 'Update Candidate'" name="submit" />
+          <a class="cancelBtn" title="Click to add new candidate"
+            *ngIf="(electionService.election | async) && isEdit == true" (click)="addCandidate()">Cancel</a>
+        </fieldset>
+      </form>
+    </div>
+    <div class="action" *ngIf="!(electionService.election | async)">
+      <p>
+        Choose an election to see the "Add Candidate Form"!
+      </p>
+    </div>
+  </div>

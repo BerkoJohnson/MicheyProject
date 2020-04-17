@@ -1,0 +1,26 @@
+<div class="user">
+  <p class="name" *ngIf="auth.isLoggedIn()">
+    Wecome,<br>
+    <!-- <a>{{ auth.getCurrentUser().name}}</a> -->
+  </p>
+</div>
+<ul class="sidebar_nav">
+  <li>
+    <span class="nav-list__title">Elections</span>
+      <ul class="sidebar_nav--sub">
+        <li>
+          <a routerLink="/elections/positions" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}">Positions</a>
+        </li>
+        <li>
+          <a routerLink="/elections/candidates" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}">Candidates</a>
+        </li>
+        <li>
+          <a routerLink="/elections/voters" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Register</a>
+        </li>
+      </ul>
+
+  </li>
+
+</ul>

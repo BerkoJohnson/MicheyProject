@@ -1,0 +1,6 @@
+$primary_color: #dd0f98;
+$secondary_color: saturate($color: $primary_color,
+  $amount: 10);
+$complement: complement($primary_color);
+$dark_complement: darken($complement, 20);
+$dark_color: rgba(0, 0, 0, 0.93);

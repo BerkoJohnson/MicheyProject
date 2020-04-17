@@ -1,0 +1,48 @@
+table {
+  border-collapse: collapse;
+  color: white;
+  width: 100%;
+}
+
+// Table styles
+table {
+  background: #333;
+  font-weight: bold;
+  color: #fff;
+  width: 100%;
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+
+  th {
+    background-color: $secondary_color;
+    color: white;
+    padding: 10px;
+  }
+
+  tr {
+    &:hover {
+      background-color: rgb(66, 55, 55);
+    }
+
+    &.active {
+      background-color: $complement;
+      color: black;
+    }
+  }
+
+  td {
+    text-transform: uppercase;
+    padding: 10px;
+    color: #fff;
+    font-size: 0.8rem;
+
+    img {
+      width: 60px;
+      height: 60px;
+      border: 2px solid #fff;
+      border-radius: 10px;
+    }
+  }
+}

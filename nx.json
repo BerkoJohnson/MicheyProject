@@ -1,0 +1,73 @@
+{
+  "npmScope": "my-web-space",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "eden-sis": {
+      "tags": []
+    },
+    "eden-sis-e2e": {
+      "tags": [],
+      "implicitDependencies": [
+        "eden-sis"
+      ]
+    },
+    "api": {
+      "tags": []
+    },
+    "api-interfaces": {
+      "tags": []
+    },
+    "edensis": {
+      "tags": []
+    },
+    "edensis-e2e": {
+      "tags": [],
+      "implicitDependencies": [
+        "edensis"
+      ]
+    },
+    "annex": {
+      "tags": []
+    },
+    "annex-e2e": {
+      "tags": [],
+      "implicitDependencies": [
+        "annex"
+      ]
+    },
+    "app2": {
+      "tags": []
+    },
+    "app2-e2e": {
+      "tags": [],
+      "implicitDependencies": [
+        "app2"
+      ]
+    },
+    "noddy": {
+      "tags": []
+    }
+  }
+}

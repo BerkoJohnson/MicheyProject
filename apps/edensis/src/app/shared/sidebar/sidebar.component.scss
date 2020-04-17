@@ -1,0 +1,64 @@
+@import "../../../csss/colors";
+
+:host {
+  padding: 20px;
+  background-color: $dark_complement;
+  flex-basis: 20%;
+}
+
+.user {
+  .name {
+    text-align: center;
+    text-transform: uppercase;
+    color: #333;
+  }
+
+  margin-bottom: 20px;
+}
+
+ul.sidebar_nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+
+  a {
+    display: block;
+    padding: 5px 0;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    // text-align: center;
+
+    &:hover {
+      color: #111;
+    }
+
+    &.active {
+      color: $complement;
+    }
+
+  }
+
+  .sidebar_nav--sub {
+    list-style: none;
+    margin-top: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    padding: 0;
+  }
+
+  .nav-list__title {
+    text-transform: uppercase;
+    background-color: #111;
+    text-align: center;
+    width: 100%;
+    color: white;
+    padding: 4px 6px;
+    margin-top: 10px;
+  }
+
+
+}

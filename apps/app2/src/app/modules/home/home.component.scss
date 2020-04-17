@@ -1,0 +1,93 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  justify-content: center;
+  align-items: center;
+}
+
+h2 {
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  letter-spacing: 3px;
+}
+
+.notes_div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .notes {
+    padding: 6px;
+    background-color: #222;
+    flex: 1;
+    margin-top: 10px;
+
+    &:not(:last-of-type) {
+      margin-bottom: 20px;
+    }
+
+    p.lead {
+      color: complement($color: #45c);
+      text-transform: uppercase;
+      font-size: 1.3rem;
+      text-align: center;
+      font-weight: bold;
+      border-bottom: 1px solid complement($color: #45c);
+    }
+
+    ol {
+      li {
+        // padding: 4px 10px;
+
+        &:not(:last-of-type) {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}
+
+@mixin button($color) {
+  border: 1px solid $color;
+  background-color: $color;
+  color: white;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-weight: bold;
+
+  &:disabled {
+    background-color: gray;
+    border: 1px solid gray;
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled):hover {
+    color: $color;
+    background-color: white;
+    border-color: $color;
+  }
+}
+
+.next {
+  @include button(gold);
+}
+
+.vote,
+.yes {
+  @include button(green);
+}
+
+.yes {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.no {
+  @include button(red);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}

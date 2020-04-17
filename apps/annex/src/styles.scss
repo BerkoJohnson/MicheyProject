@@ -1,0 +1,74 @@
+// // // @import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Lato|Montserrat&display=swap");
+@import "csss/colors";
+@import "csss/layout";
+@import "csss/message";
+@import "csss/navigation";
+@import "csss/forms";
+@import "csss/table";
+
+
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+
+body {
+  font-family: "Montserrat", "Lato", sans-serif;
+
+  height: 100%;
+  background: rgb(72, 72, 72);
+  font-size: 0.9rem;
+}
+
+
+.links {
+  border: 1px solid transparent;
+  cursor: pointer;
+  padding: 3px;
+  border-radius: 3px;
+  line-height: 1rem;
+
+  &.red {
+    background-color: red;
+    color: white;
+
+    &:hover {
+      color: red;
+      background-color: white;
+      border: 1px solid red;
+    }
+  }
+
+  &.blue {
+    background-color: blue;
+    color: white;
+
+    &:hover {
+      color: blue;
+      background-color: white;
+      border: 1px solid blue;
+    }
+  }
+
+  &.gold {
+    background-color: gold;
+    color: white;
+
+    &:hover {
+      color: gold;
+      background-color: white;
+      border: 1px solid gold;
+    }
+  }
+}

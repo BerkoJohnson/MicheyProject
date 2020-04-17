@@ -1,0 +1,14 @@
+.logo {
+  font-size: 1.2em;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color:$primary_color;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  
+  &:hover {
+    color: $secondary_color;
+    text-shadow: 1px 1px 1px $secondary_color;
+  }
+}

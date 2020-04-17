@@ -1,0 +1,179 @@
+fieldset {
+  border: none;
+  background: $dark_color;
+  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+legend {
+  background: $secondary_color;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border-radius: 5px;
+  line-height: 1.7rem;
+  padding: 4px 16px;
+  z-index: -1;
+  position: relative;
+  top: -10px;
+  left: 0;
+  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.field {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 3px 0;
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.field label {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: bold;
+  width: 40%;
+  text-align: right;
+  margin-left: -10px;
+  margin-right: 10px;
+  color: $dark_complement
+}
+
+.field input[type="text"],
+.field input[type="date"],
+.field input[type="email"],
+.field input[type="password"],
+.field select {
+  border: 1px solid #333;
+  width: 60%;
+  padding: 5px 10px;
+}
+
+.field input[type="file"] {
+  width: 60%;
+}
+
+input[type="submit"],
+button,
+.btn {
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  padding: 5px 10px;
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.2s;
+  outline: none;
+  color: black;
+  margin-top: 10px;
+
+  &:disabled {
+    background-color: #777;
+  }
+
+  &:not(:disabled):hover {
+    box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.9);
+  }
+
+  &.primary {
+    background: $complement;
+
+    &:disabled {
+      background-color: #777;
+    }
+
+    &:not(:disabled):hover {
+      background: white;
+      border: 1px solid $complement;
+    }
+  }
+}
+
+// Validation
+
+.field input[type="text"],
+.field input[type="date"],
+.field input[type="email"],
+.field input[type="password"],
+.field select {
+  &.invalid {
+    background-color: lightcoral;
+    border: 1px solid red;
+  }
+
+  &.valid {
+    background-color: lightgreen;
+    border: 1px solid green;
+  }
+}
+
+.imagebox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+// Image settings
+#candidate_photo {
+  width: 180px;
+  height: 180px;
+  border: 2px solid darken($primary_color, 30%);
+  margin: 5px 0;
+  border-radius: 10px;
+}
+
+.image {
+  display: flex;
+  justify-content: center;
+}
+
+
+.cancelBtn {
+  margin-left: 10px;
+  color: red;
+  font-weight: bold;
+  cursor: pointer;
+  border-bottom: 1px solid red;
+  transition: all 0.1s;
+  padding: 3px 5px;
+
+  &:hover {
+    color: white;
+    background-color: red;
+  }
+}
+
+%active-box {
+  color: white;
+  text-align: center;
+  padding: 2px 20px;
+  margin-bottom: 4px;
+  width: 100%;
+}
+
+.action {
+  @extend %active-box;
+  background-color: #333;
+
+  &.danger {
+    background-color: red;
+  }
+
+  &.info {
+    background-color: goldenrod;
+  }
+
+  &.success {
+    background-color: green;
+  }
+}

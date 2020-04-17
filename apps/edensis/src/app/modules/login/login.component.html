@@ -1,0 +1,21 @@
+  <form [formGroup]="loginForm" class="login" (ngSubmit)="submitForm()">
+    <fieldset>
+      <legend>Login with your email and password</legend>
+
+      <div *ngIf="errors" class="error">{{ errors }}</div>
+      
+      <div class="fields">
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" name="email" id="email" formControlName="email" />
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" name="password" id="password" formControlName="password" />
+        </div>
+      </div>
+      <div class="submit">
+        <input type="submit" name="submit" value="Login to Continue" />
+      </div>
+    </fieldset>
+  </form>

@@ -1,0 +1,12 @@
+<header class="main-header" fxLayoutAlign="space-between center">
+  <div class="logo">
+    <a routerLink="/" class='page_title'>Edensis Voting Center</a>
+  </div>
+  <div fxLayout="row" fxLayoutGap="20px">
+    <a>
+      <img width="50" height="50" *ngIf="auth?.image" src="{{'data:image/jpg;base64,' + auth?.image}}">
+      <span>{{ auth.getCurrentUser()?.name}}</span>
+    </a>
+    <a class="logout" *ngIf="auth.isLoggedIn()" (click)="auth.logout()">Logout</a>
+  </div>
+</header>

@@ -1,0 +1,20 @@
+<header class="main-header" fxLayoutAlign="space-between center">
+  <div class="logo">
+    <a routerLink="/">Edensis</a>
+  </div>
+  <div class="nav-links" fxLayout="row" fxLayoutGap="20px">
+    <!-- <a class="nav-link" routerLink='/' [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact: true}">Home</a> -->
+    <a class="nav-link" routerLink='/elections' [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{exact: true}">Elections</a>
+  </div>
+  <div fxLayout="row" fxLayoutGap="20px" >
+    <a class="nav-link" *ngIf="!auth.isLoggedIn()" routerLink='/login' [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{exact: true}">Login</a>
+    <a>
+      <img width="50" height="50" *ngIf="auth?.image" src="{{'data:image/jpg;base64,' + auth?.image}}">
+
+      <span></span>
+    </a>
+    <a class="logout" *ngIf="auth.isLoggedIn()" (click)="auth.logout()">Logout</a>
+  </div>
+</header>
