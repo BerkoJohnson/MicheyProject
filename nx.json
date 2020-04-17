@@ -14,25 +14,11 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ]
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
       }
     }
   },
   "projects": {
-    "eden-sis": {
-      "tags": []
-    },
-    "eden-sis-e2e": {
-      "tags": [],
-      "implicitDependencies": [
-        "eden-sis"
-      ]
-    },
     "api": {
       "tags": []
     },
@@ -44,27 +30,21 @@
     },
     "edensis-e2e": {
       "tags": [],
-      "implicitDependencies": [
-        "edensis"
-      ]
+      "implicitDependencies": ["edensis"]
     },
     "annex": {
       "tags": []
     },
     "annex-e2e": {
       "tags": [],
-      "implicitDependencies": [
-        "annex"
-      ]
+      "implicitDependencies": ["annex"]
     },
     "app2": {
       "tags": []
     },
     "app2-e2e": {
       "tags": [],
-      "implicitDependencies": [
-        "app2"
-      ]
+      "implicitDependencies": ["app2"]
     },
     "noddy": {
       "tags": []

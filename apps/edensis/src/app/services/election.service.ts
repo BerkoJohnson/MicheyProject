@@ -84,15 +84,13 @@ export class ElectionService {
 
   /** Get single position */
   getPosition(position: string, election: string): Observable<PositionPayload> {
-    return this.http.get<PositionPayload>(
-      `/api/v1/elections/${election}/positions/${position}`
-    );
+    return this.http.get<PositionPayload>(`/api/v1/positions/${position}`);
   }
 
   /** Get positions */
   getPositions(election: string): Observable<PositionsPayload> {
     return this.http.get<PositionsPayload>(
-      `/api/v1/elections/${election}/positions/`
+      `/api/v1/positions?election=${election}`
     );
   }
 
@@ -102,10 +100,7 @@ export class ElectionService {
     election: string
   ): Observable<PositionPayload> {
     return this.http
-      .post<PositionPayload>(
-        `/api/v1/elections/${election}/positions/`,
-        position
-      )
+      .post<PositionPayload>(`/api/v1/positions/`, position)
       .pipe(tap(_ => this.getElection(election).subscribe()));
   }
 
@@ -116,10 +111,7 @@ export class ElectionService {
     update: any
   ): Observable<PositionPayload> {
     return this.http
-      .put<PositionPayload>(
-        `/api/v1/elections/${election}/positions/${position}`,
-        update
-      )
+      .put<PositionPayload>(`/api/v1/positions/${position}`, update)
       .pipe(tap(_ => this.getElection(election).subscribe()));
   }
 
@@ -129,9 +121,7 @@ export class ElectionService {
     election: string
   ): Observable<PositionPayload> {
     return this.http
-      .delete<PositionPayload>(
-        `/api/v1/elections/${election}/positions/${position}`
-      )
+      .delete<PositionPayload>(`/api/v1/positions/${position}`)
       .pipe(tap(_ => this.getElection(election).subscribe()));
   }
 
@@ -140,14 +130,8 @@ export class ElectionService {
   /** Candidates */
 
   /** Get single candidate */
-  getCandidate(
-    candidate: string,
-    position: string,
-    election: string
-  ): Observable<CandidatePayload> {
-    return this.http.get<CandidatePayload>(
-      `/api/v1/elections/${election}/positions/${position}/candidates/${candidate}`
-    );
+  getCandidate(candidate: string): Observable<CandidatePayload> {
+    return this.http.get<CandidatePayload>(`/api/v1/candidates/${candidate}`);
   }
 
   fetchCandidatesForThisElection(election: string) {
@@ -157,12 +141,9 @@ export class ElectionService {
   }
 
   /** Get candidates */
-  getCandidates(
-    position: string,
-    election: string
-  ): Observable<CandidatesPayload> {
+  getCandidates(position: string): Observable<CandidatesPayload> {
     return this.http.get<CandidatesPayload>(
-      `/api/v1/elections/${election}/positions/${position}/candidates/`
+      `/api/v1/candidates?position=${position}`
     );
   }
 
@@ -174,7 +155,7 @@ export class ElectionService {
   ): Observable<CandidatePayload> {
     return this.http
       .post<CandidatePayload>(
-        `/api/v1/elections/${election}/positions/${position}/candidates/`,
+        `/api/v1/candidates?position=${position}`,
         candidate
       )
       .pipe(tap(_ => this.getElection(election).subscribe()));
@@ -183,28 +164,21 @@ export class ElectionService {
   /** Update candidate */
   updateCandidate(
     candidate: string,
-    position: string,
     election: string,
     update: any
   ): Observable<CandidatePayload> {
     return this.http
-      .put<CandidatePayload>(
-        `/api/v1/elections/${election}/positions/${position}/candidates/${candidate}`,
-        update
-      )
+      .put<CandidatePayload>(`/api/v1/candidates/${candidate}`, update)
       .pipe(tap(_ => this.getElection(election).subscribe()));
   }
 
   /** Delete candidate */
   deleteCandidate(
     candidate: string,
-    position: string,
     election: string
   ): Observable<CandidatePayload> {
     return this.http
-      .delete<CandidatePayload>(
-        `/api/v1/elections/${election}/positions/${position}/candidates/${candidate}`
-      )
+      .delete<CandidatePayload>(`/api/v1/candidates/${candidate}`)
       .pipe(tap(_ => this.getElection(election).subscribe()));
   }
 }

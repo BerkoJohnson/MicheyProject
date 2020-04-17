@@ -1,140 +1,6 @@
 {
   "version": 1,
   "projects": {
-    "eden-sis": {
-      "projectType": "application",
-      "schematics": {
-        "@nrwl/angular:component": {
-          "style": "scss"
-        }
-      },
-      "root": "apps/eden-sis",
-      "sourceRoot": "apps/eden-sis/src",
-      "prefix": "my-web-space",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/apps/eden-sis",
-            "index": "apps/eden-sis/src/index.html",
-            "main": "apps/eden-sis/src/main.ts",
-            "polyfills": "apps/eden-sis/src/polyfills.ts",
-            "tsConfig": "apps/eden-sis/tsconfig.app.json",
-            "aot": true,
-            "assets": [
-              "apps/eden-sis/src/favicon.ico",
-              "apps/eden-sis/src/assets"
-            ],
-            "styles": [
-              "apps/eden-sis/src/styles.scss"
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/eden-sis/src/environments/environment.ts",
-                  "with": "apps/eden-sis/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "eden-sis:build",
-            "proxyConfig": "apps/eden-sis/proxy.conf.json"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "eden-sis:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "eden-sis:build"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "apps/eden-sis/tsconfig.app.json",
-              "apps/eden-sis/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/eden-sis/**"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "apps/eden-sis/jest.config.js",
-            "tsConfig": "apps/eden-sis/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "apps/eden-sis/src/test-setup.ts"
-          }
-        }
-      }
-    },
-    "eden-sis-e2e": {
-      "root": "apps/eden-sis-e2e",
-      "sourceRoot": "apps/eden-sis-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/eden-sis-e2e/cypress.json",
-            "tsConfig": "apps/eden-sis-e2e/tsconfig.e2e.json",
-            "devServerTarget": "eden-sis:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "eden-sis:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "apps/eden-sis-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/eden-sis-e2e/**"
-            ]
-          }
-        }
-      }
-    },
     "api": {
       "root": "apps/api",
       "sourceRoot": "apps/api/src",
@@ -148,21 +14,17 @@
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": [
-              "apps/api/src/assets"
-            ]
+            "assets": ["apps/api/src/assets"]
           },
           "configurations": {
             "production": {
               "optimization": true,
               "extractLicenses": true,
               "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/api/src/environments/environment.ts",
-                  "with": "apps/api/src/environments/environment.prod.ts"
-                }
-              ]
+              "fileReplacements": [{
+                "replace": "apps/api/src/environments/environment.ts",
+                "with": "apps/api/src/environments/environment.prod.ts"
+              }]
             }
           }
         },
@@ -179,10 +41,7 @@
               "apps/api/tsconfig.app.json",
               "apps/api/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/api/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/api/**"]
           }
         },
         "test": {
@@ -208,10 +67,7 @@
               "libs/api-interfaces/tsconfig.lib.json",
               "libs/api-interfaces/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/api-interfaces/**"
-            ]
+            "exclude": ["**/node_modules/**", "!libs/api-interfaces/**"]
           }
         },
         "test": {
@@ -248,19 +104,15 @@
               "apps/edensis/src/favicon.ico",
               "apps/edensis/src/assets"
             ],
-            "styles": [
-              "apps/edensis/src/styles.scss"
-            ],
+            "styles": ["apps/edensis/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/edensis/src/environments/environment.ts",
-                  "with": "apps/edensis/src/environments/environment.prod.ts"
-                }
-              ],
+              "fileReplacements": [{
+                "replace": "apps/edensis/src/environments/environment.ts",
+                "with": "apps/edensis/src/environments/environment.prod.ts"
+              }],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -269,8 +121,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [
-                {
+              "budgets": [{
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
@@ -309,10 +160,7 @@
               "apps/edensis/tsconfig.app.json",
               "apps/edensis/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/edensis/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/edensis/**"]
           }
         },
         "test": {
@@ -347,13 +195,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/edensis-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/edensis-e2e/**"
-            ]
+            "tsConfig": ["apps/edensis-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/edensis-e2e/**"]
           }
         }
       }
@@ -400,23 +243,16 @@
             "polyfills": "apps/annex/src/polyfills.ts",
             "tsConfig": "apps/annex/tsconfig.app.json",
             "aot": true,
-            "assets": [
-              "apps/annex/src/favicon.ico",
-              "apps/annex/src/assets"
-            ],
-            "styles": [
-              "apps/annex/src/styles.scss"
-            ],
+            "assets": ["apps/annex/src/favicon.ico", "apps/annex/src/assets"],
+            "styles": ["apps/annex/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/annex/src/environments/environment.ts",
-                  "with": "apps/annex/src/environments/environment.prod.ts"
-                }
-              ],
+              "fileReplacements": [{
+                "replace": "apps/annex/src/environments/environment.ts",
+                "with": "apps/annex/src/environments/environment.prod.ts"
+              }],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -425,8 +261,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [
-                {
+              "budgets": [{
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
@@ -465,10 +300,7 @@
               "apps/annex/tsconfig.app.json",
               "apps/annex/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/annex/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/annex/**"]
           }
         },
         "test": {
@@ -503,13 +335,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/annex-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/annex-e2e/**"
-            ]
+            "tsConfig": ["apps/annex-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/annex-e2e/**"]
           }
         }
       }
@@ -556,23 +383,16 @@
             "polyfills": "apps/app2/src/polyfills.ts",
             "tsConfig": "apps/app2/tsconfig.app.json",
             "aot": true,
-            "assets": [
-              "apps/app2/src/favicon.ico",
-              "apps/app2/src/assets"
-            ],
-            "styles": [
-              "apps/app2/src/styles.scss"
-            ],
+            "assets": ["apps/app2/src/favicon.ico", "apps/app2/src/assets"],
+            "styles": ["apps/app2/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/app2/src/environments/environment.ts",
-                  "with": "apps/app2/src/environments/environment.prod.ts"
-                }
-              ],
+              "fileReplacements": [{
+                "replace": "apps/app2/src/environments/environment.ts",
+                "with": "apps/app2/src/environments/environment.prod.ts"
+              }],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -581,8 +401,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [
-                {
+              "budgets": [{
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
@@ -621,10 +440,7 @@
               "apps/app2/tsconfig.app.json",
               "apps/app2/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/app2/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/app2/**"]
           }
         },
         "test": {
@@ -659,13 +475,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/app2-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/app2-e2e/**"
-            ]
+            "tsConfig": ["apps/app2-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/app2-e2e/**"]
           }
         }
       }
@@ -683,21 +494,17 @@
             "outputPath": "dist/apps/noddy",
             "main": "apps/noddy/src/main.ts",
             "tsConfig": "apps/noddy/tsconfig.app.json",
-            "assets": [
-              "apps/noddy/src/assets"
-            ]
+            "assets": ["apps/noddy/src/assets"]
           },
           "configurations": {
             "production": {
               "optimization": true,
               "extractLicenses": true,
               "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/noddy/src/environments/environment.ts",
-                  "with": "apps/noddy/src/environments/environment.prod.ts"
-                }
-              ]
+              "fileReplacements": [{
+                "replace": "apps/noddy/src/environments/environment.ts",
+                "with": "apps/noddy/src/environments/environment.prod.ts"
+              }]
             }
           }
         },
@@ -714,10 +521,7 @@
               "apps/noddy/tsconfig.app.json",
               "apps/noddy/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/noddy/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/noddy/**"]
           }
         },
         "test": {

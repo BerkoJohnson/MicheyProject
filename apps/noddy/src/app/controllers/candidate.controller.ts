@@ -147,21 +147,21 @@ class CandidateController implements Controller {
     next: express.NextFunction
   ) => {
     try {
-      const { candidateID } = req.params;
+      const { candidate } = req.params;
 
-      if (!candidateID) {
+      if (!candidate) {
         return next(new InvalidRequestException());
       }
 
       // Check if candidate exists
-      const candidate = await this.CandidateModel.findOne({
-        _id: candidateID
+      const candidateInDB = await this.CandidateModel.findOne({
+        _id: candidate
       });
-      if (!candidate) {
-        return next(new ResourceNotFoundException(candidateID, 'Candidate'));
+      if (!candidateInDB) {
+        return next(new ResourceNotFoundException(candidate, 'Candidate'));
       }
 
-      await candidate.remove(); // now finally remove candidate
+      await candidateInDB.remove(); // now finally remove candidate
       res.sendStatus(200); // send OK if no errors
     } catch (error) {
       if (error.name === 'CastError') {
@@ -179,7 +179,6 @@ class CandidateController implements Controller {
     try {
       const { position } = req.query;
 
-      // console.log(req.body);
       if (!position || !req.file) {
         return next(new InvalidRequestException());
       }

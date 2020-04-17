@@ -31,14 +31,12 @@
     <thead>
       <tr>
         <th rowspan="2">Position</th>
-        <th colspan="5">Candidate</th>
+        <th colspan="3">Candidate</th>
         <th rowspan="2">Actions</th>
       </tr>
       <tr>
         <th>Photo</th>
         <th>Name</th>
-        <th>Gender</th>
-        <th>DOB</th>
         <th>Class</th>
       </tr>
     </thead>
@@ -65,9 +63,9 @@
               aka: {{candidate?.nickname}}
             </b>
           </td>
-          <td align="center">{{ candidate.gender }}</td>
+          <!-- <td align="center">{{ candidate.gender }}</td> -->
           <!-- <td align="center">{{ candidate.nickname }}</td> -->
-          <td align="center">{{ candidate.dob }}</td>
+          <!-- <td align="center">{{ candidate.dob }}</td> -->
           <td align="center">{{ candidate.room }}</td>
           <td align="center">
             <a class="links red" (click)="

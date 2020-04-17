@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
 import Election from '../interfaces/election.interface';
 import positionModel from './position.model';
+import candidateModel from './candidate.model';
 
 const electionSchema = new mongoose.Schema<Election>({
   title: {
@@ -26,6 +27,11 @@ electionSchema.pre<Election & mongoose.Document>('remove', async function(
   try {
     await positionModel.deleteMany({
       _id: {
+        $in: this.positions
+      }
+    });
+    await candidateModel.deleteMany({
+      position: {
         $in: this.positions
       }
     });
