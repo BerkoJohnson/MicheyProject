@@ -12,25 +12,10 @@ export interface Payload {
   errors?: string[];
 }
 
-export interface ElectionPayload extends Payload {
-  data: Election;
-}
-
-export interface ElectionsPayload extends Payload {
-  data: Election[];
-}
-
 export interface Position extends Document {
   title: string;
   election?: string | Election;
   candidates?: Candidate[];
-}
-
-export interface PositionsPayload extends Payload {
-  data: Position[];
-}
-export interface PositionPayload extends Payload {
-  data: Position;
 }
 
 export interface Document {
@@ -44,16 +29,8 @@ export interface Candidate extends Document {
   gender: 'Male' | 'Female';
   dob: string;
   room: string;
-  studentID: string;
   nickname: string;
   photo?: string;
-}
-
-export interface CandidatesPayload extends Payload {
-  data: Candidate[];
-}
-export interface CandidatePayload extends Payload {
-  data: Candidate;
 }
 
 export interface Student extends Document {

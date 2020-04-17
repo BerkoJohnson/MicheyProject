@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Election, Candidate } from '../../interfaces/all';
-import { ElectionService } from '../../services/election.service';
+import { ElectionService, CandidateService } from '../../services';
+
 interface CanPayload {
   _id: string;
   name: string;
@@ -17,6 +18,7 @@ interface CanPayload {
 }
 
 @Component({
+  // tslint:disable-next-line: component-selector
   selector: 'app-candidates',
   templateUrl: './candidates.component.html',
   styleUrls: ['./candidates.component.scss']
@@ -40,7 +42,8 @@ export class CandidatesComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public electionService: ElectionService
+    public electionService: ElectionService,
+    private candidateService: CandidateService
   ) {
     this.form = this.fb.group({
       room: ['', [Validators.required]],
@@ -68,8 +71,8 @@ export class CandidatesComponent implements OnInit {
       formData.append('photo', this.image);
 
       if (this.isEdit === false) {
-        this.electionService
-          .createCandidate(formData, this.position.value, election)
+        this.candidateService
+          .createCandidate(formData, this.position.value)
           .subscribe(
             c => {
               this.errors = '';
@@ -84,13 +87,8 @@ export class CandidatesComponent implements OnInit {
           );
       } else {
         formData.append('newPosition', this.position.value);
-        this.electionService
-          .updateCandidate(
-            this.currentCandidate._id,
-            this.currentPosition,
-            election,
-            formData
-          )
+        this.candidateService
+          .updateCandidate(this.currentCandidate._id, formData)
           .subscribe(
             c => {
               this.errors = '';
@@ -167,9 +165,7 @@ export class CandidatesComponent implements OnInit {
   }
 
   removeCandidate(candidateID: string, positionID: string, electionID: string) {
-    this.electionService
-      .deleteCandidate(candidateID, positionID, electionID)
-      .subscribe();
+    this.candidateService.deleteCandidate(candidateID).subscribe();
   }
 
   get photo() {

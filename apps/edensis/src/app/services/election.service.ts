@@ -1,16 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {
-  Election,
-  Position,
-  ElectionPayload,
-  PositionPayload,
-  ElectionsPayload,
-  PositionsPayload,
-  Candidate,
-  CandidatePayload,
-  CandidatesPayload
-} from '../interfaces/all';
+import { Election } from '../interfaces/all';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { BROWSER_STORAGE } from '../interfaces/storage';
@@ -19,10 +9,7 @@ import { BROWSER_STORAGE } from '../interfaces/storage';
   providedIn: 'root'
 })
 export class ElectionService {
-  constructor(
-    private http: HttpClient,
-    @Inject(BROWSER_STORAGE) private storage: Storage
-  ) {
+  constructor(private http: HttpClient) {
     this.getElections().subscribe();
   }
 
@@ -81,104 +68,4 @@ export class ElectionService {
   }
 
   /////////////////////// ELECTION ENDS HERE /////////////////////////
-
-  /** Get single position */
-  getPosition(position: string, election: string): Observable<PositionPayload> {
-    return this.http.get<PositionPayload>(`/api/v1/positions/${position}`);
-  }
-
-  /** Get positions */
-  getPositions(election: string): Observable<PositionsPayload> {
-    return this.http.get<PositionsPayload>(
-      `/api/v1/positions?election=${election}`
-    );
-  }
-
-  /** Create new position */
-  createPosition(
-    position: Position,
-    election: string
-  ): Observable<PositionPayload> {
-    return this.http
-      .post<PositionPayload>(`/api/v1/positions/`, position)
-      .pipe(tap(_ => this.getElection(election).subscribe()));
-  }
-
-  /** Update position */
-  updatePosition(
-    position: string,
-    election: string,
-    update: any
-  ): Observable<PositionPayload> {
-    return this.http
-      .put<PositionPayload>(`/api/v1/positions/${position}`, update)
-      .pipe(tap(_ => this.getElection(election).subscribe()));
-  }
-
-  /** Delete position */
-  deletePosition(
-    position: string,
-    election: string
-  ): Observable<PositionPayload> {
-    return this.http
-      .delete<PositionPayload>(`/api/v1/positions/${position}`)
-      .pipe(tap(_ => this.getElection(election).subscribe()));
-  }
-
-  /////////////////////// POSITION ENDS HERE /////////////////////////
-
-  /** Candidates */
-
-  /** Get single candidate */
-  getCandidate(candidate: string): Observable<CandidatePayload> {
-    return this.http.get<CandidatePayload>(`/api/v1/candidates/${candidate}`);
-  }
-
-  fetchCandidatesForThisElection(election: string) {
-    return this.http.get<Candidate[]>(
-      `/api/v1/candidates/fetch?election=${election}`
-    );
-  }
-
-  /** Get candidates */
-  getCandidates(position: string): Observable<CandidatesPayload> {
-    return this.http.get<CandidatesPayload>(
-      `/api/v1/candidates?position=${position}`
-    );
-  }
-
-  /** Create new candidate */
-  createCandidate(
-    candidate: FormData,
-    position: string,
-    election: string
-  ): Observable<CandidatePayload> {
-    return this.http
-      .post<CandidatePayload>(
-        `/api/v1/candidates?position=${position}`,
-        candidate
-      )
-      .pipe(tap(_ => this.getElection(election).subscribe()));
-  }
-
-  /** Update candidate */
-  updateCandidate(
-    candidate: string,
-    election: string,
-    update: any
-  ): Observable<CandidatePayload> {
-    return this.http
-      .put<CandidatePayload>(`/api/v1/candidates/${candidate}`, update)
-      .pipe(tap(_ => this.getElection(election).subscribe()));
-  }
-
-  /** Delete candidate */
-  deleteCandidate(
-    candidate: string,
-    election: string
-  ): Observable<CandidatePayload> {
-    return this.http
-      .delete<CandidatePayload>(`/api/v1/candidates/${candidate}`)
-      .pipe(tap(_ => this.getElection(election).subscribe()));
-  }
 }

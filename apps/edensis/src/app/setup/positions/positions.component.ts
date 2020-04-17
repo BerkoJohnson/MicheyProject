@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Election, Position } from '../../interfaces/all';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ElectionService } from '../../services/election.service';
+import { ElectionService, PositionService } from '../../services';
 
 @Component({
+  // tslint:disable-next-line: component-selector
   selector: 'app-positions',
   templateUrl: './positions.component.html',
   styleUrls: ['./positions.component.scss']
@@ -21,7 +21,8 @@ export class PositionsComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public electionService: ElectionService
+    public electionService: ElectionService,
+    public positionSrv: PositionService
   ) {
     this.positionForm = this.fb.group({
       title: ['', [Validators.required]],
@@ -47,8 +48,8 @@ export class PositionsComponent implements OnInit {
     }
   }
 
-  removePosition(position: string, election: string) {
-    this.electionService.deletePosition(position, election).subscribe();
+  removePosition(position: string) {
+    this.positionSrv.deletePosition(position).subscribe();
   }
 
   addPosition() {
@@ -68,11 +69,11 @@ export class PositionsComponent implements OnInit {
     };
 
     if (!this.isEdit) {
-      this.electionService.createPosition(pos, this.election.value).subscribe(
+      this.positionSrv.createPosition(pos, this.election.value).subscribe(
         c => {
           this.errors = '';
           this.info = 'New Position Successfully Added';
-          this.positionForm.reset({});
+          this.positionForm.reset({ election: this.election.value });
         },
         (error: HttpErrorResponse) => {
           // tslint:disable-next-line: no-string-literal
@@ -81,8 +82,8 @@ export class PositionsComponent implements OnInit {
         }
       );
     } else {
-      this.electionService
-        .updatePosition(this.positionToUpdate._id, this.election.value, pos)
+      this.positionSrv
+        .updatePosition(this.positionToUpdate._id, this.election.value)
         .subscribe(
           () => {
             this.errors = '';
