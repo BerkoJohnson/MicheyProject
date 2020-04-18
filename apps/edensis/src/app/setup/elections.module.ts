@@ -5,17 +5,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { PositionsComponent } from './positions/positions.component';
 import { CandidatesComponent } from './candidates/candidates.component';
-import { SetupComponent } from './setup.component';
 import { VotersComponent } from './voters/voters.component';
 import { ElectionsComponent } from './elections/elections.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: SetupComponent,
     children: [
       { path: '', component: ElectionsComponent },
-      { path: 'positions',  component: PositionsComponent },
+      { path: 'positions', component: PositionsComponent },
       { path: 'candidates', component: CandidatesComponent },
       { path: 'voters', component: VotersComponent }
     ]
@@ -26,7 +24,6 @@ const routes: Routes = [
   declarations: [
     PositionsComponent,
     CandidatesComponent,
-    SetupComponent,
     VotersComponent,
     ElectionsComponent
   ],
@@ -38,4 +35,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class SetupModule { }
+export class ElectionsModule {}
