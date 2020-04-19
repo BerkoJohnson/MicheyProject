@@ -48,6 +48,20 @@
     },
     "noddy": {
       "tags": []
+    },
+    "ngrx-app": {
+      "tags": []
+    },
+    "ngrx-app-e2e": {
+      "tags": [],
+      "implicitDependencies": ["ngrx-app"]
+    },
+    "ngrx-tut": {
+      "tags": []
+    },
+    "ngrx-tut-e2e": {
+      "tags": [],
+      "implicitDependencies": ["ngrx-tut"]
     }
   }
 }
