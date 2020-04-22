@@ -1,0 +1,3 @@
+<my-web-space-user-row *ngFor="let user of users; let i = index" [user]="user" (selectUser)="onSelectedUser($event)"
+  [class.selected]="isSelected(user)" (removeUser)="deleteUser(i)">
+</my-web-space-user-row>

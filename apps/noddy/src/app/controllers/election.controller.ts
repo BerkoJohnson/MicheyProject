@@ -45,11 +45,7 @@ class ElectionController implements Controller {
   ) => {
     const elections = await this.ElectionModel.find().populate({
       path: 'positions',
-      select: 'title candidates',
-      populate: {
-        path: 'candidates',
-        select: 'name gender dob nickname photo'
-      }
+      select: 'title _id'
     });
     res.json(elections);
   };
@@ -61,21 +57,15 @@ class ElectionController implements Controller {
   ) => {
     try {
       const { election } = req.params;
-      const electionInDB = await this.ElectionModel.findById(
-        election
-      ).populate({
-        path: 'positions',
-        select: 'title candidates',
-        populate: {
-          path: 'candidates',
-          select: 'name gender dob nickname photo'
+      const electionInDB = await this.ElectionModel.findById(election).populate(
+        {
+          path: 'positions',
+          select: 'title _id'
         }
-      });
+      );
 
       if (!electionInDB) {
-        return next(
-          new ResourceNotFoundException(election, 'Election')
-        );
+        return next(new ResourceNotFoundException(election, 'Election'));
       }
 
       res.json(election);
@@ -97,9 +87,7 @@ class ElectionController implements Controller {
       const electionInDB = await this.ElectionModel.findById(election);
 
       if (!electionInDB) {
-        return next(
-          new ResourceNotFoundException(election, 'Election')
-        );
+        return next(new ResourceNotFoundException(election, 'Election'));
       }
       await electionInDB.remove();
       res.sendStatus(200);
@@ -121,7 +109,7 @@ class ElectionController implements Controller {
       const createdElection = new this.ElectionModel(electionData);
 
       const savedElection = await createdElection.save();
-      // await savedElection.populate("positions").execPopulate();
+      await savedElection.populate('positions').execPopulate();
       res.status(201).json(savedElection);
     } catch (error) {
       if (error.code === 11000) {

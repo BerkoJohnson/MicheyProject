@@ -10,6 +10,9 @@ import { DefaultModule } from './layouts/default/default.module';
 import { FullwidthModule } from './layouts/fullwidth/fullwidth.module';
 
 import { PROVIDERS } from './providers';
+import { EntityDataModule } from '@ngrx/data';
+import { entityConfig } from './entity-metadata';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,7 +22,9 @@ import { PROVIDERS } from './providers';
     DefaultModule,
     FullwidthModule,
     RoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    EntityDataModule.forRoot(entityConfig),
+    StoreRouterConnectingModule.forRoot()
   ],
   providers: PROVIDERS,
   bootstrap: [AppComponent]

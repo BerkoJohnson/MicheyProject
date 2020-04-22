@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Election } from '../interfaces/all';
+import { Election } from '../interfaces';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { BROWSER_STORAGE } from '../interfaces/storage';
@@ -15,19 +15,13 @@ export class ElectionService {
 
   // tslint:disable-next-line:variable-name
   _election = new BehaviorSubject<Election>(null);
+  election$ = this._election.asObservable();
   // tslint:disable-next-line:variable-name
   private _elections = new BehaviorSubject<Election[]>(null);
+  elections$ = this._elections.asObservable();
 
   setElection(elec: Election) {
     this._election.next(elec);
-  }
-
-  get election() {
-    return this._election.asObservable();
-  }
-
-  get $elections() {
-    return this._elections.asObservable();
   }
 
   /////////////////////// ELECTION START HERE /////////////////////////

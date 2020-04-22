@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Election } from '../../interfaces/all';
+import { Election } from '../../interfaces';
 import { ElectionService } from '../../services/election.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-elections',
@@ -13,7 +14,12 @@ export class ElectionsComponent implements OnInit {
 
   electionForm: FormGroup;
 
-  constructor(private fb: FormBuilder, public electionSrv: ElectionService) {
+  constructor(
+    private fb: FormBuilder,
+    public electionSrv: ElectionService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.electionForm = this.fb.group({
       title: ['', Validators.required],
       school: ['', Validators.required],
@@ -29,6 +35,9 @@ export class ElectionsComponent implements OnInit {
 
   useElection(election: Election) {
     this.electionSrv.setElection(election);
+    // const returnUrl = this.route.snapshot.queryParams['returnUrl'];
+    // console.log(returnUrl);
+    // if (returnUrl !== null) this.router.navigateByUrl(returnUrl);
   }
 
   submitForm() {

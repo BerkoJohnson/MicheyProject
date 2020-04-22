@@ -76,7 +76,7 @@ class AuthenticationController implements Controller {
 
         const tokenData = this.createToken(user);
         res.setHeader('Set-Cookie', [this.createCookie(tokenData)]);
-        res.status(201).json(tokenData);
+        res.status(200).json(tokenData);
       } else {
         next(new WrongCredentialsException());
       }

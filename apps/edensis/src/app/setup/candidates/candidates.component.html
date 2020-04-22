@@ -1,33 +1,11 @@
 <div class="first-column tables">
-  <div class="action" *ngIf="!(electionService.election | async)">
+  <div class="action" *ngIf="!(electionService.election$ | async)">
     <p>
       Choose an election to see the candidates per positions for that
       election!
     </p>
   </div>
-  <table border="1" cellspacing="10" cellpadding="5" *ngIf="!(electionService.election | async)">
-    <thead>
-      <tr>
-        <th>Election</th>
-        <th>School</th>
-        <th>No. of Positions</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let election of electionService.$elections | async; let i = index">
-        <td align="center">{{ election.title }}</td>
-        <td align="center">{{ election.school }}</td>
-        <td align="center">{{ election?.positions.length }}</td>
-        <td align="center">
-          <button type="button" class="primary" (click)="useElection(election)">
-            Use Election
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <table border="1" cellspacing="10" cellpadding="5" *ngIf="electionService.election | async as Election">
+  <table border="1" cellspacing="10" cellpadding="5" *ngIf="electionService.election$ | async as Election">
     <thead>
       <tr>
         <th rowspan="2">Position</th>
@@ -80,7 +58,7 @@
 
 </div>
 <div class="last-column">
-  <div *ngIf="electionService.election | async as Election">
+  <div *ngIf="electionService.election$ | async as Election">
     <form [formGroup]="form" (ngSubmit)="submit(Election?._id)">
       <fieldset>
         <legend>
@@ -132,7 +110,7 @@
             <select id="position" name="position" formControlName="position">
               <option value="">Chose Position</option>
               <option *ngFor="
-                    let position of (electionService.election | async)
+                    let position of (electionService.election$ | async)
                       ?.positions
                   " [value]="position?._id">
                 {{ position?.title }}</option>
@@ -153,11 +131,11 @@
         <input type="submit" class="primary" [disabled]="form.invalid"
           [value]="isEdit !== true ? 'Save Candidate' : 'Update Candidate'" name="submit" />
         <a class="cancelBtn" title="Click to add new candidate"
-          *ngIf="(electionService.election | async) && isEdit == true" (click)="addCandidate()">Cancel</a>
+          *ngIf="(electionService.election$ | async) && isEdit == true" (click)="addCandidate()">Cancel</a>
       </fieldset>
     </form>
   </div>
-  <div class="action" *ngIf="!(electionService.election | async)">
+  <div class="action" *ngIf="!(electionService.election$ | async)">
     <p>
       Choose an election to see the "Add Candidate Form"!
     </p>

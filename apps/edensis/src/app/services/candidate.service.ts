@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Candidate } from '../interfaces/all';
+import { Candidate } from '../interfaces';
 import { tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 

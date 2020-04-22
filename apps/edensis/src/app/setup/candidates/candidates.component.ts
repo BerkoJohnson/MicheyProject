@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Election, Candidate } from '../../interfaces/all';
+import { Election, Candidate } from '../../interfaces';
 import { ElectionService, CandidateService } from '../../services';
 
 interface CanPayload {

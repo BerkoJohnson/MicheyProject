@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Election, Position } from '../../interfaces/all';
+import { Election, Position } from '../../interfaces';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ElectionService, PositionService } from '../../services';
 
@@ -25,8 +25,7 @@ export class PositionsComponent implements OnInit {
     public positionSrv: PositionService
   ) {
     this.positionForm = this.fb.group({
-      title: ['', [Validators.required]],
-      election: ['', Validators.required]
+      title: ['', [Validators.required]]
     });
   }
 
@@ -64,12 +63,11 @@ export class PositionsComponent implements OnInit {
     }
 
     const pos: Position = {
-      title: this.title.value,
-      election: this.election.value
+      title: this.title.value
     };
 
     if (!this.isEdit) {
-      this.positionSrv.createPosition(pos, this.election.value).subscribe(
+      this.positionSrv.createPosition(pos).subscribe(
         c => {
           this.errors = '';
           this.info = 'New Position Successfully Added';

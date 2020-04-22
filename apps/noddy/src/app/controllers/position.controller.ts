@@ -157,7 +157,7 @@ class PositionController implements Controller {
         _id: position
       });
 
-      if (!position) {
+      if (!positionInDB) {
         return next(new ResourceNotFoundException(position, 'Position'));
       }
 

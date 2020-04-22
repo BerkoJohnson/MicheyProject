@@ -9,7 +9,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let election of electionSrv.$elections | async; let i = index">
+      <tr *ngFor="let election of electionSrv.elections$ | async; let i = index">
         <td align="center">{{ election.title }}</td>
         <td align="center">{{ election.school }}</td>
         <td align="center">{{ election?.positions.length }}</td>

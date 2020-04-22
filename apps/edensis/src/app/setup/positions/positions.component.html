@@ -1,30 +1,8 @@
   <div class="first-column tables">
-    <div class="action" *ngIf="!(electionService.election | async)">
-      <p>Choose an election to see the positoins for that election!</p>
+    <div class="action" *ngIf="!(electionService.election$ | async)">
+      <p><a class="cta_link" routerLink="/elections">Choose an election</a> to see the positoins for that election!</p>
     </div>
-    <table border="1" cellspacing="10" cellpadding="5" *ngIf="!(electionService.election | async)">
-      <thead>
-        <tr>
-          <th>Election</th>
-          <th>School</th>
-          <th>No. of Positions</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let election of electionService.$elections | async; let i = index">
-          <td align="center">{{ election.title }}</td>
-          <td align="center">{{ election.school }}</td>
-          <td align="center">{{ election?.positions.length }}</td>
-          <td align="center">
-            <button type="button" class="primary" (click)="useElection(election)">
-              Use Election
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <table border="1" cellspacing="10" cellpadding="5" *ngIf="electionService.election | async as Election">
+    <table border="1" cellspacing="10" cellpadding="5" *ngIf="(positionSrv.positions$ | async)">
       <thead>
         <tr>
           <th>Title of Position</th>
@@ -34,19 +12,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let position of Election?.positions; let i = index">
+        <tr *ngFor="let position of (positionSrv.positions$ | async); let i = index">
           <td class="spread" align="center">
             <a class="links blue" [title]="'Update ' + position?.title"
-              (click)="editPosition(position, Election._id)">{{ position.title }}</a>
+              (click)="editPosition(position)">{{ position.title }}</a>
           </td>
           <!-- <td align="center">{{ position.cast_type }}</td> -->
           <td align="center">{{ position?.candidates.length }}</td>
           <td align="center">
-            <a class="links red" [title]="'Remove ' + position?.title"
-              (click)="removePosition(position._id, Election._id)">Delete</a>
+            <a class="links red" [title]="'Remove ' + position?.title" (click)="removePosition(position._id)">Delete</a>
           </td>
         </tr>
-        <tr *ngIf="!Election?.positions.length">
+        <tr *ngIf="!(positionSrv.positions$ | async)?.length">
           <td colspan="4">No Positions Yet!</td>
         </tr>
       </tbody>
@@ -61,14 +38,14 @@
         <div class="fields">
           <div *ngIf="errors && !info" class="error">{{ errors }}</div>
           <div *ngIf="info && !errors" class="info">{{ info }}</div>
-          <div class="field">
+          <!-- <div class="field">
             <label for="election">Election</label>
             <select name="election" id="election" formControlName="election">
               <option value="">Select Election</option>
-              <option *ngFor="let elec of electionService.$elections | async" [value]="elec._id">{{ elec.title }}
+              <option *ngFor="let elec of electionService.elections$ | async" [value]="elec._id">{{ elec.title }}
               </option>
             </select>
-          </div>
+          </div> -->
           <div class="field">
             <label for="title">Position's Title</label>
             <input type="text" name="title" id="title" placeholder="Enter title" formControlName="title" />
@@ -77,7 +54,7 @@
         <input type="submit" class="primary" [value]="isEdit === false ? 'Save Position' : 'Update Position'"
           name="submit" [disabled]="positionForm.invalid" />
         <a class="cancelBtn" title="Click to add new position"
-          *ngIf="(electionService.election | async) && isEdit == true" (click)="addPosition()">Cancel</a>
+          *ngIf="(positionSrv.positions$ | async) && isEdit == true" (click)="addPosition()">Cancel</a>
       </fieldset>
     </form>
   </div>
