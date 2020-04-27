@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { LoadUsersSuccess } from './users.action';
 
 @Component({
   selector: 'my-web-space-users',
@@ -31,13 +33,15 @@ export class UsersComponent implements OnInit {
 
   isSelected(user: { name: string; email: string }) {
     if (!user) return false;
-    if (user === this.currentUser) return true;
+    return user.email === this.currentUser.email;
   }
 
   deleteUser(i: number) {
     this.users.splice(i, 1);
   }
-  constructor() {}
+  constructor(private store: Store) {
+    store.dispatch(LoadUsersSuccess({ users: this.users }));
+  }
 
   ngOnInit(): void {}
 }

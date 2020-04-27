@@ -4,6 +4,7 @@
   justify-content: center;
   align-items: center;
   color: white;
+  width: 100%;
 }
 
 * {
@@ -38,6 +39,7 @@
   background-color: rgba($color: #000, $alpha: 0.7);
   padding: 20px;
   transition: all 0.1s;
+  margin-bottom: 30px;
 
   &:not(:last-of-type) {
     margin: 20px 0;
@@ -69,9 +71,10 @@
 
       h4 {
         color: #fff;
-        font-weight: 300;
+        font-weight: lighter;
         font-size: 1.4rem;
         padding: 2px;
+        letter-spacing: 2px;
       }
 
       h5 {
@@ -79,7 +82,8 @@
         font-size: 0.8rem;
         padding: 2px;
         margin-top: -5px;
-        font-family: sans-serif;
+        // font-family: sans-serif;
+        font-style: italic;
 
         &.inactive {
           color: #444;
@@ -96,9 +100,10 @@
 
         &.yes,
         &.no {
-          width: 10%;
+          width: 15%;
         }
       }
+
       img {
         border-radius: 10px;
         border: 2px solid transparent;
@@ -106,6 +111,7 @@
         &.inactive {
           filter: grayscale(1) opacity(0.3);
         }
+
         &.active {
           border: 2px solid green;
         }
@@ -113,6 +119,7 @@
 
       &:hover {
         background-color: rgba(#fff, 0.1);
+
         img {
           border-color: #45c;
         }
@@ -124,8 +131,10 @@
           cursor: not-allowed;
         }
       }
+
       &.active {
         background-color: rgba(rgb(34, 233, 61), 0.1);
+
         &:hover {
           img {
             border: 2px solid green;

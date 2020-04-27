@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ElectionService } from '../../services';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -9,9 +11,20 @@ import { Component, OnInit } from '@angular/core';
 export class VotersComponent implements OnInit {
   imageUrl: any;
   imageError: string;
-  constructor() {}
+  constructor(
+    private router: Router,
+    private electionService: ElectionService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.electionService.election$.subscribe(e => {
+      if (e === null) {
+        this.router.navigate(['elections'], {
+          queryParams: { returnUrl: 'voters' }
+        });
+      }
+    });
+  }
 
   previewImage(event: Event) {
     const file = event.target['files'][0] as File;

@@ -1,7 +1,7 @@
 import { Position } from './Position';
+import { Document } from './Document';
 
-export interface Election {
-  _id?: string;
+export interface Election extends Document {
   title: string;
   school: string;
   academicYear: string;

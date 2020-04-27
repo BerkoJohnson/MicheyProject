@@ -29,13 +29,18 @@ class CandidateController implements Controller {
   private initializeRoutes() {
     this.router
       .route(this.path)
-      .get(authMiddleware, this.getCandidates)
+      .get(authMiddleware, this.getCandidatesPerPosition)
       .post(
         authMiddleware,
         upload.single('photo'),
         validateMiddleware(CandidateDto),
         this.createCandidate
       );
+    this.router.get(
+      `${this.path}/byelec`,
+      authMiddleware,
+      this.getCandidatesPerElections
+    );
     this.router
       .route(`${this.path}/:candidate`)
       .get(authMiddleware, this.getCandidate)
@@ -43,7 +48,7 @@ class CandidateController implements Controller {
       .delete(authMiddleware, this.deleteCandidate);
   }
 
-  private getCandidates = async (
+  private getCandidatesPerPosition = async (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction
@@ -68,6 +73,51 @@ class CandidateController implements Controller {
         position: positionInDB._id
       });
       res.json(candidates);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  private getCandidatesPerElections = async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
+    try {
+      const { election } = req.query;
+      if (!election) {
+        return next(new InvalidRequestException());
+      }
+
+      // Check if position exist
+      const electionInDB = await this.ElectionModel.findById(election);
+
+      // else
+      if (!electionInDB) {
+        return next(
+          new ResourceNotFoundException(election.toString(), 'Position')
+        );
+      }
+
+      const candidates = await this.CandidateModel.find({
+        election: electionInDB._id
+      }).populate('position');
+      const result = candidates.map(c => {
+        return {
+          _id: c._id,
+          name: c.name,
+          gender: c.gender,
+          nickname: c.nickname,
+          dob: c.dob,
+          room: c.room,
+          position: {
+            _id: c.position['_id'],
+            title: c.position['title']
+          },
+          photo: c.photo.toString('base64')
+        };
+      });
+      res.json(result);
     } catch (error) {
       next(error);
     }
@@ -113,26 +163,69 @@ class CandidateController implements Controller {
 
       // Check if candidate exists
       let updateData: CandidateDto = req.body;
-
-      if (req.file) {
-        const image = await sharp(req.file.buffer)
+      let image: Buffer;
+      let newPosition: string;
+      let isCandidateUpdated = false;
+      //If an image is sent in req.file, then update the candidate's photo field
+      if (req.file !== undefined) {
+        image = await sharp(req.file.buffer)
           .resize(200, 200)
           .toBuffer();
-
         updateData = {
           ...updateData,
           photo: image
         };
       }
 
+      if (req.body['position'] !== undefined) {
+        newPosition = req.body['position'];
+        updateData = {
+          ...updateData,
+          position: newPosition
+        };
+      }
+
+      // console.log(updateData);
+
       const candidateInDB = await this.CandidateModel.findByIdAndUpdate(
         candidate,
-        updateData
+        updateData,
+        {
+          upsert: true
+        }
       );
+
       if (!candidateInDB) {
         return next(new ResourceNotFoundException(candidate, 'Candidate'));
+      } else {
+        isCandidateUpdated = true;
       }
+
+      if (newPosition && isCandidateUpdated) {
+        // Get the Old Position candidate was assigned to
+        const oldPosition = await this.PositionModel.findOne()
+          .where('candidates')
+          .in([candidateInDB._id]);
+
+        console.log(oldPosition);
+
+        // Not done with this update method
+
+        // Remove the candidate
+        oldPosition.candidates.splice(candidateInDB._id, 1);
+
+        // Save the position
+        oldPosition.save();
+
+        /** Update the new Position candidate array */
+        await this.PositionModel.findByIdAndUpdate(newPosition, {
+          $push: { candidates: candidateInDB._id }
+        });
+      }
+
       res.json(candidateInDB);
+
+      // res.json({ yes: true });
     } catch (error) {
       if (error.name === 'CastError') {
         return next(new CastErrorException('Candidate', error));
@@ -162,7 +255,7 @@ class CandidateController implements Controller {
       }
 
       await candidateInDB.remove(); // now finally remove candidate
-      res.sendStatus(200); // send OK if no errors
+      res.status(200).json({ success: true }); // send OK if no errors
     } catch (error) {
       if (error.name === 'CastError') {
         return next(new CastErrorException('Candidate', error));
@@ -198,6 +291,7 @@ class CandidateController implements Controller {
       const candidateData: CandidateDto = req.body;
       const createdCandidate = new this.CandidateModel({
         ...candidateData,
+        election: positionInDB.election,
         photo: image,
         position: position
       });

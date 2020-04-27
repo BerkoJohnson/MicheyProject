@@ -35,9 +35,9 @@ export class ElectionsComponent implements OnInit {
 
   useElection(election: Election) {
     this.electionSrv.setElection(election);
-    // const returnUrl = this.route.snapshot.queryParams['returnUrl'];
-    // console.log(returnUrl);
-    // if (returnUrl !== null) this.router.navigateByUrl(returnUrl);
+    const returnUrl = this.route.snapshot.queryParams['returnUrl'];
+    if (returnUrl === null || returnUrl === undefined) return;
+    this.router.navigate([returnUrl], { relativeTo: this.route });
   }
 
   submitForm() {

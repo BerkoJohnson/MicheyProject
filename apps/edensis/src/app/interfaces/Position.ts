@@ -1,10 +1,9 @@
 import { Candidate } from './Candidate';
 import { Election } from './Election';
+import { Document } from './Document';
 
-// import Candidate from './Candidate';
-export interface Position {
-  _id?: string;
+export interface Position extends Document {
   title: string;
-  election?: Election;
-  candidates?: Candidate[];
+  election?: string | Election;
+  candidates?: string | Candidate[];
 }

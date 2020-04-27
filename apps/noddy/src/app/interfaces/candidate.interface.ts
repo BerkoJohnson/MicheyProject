@@ -6,7 +6,8 @@ interface Candidate {
   dob: string;
   room: string;
   position: string;
-  photo: string;
+  election?: string;
+  photo: Buffer;
 }
 
 export default Candidate;

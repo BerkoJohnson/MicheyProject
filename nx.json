@@ -55,6 +55,27 @@
     "tut-e2e": {
       "tags": [],
       "implicitDependencies": ["tut"]
+    },
+    "banana": {
+      "tags": []
+    },
+    "banana-e2e": {
+      "tags": [],
+      "implicitDependencies": ["banana"]
+    },
+    "newapp": {
+      "tags": []
+    },
+    "newapp-e2e": {
+      "tags": [],
+      "implicitDependencies": ["newapp"]
+    },
+    "learn": {
+      "tags": []
+    },
+    "learn-e2e": {
+      "tags": [],
+      "implicitDependencies": ["learn"]
     }
   }
 }

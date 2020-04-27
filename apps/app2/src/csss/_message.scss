@@ -10,7 +10,7 @@
 
 @mixin messageBox($color, $bcolor) {
   @extend %message-shared;
-  color:$color;
+  color: $color;
   background-color: $bcolor;
 }
 

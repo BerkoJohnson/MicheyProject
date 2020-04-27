@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Position } from '../interfaces';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { ElectionService } from './election.service';
-import { tap } from 'rxjs/operators';
+import { tap, switchMap, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -16,24 +16,18 @@ export class PositionService {
   position$ = this._position.asObservable();
   positions$ = this._positions.asObservable();
   currentElectionId: string;
-  constructor(
-    private http: HttpClient,
-    private elecSrvice: ElectionService,
-    private router: Router
-  ) {
-    this.loadPositions();
-  }
+  constructor(private http: HttpClient, private elecSrvice: ElectionService) {}
 
   loadPositions() {
-    this.elecSrvice.election$.subscribe(e => {
-      if (e === null)
-        // return this.router.navigate(/elections?returnUrl='positions'");
-        this.router.navigate(['login'], {
-          queryParams: { returnUrl: '/positions' }
-        });
-      this.currentElectionId = e._id;
-      this.getPositions(e._id).subscribe();
-    });
+    this.elecSrvice.election$
+      .pipe(
+        switchMap(v => {
+          if (v === null || v === undefined) return;
+          this.currentElectionId = v._id;
+          return this.getPositions(v._id);
+        })
+      )
+      .subscribe(ps => this._positions.next(ps));
   }
 
   /** Get single position */
@@ -43,9 +37,7 @@ export class PositionService {
 
   /** Get positions */
   getPositions(election: string): Observable<Position[]> {
-    return this.http
-      .get<Position[]>(`/api/v1/positions?election=${election}`)
-      .pipe(tap(ps => this._positions.next(ps)));
+    return this.http.get<Position[]>(`/api/v1/positions?election=${election}`);
   }
 
   /** Create new position */
@@ -62,13 +54,14 @@ export class PositionService {
   updatePosition(position: string, update: any): Observable<Position> {
     return this.http
       .put<Position>(`/api/v1/positions/${position}`, update)
-      .pipe(tap(p => this.loadPositions));
+      .pipe(tap(p => this.loadPositions()));
   }
 
   /** Delete position */
   deletePosition(position: string): Observable<Position> {
-    return this.http
-      .delete<Position>(`/api/v1/positions/${position}`)
-      .pipe(tap(p => this.loadPositions));
+    return this.http.delete<Position>(`/api/v1/positions/${position}`).pipe(
+      shareReplay(),
+      tap(p => this.loadPositions())
+    );
   }
 }

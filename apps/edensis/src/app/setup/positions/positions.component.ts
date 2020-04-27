@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Election, Position } from '../../interfaces';
+import { Election, Position, Candidate } from '../../interfaces';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ElectionService, PositionService } from '../../services';
+import { Router } from '@angular/router';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -22,14 +23,24 @@ export class PositionsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public electionService: ElectionService,
-    public positionSrv: PositionService
+    public positionSrv: PositionService,
+    private router: Router
   ) {
     this.positionForm = this.fb.group({
       title: ['', [Validators.required]]
     });
+    this.positionSrv.loadPositions();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.electionService.election$.subscribe(e => {
+      if (e === null) {
+        this.router.navigate(['elections'], {
+          queryParams: { returnUrl: 'positions' }
+        });
+      }
+    });
+  }
 
   useElection(election: Election) {
     this.currentElection = election;
@@ -39,21 +50,27 @@ export class PositionsComponent implements OnInit {
   editPosition(position: Position, electionID: string) {
     // Set isEdit to true
     this.isEdit = true;
-
-    this.election.setValue(electionID);
     if (position) {
       this.positionToUpdate = position;
       this.title.setValue(position.title);
     }
   }
 
-  removePosition(position: string) {
-    this.positionSrv.deletePosition(position).subscribe();
+  removePosition(position: string, candidates: Candidate[]) {
+    let str = '';
+    candidates.forEach(c => (str += c.name + '\n'));
+    const deleted = window.confirm(
+      `The following ${
+        candidates.length === 1 ? 'candidate' : 'candidates'
+      } assigned will be removed too.\n ${str}Do you still want to remove this position?`
+    );
+    if (deleted) {
+      this.positionSrv.deletePosition(position).subscribe();
+    }
   }
 
   addPosition() {
     this.isEdit = false;
-    this.election.setValue(this.currentElection._id || '');
     this.title.setValue(null);
   }
 
@@ -62,16 +79,15 @@ export class PositionsComponent implements OnInit {
       return;
     }
 
-    const pos: Position = {
+    const pos = {
       title: this.title.value
-    };
+    } as Position;
 
     if (!this.isEdit) {
       this.positionSrv.createPosition(pos).subscribe(
         c => {
           this.errors = '';
           this.info = 'New Position Successfully Added';
-          this.positionForm.reset({ election: this.election.value });
         },
         (error: HttpErrorResponse) => {
           // tslint:disable-next-line: no-string-literal
@@ -80,19 +96,17 @@ export class PositionsComponent implements OnInit {
         }
       );
     } else {
-      this.positionSrv
-        .updatePosition(this.positionToUpdate._id, this.election.value)
-        .subscribe(
-          () => {
-            this.errors = '';
-            this.info = 'Position Successfully Updated';
-          },
-          (error: HttpErrorResponse) => {
-            // tslint:disable-next-line: no-string-literal
-            this.info = '';
-            this.errors = error.error['error'];
-          }
-        );
+      this.positionSrv.updatePosition(this.positionToUpdate._id, pos).subscribe(
+        () => {
+          this.errors = '';
+          this.info = 'Position Successfully Updated';
+        },
+        (error: HttpErrorResponse) => {
+          // tslint:disable-next-line: no-string-literal
+          this.info = '';
+          this.errors = error.error['error'];
+        }
+      );
     }
   }
 

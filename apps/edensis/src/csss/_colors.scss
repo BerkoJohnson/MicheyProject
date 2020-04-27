@@ -1,6 +1,10 @@
-$primary_color: #dd0f98;
+// $primary_color: #17aebd;
+// $primary_color: #1b7;
+// $primary_color: #6e8f20;
+$primary_color: #1178da;
 $secondary_color: saturate($color: $primary_color,
   $amount: 10);
 $complement: complement($primary_color);
 $dark_complement: darken($complement, 20);
+$dark_bgcolor: darken($primary_color, 5%);
 $dark_color: rgba(0, 0, 0, 0.93);

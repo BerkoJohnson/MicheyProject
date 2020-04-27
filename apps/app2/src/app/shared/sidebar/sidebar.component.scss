@@ -1,6 +1,9 @@
+@import "../../../csss/colors";
+
 :host {
   padding: 20px;
-  background-color: #ccbb44;
+  background-color: $dark_complement;
+  flex-basis: 20%;
 }
 
 .user {
@@ -25,6 +28,7 @@ ul.sidebar_nav {
     color: white;
     text-decoration: none;
     font-weight: bold;
+    text-transform: uppercase;
     // text-align: center;
 
     &:hover {
@@ -32,7 +36,7 @@ ul.sidebar_nav {
     }
 
     &.active {
-      color: #45c;
+      color: $complement;
     }
 
   }

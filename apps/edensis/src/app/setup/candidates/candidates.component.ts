@@ -2,7 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Election, Candidate } from '../../interfaces';
-import { ElectionService, CandidateService } from '../../services';
+import {
+  ElectionService,
+  CandidateService,
+  PositionService
+} from '../../services';
+import { Router } from '@angular/router';
 
 interface CanPayload {
   _id: string;
@@ -43,7 +48,9 @@ export class CandidatesComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public electionService: ElectionService,
-    private candidateService: CandidateService
+    public candidateService: CandidateService,
+    public positionService: PositionService,
+    private router: Router
   ) {
     this.form = this.fb.group({
       room: ['', [Validators.required]],
@@ -54,11 +61,21 @@ export class CandidatesComponent implements OnInit {
       position: ['', [Validators.required]],
       photo: [null, [Validators.required]]
     });
+    this.positionService.loadPositions();
+    this.candidateService.loadCandidates();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.electionService.election$.subscribe(e => {
+      if (e === null) {
+        this.router.navigate(['elections'], {
+          queryParams: { returnUrl: 'candidates' }
+        });
+      }
+    });
+  }
 
-  submit(election: string) {
+  submit() {
     if (this.form.invalid) {
       this.errors = 'All fields are required.';
     } else {
@@ -86,7 +103,7 @@ export class CandidatesComponent implements OnInit {
             }
           );
       } else {
-        formData.append('newPosition', this.position.value);
+        formData.append('position', this.position.value);
         this.candidateService
           .updateCandidate(this.currentCandidate._id, formData)
           .subscribe(
@@ -109,18 +126,10 @@ export class CandidatesComponent implements OnInit {
     return this.form.get('position');
   }
 
-  useElection(election: Election) {
-    this.electionService.setElection(election);
-    this.currentElection = election;
-
-    // Get candidates for this elections
-  }
-
-  editCandidate(candidate: Candidate, positionID: string) {
+  editCandidate(candidate: Candidate) {
     this.isEdit = true;
     this.errors = '';
     this.info = '';
-    this.currentPosition = positionID;
 
     this.photo.clearValidators();
     this.currentCandidate = candidate;
@@ -131,7 +140,7 @@ export class CandidatesComponent implements OnInit {
         dob: candidate.dob,
         gender: candidate.gender,
         nickname: candidate.nickname,
-        position: positionID,
+        position: candidate.position._id,
         photo: null
       },
       {
@@ -162,10 +171,20 @@ export class CandidatesComponent implements OnInit {
     this.info = '';
     this.errors = '';
     this.currentPosition = '';
+
+    this.form.get('position').enable({
+      emitEvent: true
+    });
   }
 
-  removeCandidate(candidateID: string, positionID: string, electionID: string) {
-    this.candidateService.deleteCandidate(candidateID).subscribe();
+  removeCandidate(candidateID: string) {
+    const deleted = window.confirm(
+      'Do you want to remove this candidate completely?'
+    );
+    if (deleted) {
+      this.candidateService.deleteCandidate(candidateID).subscribe();
+      // this.positionService.loadPositions();
+    }
   }
 
   get photo() {

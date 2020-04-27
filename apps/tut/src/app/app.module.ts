@@ -6,12 +6,20 @@ import { RouterModule } from '@angular/router';
 import { CounterComponent } from './counter/counter.component';
 import { UsersComponent } from './users/users.component';
 import { UserRowComponent } from './user-row/user-row.component';
+import { StoreModule } from '@ngrx/store';
+import * as fromUsers from './users/users.reducer';
 
 @NgModule({
-  declarations: [AppComponent, CounterComponent, UsersComponent, UserRowComponent],
+  declarations: [
+    AppComponent,
+    CounterComponent,
+    UsersComponent,
+    UserRowComponent
+  ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot([], { initialNavigation: 'enabled' })
+    RouterModule.forRoot([], { initialNavigation: 'enabled' }),
+    StoreModule.forRoot({ users: fromUsers.reducer })
   ],
   providers: [],
   bootstrap: [AppComponent]

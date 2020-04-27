@@ -1,14 +1,14 @@
 fieldset {
   border: none;
-  background: $dark_color;
+  background-color: $secondary_color;
   box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.5);
   padding: 10px;
   border-radius: 5px;
 }
 
 legend {
-  background: $secondary_color;
-  color: #ffffff;
+  background-color: $secondary_color;
+  color: darken($secondary_color, 30%);
   text-transform: uppercase;
   font-size: 0.8rem;
   font-weight: bold;
@@ -45,7 +45,7 @@ legend {
   text-align: right;
   margin-left: -10px;
   margin-right: 10px;
-  color: $dark_complement
+  color: darken($secondary_color, 30%);
 }
 
 .field input[type="text"],

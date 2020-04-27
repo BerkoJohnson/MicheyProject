@@ -11,6 +11,7 @@ import electionModel from '../models/election.model';
 import positionModel from '../models/position.model';
 import candidateModel from '../models/candidate.model';
 import Candidate from '../interfaces/candidate.interface';
+import { VotingElection } from '../interfaces/voteElection.interface';
 
 class ElectionController implements Controller {
   public path = '/elections';
@@ -32,6 +33,9 @@ class ElectionController implements Controller {
         validateMiddleware(ElectionDto),
         this.createElection
       );
+
+    this.router.get(`${this.path}/last`, this.getLast4Voting);
+
     this.router
       .route(`${this.path}/:election`)
       .get(authMiddleware, this.getElection)
@@ -48,6 +52,57 @@ class ElectionController implements Controller {
       select: 'title _id'
     });
     res.json(elections);
+  };
+
+  private getLast4Voting = async (
+    req: express.Request,
+    res: express.Response
+  ) => {
+    const election = await this.ElectionModel.findOne({})
+      .sort('-1')
+      .limit(1);
+
+    const positions = await this.PositionModel.find({
+      election: election._id
+    })
+      .populate('candidates')
+      .exec();
+    const thisElectionObj: VotingElection = {} as VotingElection;
+    thisElectionObj._id = election.id;
+    thisElectionObj.school = election.school;
+    thisElectionObj.title = election.title;
+
+    thisElectionObj.positions = positions.map(p => {
+      //Candidates Array Restructuring
+      const c = p.candidates.map(cd => {
+        const cdd = (cd as unknown) as Candidate;
+
+        // Remove position & election from candidate's object
+        cdd.election = undefined;
+        cdd.position = undefined;
+
+        // candidate's data with photo converted to a base64 string
+        return {
+          _id: cdd._id,
+          name: cdd.name,
+          gender: cdd.gender,
+          dob: cdd.dob,
+          nickname: cdd.nickname,
+          room: cdd.room,
+          photo: cdd.photo.toString('base64')
+        };
+      });
+
+      p.election = undefined;
+      return {
+        _id: p._id,
+        title: p.title,
+        candidates: c
+      };
+    });
+
+    // console.log(JSON.stringify(thisElectionObj, null, 2));
+    res.json(thisElectionObj);
   };
 
   private getElection = async (

@@ -18,7 +18,7 @@ table {
 
   th {
     background-color: $secondary_color;
-    color: white;
+    color: darken($secondary_color, 30%);
     padding: 10px;
   }
 

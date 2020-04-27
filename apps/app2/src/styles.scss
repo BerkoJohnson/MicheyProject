@@ -1,16 +1,19 @@
 // // // @import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
-@import url("https://fonts.googleapis.com/css?family=Lato|Montserrat&display=swap");
+// @import url("https://fonts.googleapis.com/css?family=Lato|Montserrat&display=swap");
 @import "csss/colors";
 @import "csss/message";
 @import "csss/navigation";
 @import "csss/forms";
 @import "csss/table";
 
+
+
 body,
 html {
   margin: 0;
   padding: 0;
   height: 100%;
+  font-family: Lato;
 }
 
 *,
@@ -19,13 +22,13 @@ html {
   box-sizing: border-box;
 }
 
-body {
-  font-family: "Montserrat", "Lato", sans-serif;
 
-  height: 100%;
+body {
+  font-family: Lato, sans-serif;
   background: rgb(72, 72, 72);
   font-size: 0.9rem;
 }
+
 
 .links {
   border: 1px solid transparent;
@@ -68,3 +71,27 @@ body {
   }
 }
 
+.first-column,
+.last-column {
+  padding: 0 10px;
+}
+
+.first-column {
+  flex-basis: 60%;
+  margin-left: auto;
+}
+
+.last-column {
+  flex-basis: 35%;
+  margin-right: auto;
+}
+
+.cta_link {
+  text-decoration: none;
+  background-color: #45c;
+  padding: 4px 6px;
+  color: white;
+  text-transform: uppercase;
+  border-radius: 4px;
+
+}

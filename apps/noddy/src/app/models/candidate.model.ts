@@ -32,6 +32,10 @@ const candidateSchema = new mongoose.Schema({
     ref: 'Position',
     required: true
   },
+  election: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Election'
+  },
   photo: {
     type: Buffer,
     default:

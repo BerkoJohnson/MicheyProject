@@ -38,7 +38,7 @@ class PositionController implements Controller {
       .route(`${this.path}/:position`)
       .get(authMiddleware, this.getPosition)
       .delete(authMiddleware, this.deletePosition)
-      .patch(authMiddleware, this.updatePosition);
+      .put(authMiddleware, this.updatePosition);
   }
 
   private getPositions = async (
@@ -153,9 +153,7 @@ class PositionController implements Controller {
     try {
       const { position } = req.params;
 
-      const positionInDB = await this.PositionModel.findOne({
-        _id: position
-      });
+      const positionInDB = await this.PositionModel.findById(position);
 
       if (!positionInDB) {
         return next(new ResourceNotFoundException(position, 'Position'));
@@ -163,7 +161,7 @@ class PositionController implements Controller {
 
       await positionInDB.remove();
 
-      res.sendStatus(200);
+      res.status(200).json({ success: true });
     } catch (error) {
       if (error.name === 'CastError') {
         return next(new CastErrorException('Position', error));

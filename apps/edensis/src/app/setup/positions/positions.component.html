@@ -20,7 +20,8 @@
           <!-- <td align="center">{{ position.cast_type }}</td> -->
           <td align="center">{{ position?.candidates.length }}</td>
           <td align="center">
-            <a class="links red" [title]="'Remove ' + position?.title" (click)="removePosition(position._id)">Delete</a>
+            <a class="links red" [title]="'Remove ' + position?.title"
+              (click)="removePosition(position._id, position.candidates)">Delete</a>
           </td>
         </tr>
         <tr *ngIf="!(positionSrv.positions$ | async)?.length">
@@ -28,7 +29,6 @@
         </tr>
       </tbody>
     </table>
-    <!-- <button type="button" (click)="addPosition()">Add New Position</button> -->
   </div>
   <div class="last-column">
     <form [formGroup]="positionForm" (ngSubmit)="submitForm()">
@@ -38,14 +38,6 @@
         <div class="fields">
           <div *ngIf="errors && !info" class="error">{{ errors }}</div>
           <div *ngIf="info && !errors" class="info">{{ info }}</div>
-          <!-- <div class="field">
-            <label for="election">Election</label>
-            <select name="election" id="election" formControlName="election">
-              <option value="">Select Election</option>
-              <option *ngFor="let elec of electionService.elections$ | async" [value]="elec._id">{{ elec.title }}
-              </option>
-            </select>
-          </div> -->
           <div class="field">
             <label for="title">Position's Title</label>
             <input type="text" name="title" id="title" placeholder="Enter title" formControlName="title" />

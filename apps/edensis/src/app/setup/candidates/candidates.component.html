@@ -5,53 +5,44 @@
       election!
     </p>
   </div>
-  <table border="1" cellspacing="10" cellpadding="5" *ngIf="electionService.election$ | async as Election">
+  <table border="1" cellspacing="10" cellpadding="5">
     <thead>
-      <tr>
-        <th rowspan="2">Position</th>
-        <th colspan="3">Candidate</th>
-        <th rowspan="2">Actions</th>
-      </tr>
       <tr>
         <th>Photo</th>
         <th>Name</th>
-        <th>Class</th>
+        <th>Room</th>
+        <th>Position</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      <ng-container *ngFor="let position of Election?.positions; let i = index">
-        <tr>
-          <td align="center" [rowSpan]="position?.candidates.length + 1">
-            {{ position.title }}
-          </td>
-          <td *ngIf="position.candidates.length === 0" [colSpan]="6">
-            <b>No Candidates Yet</b>
-          </td>
-        </tr>
-        <tr *ngFor="let candidate of position?.candidates; let i = index">
-          <td align="center" class="hasImage">
-            <img *ngIf="candidate?.photo" src="{{ 'data:image/jpg;base64,' + candidate?.photo.toString('base64') }}"
-              [alt]="candidate.name" />
-          </td>
-          <td align="center">
-            <a class="links blue" [title]="'Update ' + candidate?.name"
-              (click)="editCandidate(candidate, position._id)">{{ candidate.name }}</a>
-            <br>
-            <b style="display:block; margin-top: 7px; color: rgba(255,255,255,0.7);">
-              aka: {{candidate?.nickname}}
-            </b>
-          </td>
-          <!-- <td align="center">{{ candidate.gender }}</td> -->
-          <!-- <td align="center">{{ candidate.nickname }}</td> -->
-          <!-- <td align="center">{{ candidate.dob }}</td> -->
-          <td align="center">{{ candidate.room }}</td>
-          <td align="center">
-            <a class="links red" (click)="
-                  removeCandidate(candidate._id, position._id, Election._id)
+      <tr *ngIf="(candidateService.candidates$ | async)?.length === 0">
+        <td [colSpan]="4">No Candidates Yet</td>
+      </tr>
+      <tr *ngFor="let candidate of candidateService.candidates$ | async; let i = index">
+        <td align="center" class="hasImage">
+          <img *ngIf="candidate?.photo" src="{{ 'data:image/jpg;base64,' + candidate?.photo.toString('base64') }}"
+            [alt]="candidate.name" />
+        </td>
+        <td align="center">
+          <a class="links blue" [title]="'Update ' + candidate?.name"
+            (click)="editCandidate(candidate, position._id)">{{ candidate.name }}</a>
+          <br>
+          <b style="display:block; margin-top: 7px; color: rgba(255,255,255,0.7);">
+            aka: {{candidate?.nickname}}
+          </b>
+        </td>
+        <!-- <td align="center">{{ candidate?.position?.title }}</td> -->
+        <!-- <td align="center">{{ candidate.nickname }}</td> -->
+        <!-- <td align="center">{{ candidate.dob }}</td> -->
+        <td align="center">{{ candidate.room }}</td>
+        <td align="center">{{ candidate?.position.title }}</td>
+        <td align="center">
+          <a class="links red" (click)="
+                  removeCandidate(candidate._id)
                 " [title]="'Remove ' + candidate?.name">Delete</a>
-          </td>
-        </tr>
-      </ng-container>
+        </td>
+      </tr>
     </tbody>
   </table>
 
@@ -68,9 +59,6 @@
         <div *ngIf="info && !errors" class="info">{{ info }}</div>
         <div class="fields">
           <div class="field">
-            <!-- Automatically send the selected class and reload the page
-                    with the students in that class for the candidate's selection
-                -->
             <label for="room">Class</label>
             <select name="room" id="room" formControlName="room">
               <option value="">Choose Class</option>
@@ -110,8 +98,7 @@
             <select id="position" name="position" formControlName="position">
               <option value="">Chose Position</option>
               <option *ngFor="
-                    let position of (electionService.election$ | async)
-                      ?.positions
+                    let position of (positionService.positions$ | async)
                   " [value]="position?._id">
                 {{ position?.title }}</option>
             </select>

@@ -40,7 +40,9 @@ class App {
   public listen() {
     this.app.listen(this.port, () => {
       console.log(
-        colors.green.inverse(
+        colors.black.bold('->'),
+        colors.yellow.bold('[Bootstrapping]'),
+        colors.green.bold(
           `Api running on  http://localhost:${this.port}/api/v1/`
         )
       );
