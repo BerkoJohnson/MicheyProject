@@ -17,7 +17,7 @@ import { HostComponent } from './host.component';
     ValueDirective
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     RouterModule.forRoot([], { initialNavigation: 'enabled' })
   ],
   providers: [],

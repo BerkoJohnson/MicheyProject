@@ -5,15 +5,22 @@ import errorMiddleware from './middleware/error.middleware';
 import * as colors from 'colors';
 import * as cookieParser from 'cookie-parser';
 import { environment } from '../environments/environment';
+import { createServer, Server } from 'http';
+import * as socketIO from 'socket.io';
 
 class App {
   public app: express.Application;
+  public server: Server;
+  public io: socketIO.Server;
   public port: number;
 
-  constructor(controllers: Controller[], port) {
+  constructor(controllers: Controller[], port: number) {
     this.app = express();
-    this.port = environment.PORT;
+    this.server = createServer(this.app);
+    this.io = socketIO(this.server);
+    this.port = port;
 
+    this.connectIO();
     this.connectToTheDatabase();
     this.initializeMiddlewares();
     this.initializeControllers(controllers);
@@ -25,6 +32,7 @@ class App {
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(cookieParser());
     this.app.use(require('morgan')('dev'));
+    this.app.use(require('cors')());
   }
 
   private initializeErrorHandling() {
@@ -38,25 +46,40 @@ class App {
   }
 
   public listen() {
-    this.app.listen(this.port, () => {
+    this.server.listen(this.port, () => {
       console.log(
         colors.black.bold('->'),
         colors.yellow.bold('[Bootstrapping]'),
         colors.green.bold(
-          `Api running on  http://localhost:${this.port}/api/v1/`
+          `NoddyAPI running on http://localhost:${this.port}/api/v1/`
         )
       );
     });
   }
 
   private connectToTheDatabase() {
-    // const { MONGO_USER, MONGO_PASSWORD, MONGO_PATH, MONGO_URI } = process.env;
-
     mongoose.connect(environment.MONGO_URI, {
       useFindAndModify: false,
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true
+    });
+  }
+
+  private connectIO() {
+    this.io.on('connection', socket => {
+      console.log('User connected');
+      this.io.emit('results', { election: 123 });
+
+      socket.on('disconnect', () => {
+        console.log('User disconnected');
+      });
+
+      socket.on('vote this', data => {
+        //
+        console.log(data);
+        this.io.emit('results', { election: 123 });
+      });
     });
   }
 }

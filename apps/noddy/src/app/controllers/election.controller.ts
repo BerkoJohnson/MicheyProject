@@ -12,6 +12,7 @@ import positionModel from '../models/position.model';
 import candidateModel from '../models/candidate.model';
 import Candidate from '../interfaces/candidate.interface';
 import { VotingElection } from '../interfaces/voteElection.interface';
+import { lastElection } from '../candidate.service';
 
 class ElectionController implements Controller {
   public path = '/elections';
@@ -58,6 +59,7 @@ class ElectionController implements Controller {
     req: express.Request,
     res: express.Response
   ) => {
+    // Get last election
     const election = await this.ElectionModel.findOne({})
       .sort('-1')
       .limit(1);
@@ -67,6 +69,7 @@ class ElectionController implements Controller {
     })
       .populate('candidates')
       .exec();
+
     const thisElectionObj: VotingElection = {} as VotingElection;
     thisElectionObj._id = election.id;
     thisElectionObj.school = election.school;
@@ -101,7 +104,6 @@ class ElectionController implements Controller {
       };
     });
 
-    // console.log(JSON.stringify(thisElectionObj, null, 2));
     res.json(thisElectionObj);
   };
 

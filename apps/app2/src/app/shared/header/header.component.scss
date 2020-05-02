@@ -1,13 +1,18 @@
+@import "../../../csss/colors";
+
 :host {
   display: block;
-    position: sticky;
-    top: 0;
-    left: 0;
-    z-index: 10;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 10;
 }
+
 header {
   padding: 20px;
   background-color: #111;
+  display: flex;
+  justify-content: space-between;
 
 
   a {
@@ -20,7 +25,7 @@ header {
     margin: 0;
     font-size: 1.3rem;
     text-transform: uppercase;
-    color: #45c;
+    color: $primary_color;
     letter-spacing: 3px;
   }
 }

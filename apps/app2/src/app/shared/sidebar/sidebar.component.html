@@ -7,17 +7,14 @@
   <li>
     <span class="nav-list__title">Elections</span>
     <ul class="sidebar_nav--sub">
-      <li>
-        <a routerLink="/voting-center" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Voting
-          Center</a>
+      <li *ngFor="let pos of votingData?.positions; let i = index">
+        <a [routerLink]="['/voting-center', pos._id]" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">
+          {{
+            pos?.title
+          }}
+        </a>
       </li>
-      <!-- <li>
-          <a routerLink="/elections/candidates" routerLinkActive="active"
-            [routerLinkActiveOptions]="{exact: true}">Candidates</a>
-        </li>
-        <li>
-          <a routerLink="/elections/voters" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Register</a>
-        </li> -->
     </ul>
 
   </li>

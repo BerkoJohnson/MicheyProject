@@ -14,7 +14,12 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ]
       }
     }
   },
@@ -30,21 +35,27 @@
     },
     "edensis-e2e": {
       "tags": [],
-      "implicitDependencies": ["edensis"]
+      "implicitDependencies": [
+        "edensis"
+      ]
     },
     "annex": {
       "tags": []
     },
     "annex-e2e": {
       "tags": [],
-      "implicitDependencies": ["annex"]
+      "implicitDependencies": [
+        "annex"
+      ]
     },
     "app2": {
       "tags": []
     },
     "app2-e2e": {
       "tags": [],
-      "implicitDependencies": ["app2"]
+      "implicitDependencies": [
+        "app2"
+      ]
     },
     "noddy": {
       "tags": []
@@ -54,28 +65,39 @@
     },
     "tut-e2e": {
       "tags": [],
-      "implicitDependencies": ["tut"]
+      "implicitDependencies": [
+        "tut"
+      ]
     },
     "banana": {
       "tags": []
     },
     "banana-e2e": {
       "tags": [],
-      "implicitDependencies": ["banana"]
+      "implicitDependencies": [
+        "banana"
+      ]
     },
     "newapp": {
       "tags": []
     },
     "newapp-e2e": {
       "tags": [],
-      "implicitDependencies": ["newapp"]
+      "implicitDependencies": [
+        "newapp"
+      ]
     },
     "learn": {
       "tags": []
     },
     "learn-e2e": {
       "tags": [],
-      "implicitDependencies": ["learn"]
+      "implicitDependencies": [
+        "learn"
+      ]
+    },
+    "angsoc": {
+      "tags": []
     }
   }
 }

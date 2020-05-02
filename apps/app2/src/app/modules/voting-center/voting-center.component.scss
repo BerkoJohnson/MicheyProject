@@ -1,3 +1,5 @@
+@import "../../../csss/colors";
+
 :host {
   display: flex;
   flex-direction: column;
@@ -12,31 +14,12 @@
   padding: 0;
 }
 
-.school,
-.title {
-  color: complement($color: #45c);
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.school {
-  padding: 4px 6px;
-  letter-spacing: 3px;
-}
-
-.title {
-  background-color: #45c;
-  margin-bottom: 10px;
-  letter-spacing: 3px;
-  color: white;
-  padding: 4px;
-}
 
 .positions {
   text-align: center;
-  border: 2px solid rgba($color: #000, $alpha: 0.3);
+  border: 2px solid $primary_color;
   border-radius: 10px;
-  background-color: rgba($color: #000, $alpha: 0.7);
+  background-color: #222;
   padding: 20px;
   transition: all 0.1s;
   margin-bottom: 30px;
@@ -46,21 +29,24 @@
   }
 
   .position {
-    padding: 4px 6px;
+    padding: 10px;
     text-transform: uppercase;
-    letter-spacing: 3px;
+    letter-spacing: -1px;
     font-size: 1.4rem;
+    font-weight: 100;
     margin: -20px -20px 0 -20px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    background-color: rgba(complement($color: #45c), 0.5);
+    color: white;
+    text-shadow: 1px 1px 1px black;
+    background-color: darken($primary_color, 20);
   }
 
   .candidates {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: baseline;
     flex-wrap: wrap;
     margin-top: 10px;
 
@@ -68,11 +54,13 @@
       flex: 1;
       border-radius: 10px;
       padding: 10px;
+      border: 1px solid rgba(0, 0, 0, 0.5);
+      margin: 0 5px;
 
       h4 {
         color: #fff;
-        font-weight: lighter;
-        font-size: 1.4rem;
+        font-weight: 100;
+        font-size: 2rem;
         padding: 2px;
         letter-spacing: 2px;
       }
@@ -94,13 +82,20 @@
         }
       }
 
+      .name {
+        font-size: 1.15rem;
+        padding: 2px 3px;
+        color: $complement;
+      }
+
+
       button {
         margin-top: 10px;
         width: 100%;
 
         &.yes,
         &.no {
-          width: 15%;
+          width: 35%;
         }
       }
 
@@ -118,10 +113,10 @@
       }
 
       &:hover {
-        background-color: rgba(#fff, 0.1);
+        background-color: rgba(#000, 0.1);
 
         img {
-          border-color: #45c;
+          border-color: #444;
         }
       }
 
@@ -133,7 +128,7 @@
       }
 
       &.active {
-        background-color: rgba(rgb(34, 233, 61), 0.1);
+        background-color: rgba(rgb(12, 129, 28), 0.1);
 
         &:hover {
           img {

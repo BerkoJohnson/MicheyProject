@@ -1,16 +1,18 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthService } from './services/auth.service';
-import { VotingService } from './services/election.service';
 import { DefaultModule } from './layouts/default/default.module';
 import { FullwidthModule } from './layouts/fullwidth/fullwidth.module';
-import { JwtInterceptor } from './interceptors/jwt-interceptors';
-import { AuthInterceptor } from './interceptors/auth-interceptors';
-import { ErrorInterceptor } from './interceptors/error-interceptors';
+import { providers } from './services/providers';
+
+const config: SocketIoConfig = {
+  url: 'http://localhost:7700'
+};
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,27 +21,11 @@ import { ErrorInterceptor } from './interceptors/error-interceptors';
     HttpClientModule,
     DefaultModule,
     FullwidthModule,
-    AppRoutingModule
+    AppRoutingModule,
+    SocketIoModule.forRoot(config),
+    FontAwesomeModule
   ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptor,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ErrorInterceptor,
-      multi: true
-    },
-    AuthService,
-    VotingService
-  ],
+  providers: [providers],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

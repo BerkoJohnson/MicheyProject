@@ -1,43 +1,42 @@
-<div *ngIf="votingData$ | async as data">
-  <h1 class="school"> {{ data?.school}} </h1>
-  <h2 class="title"> {{ data?.title}} </h2>
+<div *ngIf="votingData as data">
+  <div *ngFor=" let position of data.positions; let i=index">
+    <div class="positions" *ngIf="position._id === currentPosition">
+      <h3 class="position">{{ position.title }}</h3>
 
-  <div class="positions" *ngFor=" let position of data.positions; let i=index">
-    <h3 class="position">{{ position.title }}</h3>
-
-    <div class="candidates">
-      <div class="candidate" *ngFor="let candidate of position.candidates; let j = index" [ngClass]="{
+      <div class="candidates">
+        <div class="candidate" *ngFor="let candidate of position.candidates; let j = index" [ngClass]="{
       'inactive': position.cast === true && candidate.choosen !== true,
       'active': position.cast === true && candidate.choosen === true
       }">
-        <img src="{{'data:image/jpg;base64,' + candidate?.photo}}" [alt]="candidate.name" [ngClass]="{
+          <img src="{{'data:image/jpg;base64,' + candidate?.photo}}" [alt]="candidate.name" [ngClass]="{
         'inactive': position.cast === true && candidate.choosen !== true,
         'active': position.cast === true && candidate.choosen === true
         }">
-        <h4>{{candidate.name}}</h4>
-        <h5 [ngClass]="{
+          <div class="name">{{ nameFormat(candidate.name)}}</div>
+          <h5 [ngClass]="{
         'inactive': position.cast === true && candidate.choosen !== true,
         'active': position.cast === true && candidate.choosen === true
         }">a.k.a {{candidate.nickname}}</h5>
-        <h5 [ngClass]="{
+          <h5 [ngClass]="{
         'inactive': position.cast === true && candidate.choosen !== true,
         'active': position.cast === true && candidate.choosen === true
         }">{{candidate.room}}</h5>
-        <div *ngIf="position.candidates.length > 1">
-          <button type="button" class="vote"
-            [title]="position.cast !== true ? 'Vote for ' + candidate.name: 'Already voted'"
-            (click)="vote(data._id, position._id, candidate._id, 'thumbs')"
-            [disabled]="position.cast === true && candidate.choosen !== true">Vote</button>
-        </div>
-        <div *ngIf="position.candidates.length === 1">
-          <button type="button" class="yes"
-            [title]="position.cast !== true ? 'Vote YES for ' + candidate.name: 'Already voted'"
-            (click)="vote(data._id, position._id, candidate._id, 'yes')" [disabled]="position.cast === true &&
+          <div *ngIf="position.candidates.length > 1">
+            <button type="button" class="vote"
+              [title]="position.cast !== true ? 'Vote for ' + candidate.name: 'Already voted'"
+              (click)="vote(position._id, candidate._id, 'thumbs')"
+              [disabled]="position.cast === true && candidate.choosen !== true">Vote</button>
+          </div>
+          <div *ngIf="position.candidates.length === 1">
+            <button type="button" class="yes"
+              [title]="position.cast !== true ? 'Vote YES for ' + candidate.name: 'Already voted'"
+              (click)="vote(position._id, candidate._id, 'yes')" [disabled]="position.cast === true &&
             candidate.choosen === true">Yes</button>
-          <button type="button" class="no"
-            [title]="position.cast !== true ? 'Vote NO for ' + candidate.name: 'Already voted'" (click)="
-            vote(data._id, position._id, candidate._id, 'no')" [disabled]="position.cast === true &&
+            <button type="button" class="no"
+              [title]="position.cast !== true ? 'Vote NO for ' + candidate.name: 'Already voted'" (click)="
+            vote(position._id, candidate._id, 'no')" [disabled]="position.cast === true &&
             candidate.choosen === true">No</button>
+          </div>
         </div>
       </div>
     </div>

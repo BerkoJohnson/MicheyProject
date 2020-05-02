@@ -1,0 +1,14 @@
+<div class="user">
+  <p class="name" *ngIf="auth.isLoggedIn()">
+    <h1 class="school"> {{ votingData?.school}} </h1>
+    <h2 class="title"> {{ votingData?.title}} </h2>
+</div>
+<ul class="sidebar_nav">
+  <li *ngFor="let pos of votingData?.positions; let i = index">
+    <a [routerLink]="['/voting-center', pos._id]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      {{
+            pos?.title
+          }}
+    </a>
+  </li>
+</ul>

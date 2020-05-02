@@ -16,6 +16,7 @@ export interface VotingElection {
       room: string;
       photo: string;
       choosen?: boolean;
+      vtype: 'yes' | 'no' | 'thumbs';
     }[];
   }[];
 }

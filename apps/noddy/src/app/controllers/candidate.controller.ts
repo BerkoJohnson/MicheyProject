@@ -114,7 +114,7 @@ class CandidateController implements Controller {
             _id: c.position['_id'],
             title: c.position['title']
           },
-          photo: c.photo.toString('base64')
+          photo: c.photo ? c.photo.toString('base64') : null
         };
       });
       res.json(result);
@@ -162,70 +162,51 @@ class CandidateController implements Controller {
       }
 
       // Check if candidate exists
-      let updateData: CandidateDto = req.body;
+      const updateData: CandidateDto = req.body;
       let image: Buffer;
-      let newPosition: string;
-      let isCandidateUpdated = false;
+
       //If an image is sent in req.file, then update the candidate's photo field
       if (req.file !== undefined) {
+        // resize image, convert to buffer and set it the updateData.photo field
         image = await sharp(req.file.buffer)
           .resize(200, 200)
           .toBuffer();
-        updateData = {
-          ...updateData,
-          photo: image
-        };
+        updateData['photo'] = image;
+      } else {
+        updateData['photo'] = undefined;
       }
 
+      // if a new position is sent change candidate's position
       if (req.body['position'] !== undefined) {
-        newPosition = req.body['position'];
-        updateData = {
-          ...updateData,
-          position: newPosition
-        };
+        updateData['position'] = req.body['position'];
       }
 
-      // console.log(updateData);
+      const oldDoc = await this.CandidateModel.findById(candidate);
 
-      const candidateInDB = await this.CandidateModel.findByIdAndUpdate(
+      this.CandidateModel.findByIdAndUpdate(
         candidate,
         updateData,
         {
-          upsert: true
+          new: true
+        },
+        async (err, resDOc) => {
+          if (err) return next(err);
+
+          // Get the Old Position candidate was assigned to
+          await this.PositionModel.findByIdAndUpdate(oldDoc.position, {
+            $pull: {
+              candidate: resDOc._id
+            }
+          });
+
+          /** Update the new Position candidate array */
+          await this.PositionModel.findByIdAndUpdate(updateData['position'], {
+            $push: { candidates: resDOc._id }
+          });
+
+          res.json(resDOc);
         }
       );
-
-      if (!candidateInDB) {
-        return next(new ResourceNotFoundException(candidate, 'Candidate'));
-      } else {
-        isCandidateUpdated = true;
-      }
-
-      if (newPosition && isCandidateUpdated) {
-        // Get the Old Position candidate was assigned to
-        const oldPosition = await this.PositionModel.findOne()
-          .where('candidates')
-          .in([candidateInDB._id]);
-
-        console.log(oldPosition);
-
-        // Not done with this update method
-
-        // Remove the candidate
-        oldPosition.candidates.splice(candidateInDB._id, 1);
-
-        // Save the position
-        oldPosition.save();
-
-        /** Update the new Position candidate array */
-        await this.PositionModel.findByIdAndUpdate(newPosition, {
-          $push: { candidates: candidateInDB._id }
-        });
-      }
-
-      res.json(candidateInDB);
-
-      // res.json({ yes: true });
     } catch (error) {
       if (error.name === 'CastError') {
         return next(new CastErrorException('Candidate', error));
