@@ -3,6 +3,9 @@ interface Position {
   title: string;
   election: string;
   candidates: string[];
+
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export default Position;

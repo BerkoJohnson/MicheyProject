@@ -7,21 +7,16 @@
 </div>
 <ul class="sidebar_nav">
   <li>
-    <span class="nav-list__title">Elections</span>
-      <ul class="sidebar_nav--sub">
-        <li>
-          <a routerLink="/elections/positions" routerLinkActive="active"
-            [routerLinkActiveOptions]="{exact: true}">Positions</a>
-        </li>
-        <li>
-          <a routerLink="/elections/candidates" routerLinkActive="active"
-            [routerLinkActiveOptions]="{exact: true}">Candidates</a>
-        </li>
-        <li>
-          <a routerLink="/elections/voters" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Register</a>
-        </li>
-      </ul>
-
+    <a class="nav-link" routerLink='/ec' [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{exact: true}">Electoral
+      Commission</a>
   </li>
- 
+  <!-- <li>
+    <a routerLink="/elections/candidates" routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact: true}">Candidates</a>
+  </li>
+  <li>
+    <a routerLink="/elections/voters" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Register</a>
+  </li> -->
+
 </ul>

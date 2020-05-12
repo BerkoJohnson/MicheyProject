@@ -23,12 +23,10 @@
               "optimization": true,
               "extractLicenses": true,
               "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/api/src/environments/environment.ts",
-                  "with": "apps/api/src/environments/environment.prod.ts"
-                }
-              ]
+              "fileReplacements": [ {
+                "replace": "apps/api/src/environments/environment.ts",
+                "with": "apps/api/src/environments/environment.prod.ts"
+              } ]
             }
           }
         },
@@ -121,12 +119,10 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/edensis/src/environments/environment.ts",
-                  "with": "apps/edensis/src/environments/environment.prod.ts"
-                }
-              ],
+              "fileReplacements": [ {
+                "replace": "apps/edensis/src/environments/environment.ts",
+                "with": "apps/edensis/src/environments/environment.prod.ts"
+              } ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -135,8 +131,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [
-                {
+              "budgets": [ {
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
@@ -277,12 +272,10 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/annex/src/environments/environment.ts",
-                  "with": "apps/annex/src/environments/environment.prod.ts"
-                }
-              ],
+              "fileReplacements": [ {
+                "replace": "apps/annex/src/environments/environment.ts",
+                "with": "apps/annex/src/environments/environment.prod.ts"
+              } ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -291,8 +284,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [
-                {
+              "budgets": [ {
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
@@ -433,12 +425,10 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/app2/src/environments/environment.ts",
-                  "with": "apps/app2/src/environments/environment.prod.ts"
-                }
-              ],
+              "fileReplacements": [ {
+                "replace": "apps/app2/src/environments/environment.ts",
+                "with": "apps/app2/src/environments/environment.prod.ts"
+              } ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -447,8 +437,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [
-                {
+              "budgets": [ {
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
@@ -558,12 +547,10 @@
               "optimization": true,
               "extractLicenses": true,
               "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/noddy/src/environments/environment.ts",
-                  "with": "apps/noddy/src/environments/environment.prod.ts"
-                }
-              ]
+              "fileReplacements": [ {
+                "replace": "apps/noddy/src/environments/environment.ts",
+                "with": "apps/noddy/src/environments/environment.prod.ts"
+              } ]
             }
           }
         },
@@ -649,12 +636,10 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/tut/src/environments/environment.ts",
-                  "with": "apps/tut/src/environments/environment.prod.ts"
-                }
-              ],
+              "fileReplacements": [ {
+                "replace": "apps/tut/src/environments/environment.ts",
+                "with": "apps/tut/src/environments/environment.prod.ts"
+              } ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -663,8 +648,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [
-                {
+              "budgets": [ {
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
@@ -804,12 +788,10 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/banana/src/environments/environment.ts",
-                  "with": "apps/banana/src/environments/environment.prod.ts"
-                }
-              ],
+              "fileReplacements": [ {
+                "replace": "apps/banana/src/environments/environment.ts",
+                "with": "apps/banana/src/environments/environment.prod.ts"
+              } ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -818,8 +800,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [
-                {
+              "budgets": [ {
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
@@ -959,12 +940,10 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/newapp/src/environments/environment.ts",
-                  "with": "apps/newapp/src/environments/environment.prod.ts"
-                }
-              ],
+              "fileReplacements": [ {
+                "replace": "apps/newapp/src/environments/environment.ts",
+                "with": "apps/newapp/src/environments/environment.prod.ts"
+              } ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -973,8 +952,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [
-                {
+              "budgets": [ {
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
@@ -1114,12 +1092,10 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/learn/src/environments/environment.ts",
-                  "with": "apps/learn/src/environments/environment.prod.ts"
-                }
-              ],
+              "fileReplacements": [ {
+                "replace": "apps/learn/src/environments/environment.ts",
+                "with": "apps/learn/src/environments/environment.prod.ts"
+              } ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -1128,8 +1104,7 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [
-                {
+              "budgets": [ {
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
@@ -1192,12 +1167,10 @@
           "configurations": {
             "production": {
               "outputHashing": "media",
-              "fileReplacements": [
-                {
-                  "replace": "apps/learn/src/environments/environment.ts",
-                  "with": "apps/learn/src/environments/environment.prod.ts"
-                }
-              ],
+              "fileReplacements": [ {
+                "replace": "apps/learn/src/environments/environment.ts",
+                "with": "apps/learn/src/environments/environment.prod.ts"
+              } ],
               "sourceMap": false,
               "optimization": true
             }
@@ -1285,12 +1258,10 @@
               "optimization": true,
               "extractLicenses": true,
               "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/angsoc/src/environments/environment.ts",
-                  "with": "apps/angsoc/src/environments/environment.prod.ts"
-                }
-              ]
+              "fileReplacements": [ {
+                "replace": "apps/angsoc/src/environments/environment.ts",
+                "with": "apps/angsoc/src/environments/environment.prod.ts"
+              } ]
             }
           }
         },

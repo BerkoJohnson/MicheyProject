@@ -3,6 +3,8 @@ export interface VotingElection {
   title: string;
   school: string;
   academicYear: string;
+  createdAt?: string;
+  updatedAt?: string;
   positions: {
     _id?: string;
     title: string;

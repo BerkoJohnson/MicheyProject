@@ -1,0 +1,12 @@
+ <form [formGroup]="positionForm" (ngSubmit)="submitForm()">
+   <fieldset>
+     <legend>Update Position</legend>
+     <div class="fields">
+       <div class="field">
+         <label for="title">Position's Title</label>
+         <input type="text" name="title" id="title" placeholder="Enter title" formControlName="title" />
+       </div>
+     </div>
+     <input type="submit" class="primary" value="Update Position" name="submit" [disabled]="positionForm.invalid" />
+   </fieldset>
+ </form>

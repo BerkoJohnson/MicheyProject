@@ -12,7 +12,6 @@ import positionModel from '../models/position.model';
 import candidateModel from '../models/candidate.model';
 import Candidate from '../interfaces/candidate.interface';
 import { VotingElection } from '../interfaces/voteElection.interface';
-import { lastElection } from '../candidate.service';
 
 class ElectionController implements Controller {
   public path = '/elections';
@@ -52,6 +51,7 @@ class ElectionController implements Controller {
       path: 'positions',
       select: 'title _id'
     });
+
     res.json(elections);
   };
 
@@ -117,7 +117,7 @@ class ElectionController implements Controller {
       const electionInDB = await this.ElectionModel.findById(election).populate(
         {
           path: 'positions',
-          select: 'title _id'
+          select: 'title _id candidates'
         }
       );
 
@@ -125,7 +125,50 @@ class ElectionController implements Controller {
         return next(new ResourceNotFoundException(election, 'Election'));
       }
 
-      res.json(election);
+      const positions = await this.PositionModel.find({
+        election: election
+      })
+        .populate('candidates')
+        .exec();
+
+      const thisElectionObj: VotingElection = {} as VotingElection;
+      thisElectionObj._id = electionInDB._id;
+      thisElectionObj.school = electionInDB.school;
+      thisElectionObj.title = electionInDB.title;
+      thisElectionObj.academicYear = electionInDB.academicYear;
+      thisElectionObj.createdAt = electionInDB.createdAt;
+      thisElectionObj.updatedAt = electionInDB.updatedAt;
+
+      thisElectionObj.positions = positions.map(p => {
+        //Candidates Array Restructuring
+        const c = p.candidates.map(cd => {
+          const cdd = (cd as unknown) as Candidate;
+
+          // Remove position & election from candidate's object
+          cdd.election = undefined;
+          cdd.position = undefined;
+
+          // candidate's data with photo converted to a base64 string
+          return {
+            _id: cdd._id,
+            name: cdd.name,
+            gender: cdd.gender,
+            dob: cdd.dob,
+            nickname: cdd.nickname,
+            room: cdd.room,
+            photo: cdd.photo.toString('base64')
+          };
+        });
+
+        p.election = undefined;
+        return {
+          _id: p._id,
+          title: p.title,
+          candidates: c
+        };
+      });
+
+      res.json(thisElectionObj);
     } catch (error) {
       if (error.name === 'CastError') {
         return next(new CastErrorException('Election', error));

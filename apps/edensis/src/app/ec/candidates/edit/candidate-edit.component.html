@@ -1,0 +1,69 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <fieldset>
+    <legend>
+      Update Candidate
+    </legend>
+    <div *ngIf="errors && !info" class="error">{{ errors }}</div>
+    <div *ngIf="info && !errors" class="info">{{ info }}</div>
+    <div class="fields">
+      <div class="field">
+        <label for="room">Class</label>
+        <select name="room" id="room" formControlName="room">
+          <option value="">Choose Class</option>
+          <option value="2A1">2A1</option>
+          <option value="2A2">2A2</option>
+          <option value="2A3">2A3</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="name">Full Name</label>
+        <input type="text" name="name" id="name" placeholder="Enter full name" formControlName="name" />
+      </div>
+      <div class="field">
+        <label for="gender">Gender</label>
+        <select name="name" id="name" formControlName="gender">
+          <option value="">Choose Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="dob">Birth Date</label>
+        <input type="date" name="dob" id="dob" formControlName="dob" />
+      </div>
+      <div class="field">
+        <label for="nickname">Nickname</label>
+        <input type="text" name="nickname" id="nickname" placeholder="Enter Nickname if any"
+          formControlName="nickname" />
+      </div>
+      <div class="field">
+        <label for="change_positio">Change Position</label>
+        <input type="checkbox" id="nickname" #position (change)="changePosition(position.checked)" />
+        <span style="color: yellow; font-weight:bold;">(Want to change position)</span>
+      </div>
+      <div class="field">
+        <label for="nickname">Aspiring For</label>
+        <select id="position" name="position" formControlName="position">
+          <option value="">Chose Position</option>
+          <option *ngFor="
+                    let position of (currentElection$ | async)?.positions
+                  " [value]="position?._id">
+            {{ position?.title }}</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="photo">Photo</label>
+        <input type="file" name="photo" id="photo" formControlName="photo" (change)="previewImage($event)" />
+      </div>
+      <div class="field">
+        <label for="">Candidate's <br />
+          Photo</label>
+        <div class="imagebox">
+          <img id="candidate_photo" alt="Candidate Photo Here" [src]="imageUrl" />
+        </div>
+      </div>
+    </div>
+    <input type="submit" class="primary" [disabled]="form.invalid" value="Save Candidate" name="submit" />
+    <a class="cancelBtn" title="Click to add new candidate" (click)="onAddNewCandidate()">Cancel</a>
+  </fieldset>
+</form>

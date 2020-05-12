@@ -6,13 +6,18 @@ const addressSchema = new mongoose.Schema({
   street: String
 });
 
-const userSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  password: String,
-  photo: Buffer,
-  telephone: String
-});
+const userSchema = new mongoose.Schema(
+  {
+    name: String,
+    email: String,
+    password: String,
+    photo: Buffer,
+    telephone: String
+  },
+  {
+    timestamps: true
+  }
+);
 
 const userModel = mongoose.model<User & mongoose.Document>('User', userSchema);
 export default userModel;

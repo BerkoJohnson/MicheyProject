@@ -3,23 +3,28 @@ import Election from '../interfaces/election.interface';
 import positionModel from './position.model';
 import candidateModel from './candidate.model';
 
-const electionSchema = new mongoose.Schema<Election>({
-  title: {
-    type: String,
-    unique: true,
-    uppercase: true,
-    trim: true,
-    required: true
+const electionSchema = new mongoose.Schema<Election>(
+  {
+    title: {
+      type: String,
+      unique: true,
+      uppercase: true,
+      trim: true,
+      required: true
+    },
+    school: { type: String, required: true },
+    academicYear: { type: String, required: true },
+    positions: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Position'
+      }
+    ]
   },
-  school: { type: String, required: true },
-  academicYear: { type: String, required: true },
-  positions: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Position'
-    }
-  ]
-});
+  {
+    timestamps: true
+  }
+);
 
 electionSchema.pre<Election & mongoose.Document>('remove', async function(
   next: mongoose.HookNextFunction

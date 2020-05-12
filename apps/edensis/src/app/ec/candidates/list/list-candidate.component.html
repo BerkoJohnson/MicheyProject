@@ -1,0 +1,52 @@
+<!-- <div class="action" *ngIf="!(electionService.election$ | async)">
+  <p>
+    Choose an election to see the candidates per positions for that
+    election!
+  </p>
+</div>
+<table border="1" cellspacing="10" cellpadding="5">
+  <thead>
+    <tr>
+      <th>Photo</th>
+      <th>Name</th>
+      <th>Room</th>
+      <th>Position</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngIf="(candidateService.candidates$ | async)?.length === 0">
+      <td [colSpan]="4">No Candidates Yet</td>
+    </tr>
+    <tr *ngFor="let candidate of candidateService.candidates$ | async; let i = index">
+      <td align="center" class="hasImage">
+        <img *ngIf="candidate?.photo" src="{{ 'data:image/jpg;base64,' + candidate?.photo.toString('base64') }}"
+          [alt]="candidate.name" />
+      </td>
+      <td align="center">
+        <a class="links blue" [title]="'Update ' + candidate?.name"
+          (click)="onEditCandidate(candidate)">{{ candidate.name }}</a>
+        <br>
+        <b style="display:block; margin-top: 7px; color: rgba(255,255,255,0.7);">
+          aka: {{candidate?.nickname}}
+        </b>
+      </td>
+      <td align="center">{{ candidate.room }}</td>
+      <td align="center">{{ candidate?.position.title }}</td>
+      <td align="center">
+        <a class="links red" (click)="
+                  onRemoveCandidate(candidate._id)
+                " [title]="'Remove ' + candidate?.name">Delete</a>
+      </td>
+    </tr>
+  </tbody>
+</table> -->
+
+<!-- <ul>
+  <li>
+    <a *ngFor="let candidate of candidateService.candidates$ | async; let i=index">
+      <a class="links blue" [title]="'Update ' + candidate?.name"
+        (click)="onEditCandidate(candidate)">{{ candidate.name }}</a>
+    </a>
+  </li>
+</ul> -->

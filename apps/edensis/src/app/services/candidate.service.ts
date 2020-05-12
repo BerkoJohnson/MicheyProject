@@ -1,78 +1,47 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { Candidate } from '../interfaces';
-import { tap, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { ElectionService } from './election.service';
+import ICandidate from '../models/candidate.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CandidateService {
-  private _candidate = new BehaviorSubject<Candidate>(null);
-  private _candidates = new BehaviorSubject<Candidate[]>(null);
-
-  candidate$ = this._candidate.asObservable();
-  candidates$ = this._candidates.asObservable();
-  currentElectionId: string;
-
-  constructor(
-    private http: HttpClient,
-    private electionService: ElectionService
-  ) {}
+  constructor(private http: HttpClient) {}
 
   /** Get single candidate */
-  getCandidate(candidate: string): Observable<Candidate> {
-    return this.http.get<Candidate>(`/api/v1/candidates/${candidate}`);
+  getCandidate(candidate: string): Observable<ICandidate> {
+    return this.http.get<ICandidate>(`/api/v1/candidates/${candidate}`);
   }
 
   /** Get candidates */
-  getCandidates(position: string): Observable<Candidate[]> {
-    return this.http.get<Candidate[]>(
+  getCandidates(position: string): Observable<ICandidate[]> {
+    return this.http.get<ICandidate[]>(
       `/api/v1/candidates?position=${position}`
     );
   }
 
-  private getCandidatesByElec(e: string): Observable<Candidate[]> {
-    return this.http.get<Candidate[]>(
+  getCandidatesByElec(e: string): Observable<ICandidate[]> {
+    return this.http.get<ICandidate[]>(
       `/api/v1/candidates/byelec?election=${e}`
     );
   }
 
-  loadCandidates() {
-    this.electionService.election$
-      .pipe(
-        switchMap(v => {
-          if (v === null || v === undefined) return;
-          return this.getCandidatesByElec(v._id);
-        })
-      )
-      .subscribe(cs => {
-        this._candidates.next(cs);
-      });
-  }
-
   /** Create new candidate */
-  createCandidate(
-    candidate: FormData,
-    position: string
-  ): Observable<Candidate> {
-    return this.http
-      .post<Candidate>(`/api/v1/candidates?position=${position}`, candidate)
-      .pipe(tap(c => this.loadCandidates()));
+  createCandidate(candidate: FormData): Observable<ICandidate> {
+    return this.http.post<ICandidate>(`/api/v1/candidates`, candidate);
   }
 
   /** Update candidate */
-  updateCandidate(candidate: string, update: any): Observable<Candidate> {
-    return this.http
-      .patch<Candidate>(`/api/v1/candidates/${candidate}`, update)
-      .pipe(tap(c => this.loadCandidates()));
+  updateCandidate(candidate: string, update: any): Observable<ICandidate> {
+    return this.http.patch<ICandidate>(
+      `/api/v1/candidates/${candidate}`,
+      update
+    );
   }
 
   /** Delete candidate */
-  deleteCandidate(candidate: string): Observable<Candidate> {
-    return this.http
-      .delete<Candidate>(`/api/v1/candidates/${candidate}`)
-      .pipe(tap(c => this.loadCandidates()));
+  deleteCandidate(candidate: string): Observable<ICandidate> {
+    return this.http.delete<ICandidate>(`/api/v1/candidates/${candidate}`);
   }
 }

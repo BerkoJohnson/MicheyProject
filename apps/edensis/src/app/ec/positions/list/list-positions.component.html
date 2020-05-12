@@ -1,0 +1,21 @@
+ <table>
+   <thead>
+     <th align="center">Title</th>
+     <th align="center">Candidates</th>
+   </thead>
+   <tbody>
+     <tr align="center" *ngFor="let pos of (currentElection$ | async)?.positions;">
+       <td [rowSpan]="pos?.candidates.length +1">
+         <a [routerLink]="'/ec/elections/'+ (currentElection$ |async)._id + '/view-position'">{{ pos?.title }}</a>
+       </td>
+       <ng-container>
+     <tr align="center" *ngFor="let cand of pos?.candidates">
+       <td>
+         <a
+           [routerLink]="'/ec/elections/'+ (currentElection$ |async)._id + '/view-candidate/' + cand._id">{{cand.name }}</a>
+       </td>
+     </tr>
+     </ng-container>
+     </tr>
+   </tbody>
+ </table>

@@ -1,0 +1,85 @@
+@import '../../../../csss/colors';
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.columns {
+  display: flex;
+}
+
+// 
+.main-header {
+  margin: 0;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 10px;
+  color: $primary_color;
+  background-color: rgba(#000, 0.1);
+  border-bottom: 1px solid $primary_color;
+}
+
+// 
+.sub-details {
+  padding: 10px;
+}
+
+// 
+.sub-header {
+  display: flex;
+  padding: 3px;
+
+
+  span {
+    color: darken($color: $primary_color, $amount: 10);
+    font-size: 1rem;
+  }
+
+  b {
+    text-transform: uppercase;
+    text-align: center;
+    color: white;
+    padding-left: 10px;
+  }
+}
+
+.links {
+  margin-top: 20px;
+
+  a {
+    text-decoration: none;
+    padding: 10px 16px;
+    background-color: $primary_color;
+    color: white;
+
+    &:hover {
+      background-color: darken($color: $primary_color, $amount: 3);
+    }
+  }
+
+  .blue {
+    background-color: blue;
+    color: white;
+
+
+    &:hover {
+      background-color: darken($color: blue, $amount: 3);
+    }
+  }
+
+  .green {
+    background-color: green;
+    color: white;
+
+
+    &:hover {
+      background-color: darken($color: green, $amount: 3);
+    }
+  }
+}
+
+.addPadding {
+  padding: 10px;
+}

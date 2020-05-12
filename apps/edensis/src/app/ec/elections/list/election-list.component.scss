@@ -1,0 +1,56 @@
+@import '../../../../csss/colors';
+
+
+
+:host {
+  display: block;
+}
+
+ul {
+  list-style-type: disc;
+
+  a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+  }
+}
+
+.item a {
+  color: white;
+}
+
+.links {
+  margin-top: 20px;
+
+  a {
+    text-decoration: none;
+    padding: 10px 16px;
+    background-color: $primary_color;
+    color: white;
+
+    &:hover {
+      background-color: darken($color: $primary_color, $amount: 3);
+    }
+  }
+
+  .blue {
+    background-color: blue;
+    color: white;
+
+
+    &:hover {
+      background-color: darken($color: blue, $amount: 3);
+    }
+  }
+
+  .green {
+    background-color: green;
+    color: white;
+
+
+    &:hover {
+      background-color: darken($color: green, $amount: 3);
+    }
+  }
+}

@@ -1,0 +1,38 @@
+<h2 class="main-header">{{ (currentElection$ | async)?.title }}</h2>
+<div class="columns">
+  <div class="first-column">
+    <div class="sub-details">
+      <div class="sub-header">
+        <span>School:</span>
+        <b>{{ (currentElection$ | async)?.school }}</b>
+      </div>
+      <div class="sub-header">
+        <span>Academic Year:</span>
+        <b>{{ (currentElection$ | async)?.academicYear }}</b>
+      </div>
+      <div class="sub-header">
+        <span>Created On:</span>
+        <b>{{ (currentElection$ | async)?.createdAt | date: 'mediumDate' }}</b>
+      </div>
+      <div class="sub-header">
+        <span>Last Updated: </span>
+        <b>{{ (currentElection$ | async)?.updatedAt | date: 'mediumDate' }}</b>
+      </div>
+      <div class="links">
+        <a class="blue" [routerLink]="'/ec/elections/' + (currentElection$ | async)?._id + '/edit-election'">Update
+          Election</a> |
+        <a [routerLink]="'/ec/elections/' + (currentElection$ | async)?._id + '/add-position'">Add New Position</a>
+        | <a class="green" [routerLink]="'/ec/elections/' + (currentElection$ | async)?._id + '/add-candidate'">Add New
+          Candidate</a>
+      </div>
+    </div>
+
+    <div class="addPadding">
+      <h4>Positions Assigned</h4>
+      <list-positions></list-positions>
+    </div>
+  </div>
+  <div class="last-column addPadding" style="padding: 20px;">
+    <router-outlet></router-outlet>
+  </div>
+</div>

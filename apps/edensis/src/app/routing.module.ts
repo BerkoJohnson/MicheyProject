@@ -17,9 +17,9 @@ const ROUTES: Routes = [
         component: DashboardComponent
       },
       {
-        path: 'elections',
+        path: 'ec',
         loadChildren: () =>
-          import('./setup/elections.module').then(mod => mod.ElectionsModule)
+          import('./ec/elections.module').then(mod => mod.ElectionsModule)
       }
     ]
   },

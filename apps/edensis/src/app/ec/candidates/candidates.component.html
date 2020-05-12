@@ -1,0 +1,7 @@
+<div class="first-column">
+  <list-candidates (editCandidate)="onEditCandidate($event)" (removeCandidate)="onRemoveCandidate($event)"
+    (selectCandidate)="onViewCandidate($event)"></list-candidates>
+</div>
+<div class="last-column">
+  <router-outlet></router-outlet>
+</div>

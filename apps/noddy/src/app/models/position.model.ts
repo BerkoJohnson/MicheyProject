@@ -5,26 +5,31 @@ import electionModel from './election.model';
 
 interface IPosition extends mongoose.Document {}
 
-const positionSchema = new mongoose.Schema<Position>({
-  title: {
-    type: String,
-    unique: true,
-    uppercase: true,
-    trim: true,
-    required: true
-  },
-  election: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Election',
-    required: true
-  },
-  candidates: [
-    {
+const positionSchema = new mongoose.Schema<Position>(
+  {
+    title: {
+      type: String,
+      unique: true,
+      uppercase: true,
+      trim: true,
+      required: true
+    },
+    election: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Candidate'
-    }
-  ]
-});
+      ref: 'Election',
+      required: true
+    },
+    candidates: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Candidate'
+      }
+    ]
+  },
+  {
+    timestamps: true
+  }
+);
 
 positionSchema.pre<Position & mongoose.Document>('remove', async function(
   next: mongoose.HookNextFunction

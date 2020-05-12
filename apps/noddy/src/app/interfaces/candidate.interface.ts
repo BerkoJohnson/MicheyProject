@@ -8,6 +8,9 @@ interface Candidate {
   position: string;
   election?: string;
   photo: Buffer;
+
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export default Candidate;

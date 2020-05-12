@@ -4,6 +4,8 @@ interface Election {
   school: string;
   academicYear: string;
   positions: string[];
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export default Election;

@@ -14,6 +14,7 @@ import CandidateDto from '../dtos/candidate.dto';
 import candidateModel from '../models/candidate.model';
 import DuplicateItemException from '../exceptions/DuplicateItemException';
 import upload from '../middleware/multer.middleware';
+import Candidate from '../interfaces/candidate.interface';
 
 class CandidateController implements Controller {
   public path = '/candidates';
@@ -140,7 +141,20 @@ class CandidateController implements Controller {
       if (!candidateInDB) {
         return next(new ResourceNotFoundException(candidate, 'Candidate'));
       }
-      res.json(candidateInDB);
+      const candidateDetail = {
+        _id: candidateInDB._id,
+        name: candidateInDB.name,
+        nickname: candidateInDB.nickname,
+        dob: candidateInDB.dob,
+        gender: candidateInDB.gender,
+        photo: candidateInDB.photo.toString('base64'),
+        room: candidateInDB.room,
+        position: candidateInDB.position,
+        election: candidateInDB.election,
+        createdAt: candidateInDB.createdAt,
+        updatedAt: candidateInDB.updatedAt
+      };
+      res.json(candidateDetail);
     } catch (error) {
       if (error.name === 'CastError') {
         return next(new CastErrorException('Candidate', error));
@@ -251,7 +265,7 @@ class CandidateController implements Controller {
     next: express.NextFunction
   ) => {
     try {
-      const { position } = req.query;
+      const { position } = req.body;
 
       if (!position || !req.file) {
         return next(new InvalidRequestException());

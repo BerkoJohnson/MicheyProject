@@ -4,6 +4,7 @@ import { Election } from '../interfaces';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { BROWSER_STORAGE } from '../interfaces/storage';
+import IElection from '../models/election.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,24 +28,20 @@ export class ElectionService {
   /////////////////////// ELECTION START HERE /////////////////////////
 
   /** Get single election */
-  getElection(elec: string): Observable<Election> {
+  getElection(elec: string): Observable<IElection> {
     return this.http
-      .get<Election>(`/api/v1/elections/${elec}`)
+      .get<IElection>(`/api/v1/elections/${elec}`)
       .pipe(tap(el => this._election.next(el)));
   }
 
   /** Get elections */
-  getElections(): Observable<Election[]> {
-    return this.http
-      .get<Election[]>(`/api/v1/elections/`)
-      .pipe(tap(e => this._elections.next(e)));
+  getElections(): Observable<IElection[]> {
+    return this.http.get<IElection[]>(`/api/v1/elections/`);
   }
 
   /** Create new election */
-  createElection(elec: Election): Observable<Election | boolean> {
-    return this.http
-      .post<Election>('/api/v1/elections/', elec)
-      .pipe(tap(_ => this.getElections().subscribe()));
+  createElection(elec: IElection): Observable<IElection> {
+    return this.http.post<IElection>('/api/v1/elections/', elec);
   }
 
   /** Update election */

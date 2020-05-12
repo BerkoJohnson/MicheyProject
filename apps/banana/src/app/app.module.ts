@@ -1,20 +1,34 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
-import { BananasComponent } from './bananas/bananas.component';
+import { StoreModule } from '@ngrx/store';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { AppComponent } from './app.component';
+import { ToDoReducer } from './todo.reducer';
+import { ToDoComponent } from './ToDo/to-do.component';
+import { ToDoService } from './todo.service';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { ToDoEffect } from './todo.effect';
+import { environment } from '../environments/environment.prod';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    BananasComponent
-  ],
+  declarations: [AppComponent, ToDoComponent],
   imports: [
     BrowserModule,
-    RouterModule.forRoot([], {initialNavigation: 'enabled'})
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    RouterModule.forRoot([], { initialNavigation: 'enabled' }),
+    StoreModule.forRoot({ todos: ToDoReducer }),
+    EffectsModule.forRoot([ToDoEffect]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production
+    })
   ],
-  providers: [],
+  providers: [ToDoService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
