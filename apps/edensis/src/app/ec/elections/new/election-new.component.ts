@@ -11,6 +11,8 @@ import { Store } from '@ngrx/store';
 import { ElectionState } from '../../store/election.reducer';
 import { addElection } from '../../store/election.actions';
 import IElection from '../../../models/election.model';
+import { ValidationMessage } from '../../../interfaces/validation-messages';
+import { electionValidation } from '../../validations/election.validation';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -20,16 +22,38 @@ import IElection from '../../../models/election.model';
 })
 export class NewElectionComponent implements OnInit, OnDestroy {
   electionForm: FormGroup;
+  validationMessages: ValidationMessage;
+
   @Output() submitElection = new EventEmitter<Election>();
 
   constructor(private fb: FormBuilder, private store: Store<ElectionState>) {
     this.electionForm = this.fb.group({
-      title: ['', Validators.required],
-      school: ['', Validators.required],
-      academicYear: ['', Validators.required]
+      title: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(/^[a-zA-Z0-9 ]+$/)
+        ])
+      ],
+      school: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(/^[a-zA-Z ]+$/)
+        ])
+      ],
+      academicYear: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(/20[0-9]{2}\/20[0-9]{2}/)
+        ])
+      ]
     });
   }
-  ngOnInit() {}
+  ngOnInit() {
+    this.validationMessages = electionValidation;
+  }
   ngOnDestroy() {}
 
   submitForm() {

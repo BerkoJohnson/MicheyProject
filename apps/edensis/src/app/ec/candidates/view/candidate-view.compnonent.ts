@@ -1,14 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import ICandidate from '../../../models/candidate.model';
 import { Store } from '@ngrx/store';
 import { ElectionState } from '../../store/election.reducer';
 import { loadCandidate } from '../../store/election.actions';
-import {
-  CurrentCandidate,
-  selectedElection
-} from '../../store/election.selector';
-import { ActivatedRoute } from '@angular/router';
+import { selectedElection } from '../../store/election.selector';
+import { Router } from '@angular/router';
 import IElection from '../../../models/election.model';
 
 @Component({
@@ -18,23 +15,31 @@ import IElection from '../../../models/election.model';
   styleUrls: ['./candidate-view.compnonent.scss']
 })
 export class ViewCandidateComponent implements OnInit {
-  currentCandidate$: Observable<ICandidate>;
+  @Input() candidate: ICandidate;
+  // currentCandidate$: Observable<ICandidate>;
   currentElection$: Observable<IElection>;
-  constructor(
-    private store: Store<ElectionState>,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private store: Store<ElectionState>, private router: Router) {}
 
   ngOnInit() {
-    this.route.params.subscribe(p =>
-      this.store.dispatch(loadCandidate({ candidate: p['cid'] }))
-    );
-
-    this.currentCandidate$ = this.store.select(CurrentCandidate);
     this.currentElection$ = this.store.select(selectedElection);
   }
 
   createImageLink(photo: string) {
     return `data:image/jpg;base64,${photo}`;
+  }
+
+  setCurrentCandidate(candidate: string) {
+    this.store.dispatch(loadCandidate({ candidate }));
+  }
+
+  goto(candidate: string, link: string) {
+    this.store.dispatch(loadCandidate({ candidate }));
+    setTimeout(() => {
+      let url = '/ec/elections/';
+      this.currentElection$.subscribe(el => (url += el._id));
+      url += link;
+
+      this.router.navigateByUrl(url);
+    }, 100);
   }
 }

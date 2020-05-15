@@ -3,6 +3,7 @@
 :host {
   display: block;
   width: 100%;
+
 }
 
 .columns {
@@ -30,6 +31,7 @@
 .sub-header {
   display: flex;
   padding: 3px;
+  color: rgba(#fff, 0.7);
 
 
   span {
@@ -40,7 +42,6 @@
   b {
     text-transform: uppercase;
     text-align: center;
-    color: white;
     padding-left: 10px;
   }
 }

@@ -4,7 +4,11 @@ import IElection from '../../../models/election.model';
 import { Store } from '@ngrx/store';
 import { ElectionState } from '../../store/election.reducer';
 import { selectedElection } from '../../store/election.selector';
-import { loadCandidate } from '../../store/election.actions';
+import {
+  loadCandidate,
+  setCurrentPosition
+} from '../../store/election.actions';
+import IPosition from '../../../models/position.model';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -23,4 +27,8 @@ export class ListPositionsComponent implements OnInit {
   // loadCandidate(id: string) {
   //   this.store.dispatch(loadCandidate({ candidate: id }));
   // }
+
+  setCurrentPosition(pos: IPosition) {
+    this.store.dispatch(setCurrentPosition({ position: pos }));
+  }
 }

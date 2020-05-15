@@ -3,6 +3,7 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import * as ElectionActions from './election.actions';
 import IElection from '../../models/election.model';
 import ICandidate from '../../models/candidate.model';
+import IPosition from '../../models/position.model';
 
 export const electionsFeatureKey = 'elections';
 
@@ -10,8 +11,11 @@ export interface ElectionState extends EntityState<IElection> {
   // additional entities state properties
   error: any;
   selectedElection: IElection;
+  positions: IPosition[];
+  candidates: ICandidate[];
   useElection: IElection;
   currentCandidate: ICandidate;
+  currentPosition: IPosition;
 }
 
 export const adapter: EntityAdapter<IElection> = createEntityAdapter<IElection>(
@@ -25,7 +29,10 @@ export const initialState: ElectionState = adapter.getInitialState({
   error: undefined,
   selectedElection: undefined,
   useElection: undefined,
-  currentCandidate: undefined
+  currentCandidate: undefined,
+  currentPosition: undefined,
+  candidates: undefined,
+  positions: undefined
 });
 
 export const reducer = createReducer(
@@ -56,9 +63,9 @@ export const reducer = createReducer(
   }),
 
   // Loading Elections
-  on(ElectionActions.loadElectionsSuccess, (state, action) =>
-    adapter.setAll(action.elections, state)
-  ),
+  on(ElectionActions.loadElectionsSuccess, (state, action) => {
+    return adapter.setAll(action.elections, state);
+  }),
 
   on(ElectionActions.loadElectionsFailure, (state, action) => {
     return {
@@ -100,6 +107,13 @@ export const reducer = createReducer(
     return {
       ...state,
       useElection: action.election
+    };
+  }),
+
+  on(ElectionActions.setCurrentPosition, (state, action) => {
+    return {
+      ...state,
+      currentPosition: action.position
     };
   }),
 

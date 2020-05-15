@@ -24,3 +24,8 @@ export const CurrentCandidate = createSelector(
   selectElectionState,
   (state: ElectionState) => state.currentCandidate
 );
+
+export const CurrentPosition = createSelector(
+  selectElectionState,
+  (state: ElectionState) => state.currentPosition
+);

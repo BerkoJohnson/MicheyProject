@@ -1,32 +1,28 @@
-fieldset {
-  border: none;
-  background-color: $secondary_color;
-  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.5);
-  padding: 10px;
-  border-radius: 5px;
+form {
+  display: block;
+  background-color: rgba(white, 0.8);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+
+  .title {
+    margin: 0;
+    color: #444;
+    text-align: center;
+    padding: 10px;
+    background-color: rgba($primary_color, 1);
+  }
+
+  .body {
+    padding: 6px;
+  }
 }
 
-legend {
-  background-color: $secondary_color;
-  color: darken($secondary_color, 30%);
-  text-transform: uppercase;
-  font-size: 0.8rem;
-  font-weight: bold;
-  border-radius: 5px;
-  line-height: 1.7rem;
-  padding: 4px 16px;
-  z-index: -1;
-  position: relative;
-  top: -10px;
-  left: 0;
-  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.5);
-}
+
 
 .field {
   display: flex;
   justify-content: flex-start;
-  align-items: center;
-  margin: 3px 0;
+  align-items: flex-start;
+  margin: 2px 0;
 
   &:first-of-type {
     margin-top: 0;
@@ -37,29 +33,40 @@ legend {
   }
 }
 
-.field label {
-  text-transform: uppercase;
-  font-size: 0.8rem;
-  font-weight: bold;
-  width: 40%;
-  text-align: right;
-  margin-left: -10px;
-  margin-right: 10px;
-  color: darken($secondary_color, 30%);
-}
-
+.field label,
 .field input[type="text"],
 .field input[type="date"],
 .field input[type="email"],
 .field input[type="password"],
+.field input[type="file"],
 .field select {
-  border: 1px solid #333;
-  width: 60%;
-  padding: 5px 10px;
+  font-size: 0.72rem;
+  color: rgba($primary_color, 0.85);
+  padding: 3px 6px;
 }
 
-.field input[type="file"] {
-  width: 60%;
+.field .label {
+  text-transform: uppercase;
+  font-weight: bold;
+  flex-basis: 40%;
+  text-align: right;
+  margin-left: -10px;
+  margin-right: 10px;
+}
+
+.field .input {
+  flex-basis: 60%;
+}
+
+.input input[type="text"],
+.input input[type="date"],
+.input input[type="email"],
+.input input[type="password"],
+.input input[type="file"],
+.input select {
+  border: 1px solid rgba($primary_color, 0.28);
+  width: 100%;
+  font-weight: bold;
 }
 
 input[type="submit"],
@@ -73,8 +80,8 @@ button,
   border-radius: 3px;
   transition: all 0.2s;
   outline: none;
-  color: black;
-  margin-top: 10px;
+  color: #444;
+  margin-top: 5px;
 
   &:disabled {
     background-color: #777;
@@ -85,7 +92,7 @@ button,
   }
 
   &.primary {
-    background: $complement;
+    background: invert($color: $primary_color);
 
     &:disabled {
       background-color: #777;
@@ -100,18 +107,18 @@ button,
 
 // Validation
 
-.field input[type="text"],
-.field input[type="date"],
-.field input[type="email"],
-.field input[type="password"],
-.field select {
+.input input[type="text"],
+.input input[type="date"],
+.input input[type="email"],
+.input input[type="password"],
+.input select {
   &.invalid {
-    background-color: lightcoral;
+    background-color: rgba(red, 0.15);
     border: 1px solid red;
   }
 
   &.valid {
-    background-color: lightgreen;
+    background-color: rgba(green, 0.15);
     border: 1px solid green;
   }
 }
@@ -125,8 +132,8 @@ button,
 
 // Image settings
 #candidate_photo {
-  width: 180px;
-  height: 180px;
+  width: 150px;
+  height: 150px;
   border: 2px solid darken($primary_color, 30%);
   margin: 5px 0;
   border-radius: 10px;
@@ -175,5 +182,27 @@ button,
 
   &.success {
     background-color: green;
+  }
+}
+
+
+.validation {
+  color: #333;
+  font-size: 0.6rem;
+  font-weight: bold;
+  // line-height: 14px;
+  // padding: 2px 0;
+  text-transform: uppercase;
+
+  &.danger {
+    color: red;
+  }
+
+  &.info {
+    color: goldenrod;
+  }
+
+  &.success {
+    color: green;
   }
 }

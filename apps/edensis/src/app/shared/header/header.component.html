@@ -1,13 +1,8 @@
 <div class="logo">
   <a routerLink="/">Edensis</a>
 </div>
-<div class="nav-links">
-  <!-- <a class="nav-link" routerLink='/' [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact: true}">Home</a> -->
-
-</div>
+<div class="nav-links"></div>
 <div class="user-tools">
-  <a class="nav-link" *ngIf="!auth.isLoggedIn()" routerLink='/login' [routerLinkActive]="'active'"
-    [routerLinkActiveOptions]="{exact: true}">Login</a>
   <a>
     <img width="40" height="40" *ngIf="auth?.image" src="{{'data:image/jpg;base64,' + auth?.image}}">
 

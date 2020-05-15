@@ -1,0 +1,20 @@
+.action_buttons {
+  font-size: 0.6rem;
+  font-weight: bold;
+
+  .blue {
+    color: blue;
+
+    &:hover {
+      color: darken($color: blue, $amount: 7);
+    }
+  }
+
+  .green {
+    color: green;
+
+    &:hover {
+      color: darken($color: green, $amount: 7);
+    }
+  }
+}

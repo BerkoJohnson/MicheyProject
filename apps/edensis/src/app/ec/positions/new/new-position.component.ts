@@ -8,6 +8,9 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import IElection from '../../../models/election.model';
 import IPosition from '../../../models/position.model';
+import { electionValidation } from '../../validations/election.validation';
+import { ValidationMessage } from '../../../interfaces/validation-messages';
+import { PositionValidation } from '../../validations/position.validation';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -18,14 +21,22 @@ import IPosition from '../../../models/position.model';
 export class NewPositionComponent implements OnInit {
   positionForm: FormGroup;
   currentElection$: Observable<IElection>;
+  validationMessages: ValidationMessage;
 
   constructor(private fb: FormBuilder, private store: Store<ElectionState>) {
     this.positionForm = this.fb.group({
-      title: ['', [Validators.required]]
+      title: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(/^[a-zA-Z ]+$/)
+        ])
+      ]
     });
   }
   ngOnInit() {
     this.currentElection$ = this.store.select(selectedElection);
+    this.validationMessages = PositionValidation;
   }
 
   submitForm(election: string) {

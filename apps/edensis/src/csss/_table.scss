@@ -16,6 +16,10 @@ table {
     margin-top: 0;
   }
 
+  a {
+    color: white;
+  }
+
   th {
     background-color: $secondary_color;
     color: darken($secondary_color, 30%);

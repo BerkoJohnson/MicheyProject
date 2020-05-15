@@ -1,18 +1,14 @@
-<div *ngIf="currentCandidate$ | async as c">
-  <div class="detail"><img [src]="createImageLink(c.photo)" [alt]="'Image of ' + c.name">
-    <div class="name">
-      <h3>{{c.name}}</h3>
-      <h5>aka. {{c.nickname}}</h5>
-    </div>
+<img [src]="createImageLink(candidate.photo)" [alt]="'Image of ' + candidate.name">
+<div>
+  <p>{{candidate.name}}</p>
+  <small style="display: block;">
+    {{ candidate.nickname}} | {{candidate.gender}}
+  </small>
+  <small style="display: block;">
+    {{candidate.dob | date: 'fullDate'}}
+  </small>
+  <div class="action_buttons" (click)="setCurrentCandidate(candidate._id)">
+    <a class="blue" (click)="goto(candidate._id,'/edit-candidate')">Update</a> <a class="red"
+      (click)="goto(candidate._id,'/remove-candidate')">Remove</a>
   </div>
-  <hr>
-
-  <p>Born
-    <span class="underline">{{c.gender}}</span> on
-    <span class="underline">
-      {{c.dob | date:'fullDate'}}
-    </span></p>
-
-  <a [routerLink]="'/ec/elections/'+ (currentElection$ |async)._id + '/edit-candidate/' + c._id">Update Candidate
-  </a>
 </div>

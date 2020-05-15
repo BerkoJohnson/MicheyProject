@@ -1,27 +1,30 @@
+@import "../../../csss/colors";
+
 :host {
   display: flex;
   padding: 20px;
   justify-content: space-between;
   background-color: #111;
 
-  a {
-    color: white;
-    text-decoration: none;
-    padding: 3px 5px;
+  .logo {
+    a {
+      color: invert($color: $primary_color);
+      text-decoration: none;
+      padding: 3px 5px;
+
+    }
   }
 }
 
 // Logout Button Settings
 .logout {
-  border: 1px solid red;
-  background-color: red;
   color: white;
   text-transform: uppercase;
+  background-color: rgba($color: red, $alpha: 0.73);
   cursor: pointer;
+  padding: 7px 10px;
 
   &:hover {
-    color: red;
-    background-color: white;
-    border-color: red;
+    background-color: darken(red, 10);
   }
 }

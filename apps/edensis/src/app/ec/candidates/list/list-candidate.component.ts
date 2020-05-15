@@ -1,6 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { CandidateService, ElectionService } from '../../../services';
-import { Candidate } from '../../../interfaces';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import ICandidate from '../../../models/candidate.model';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -9,26 +8,9 @@ import { Candidate } from '../../../interfaces';
   styleUrls: ['./list-candidate.component.scss']
 })
 export class ListCandidateComponent implements OnInit {
-  @Output() selectCandidate = new EventEmitter<Candidate>();
-  @Output() removeCandidate = new EventEmitter<string>();
-  @Output() editCandidate = new EventEmitter<Candidate>();
+  @Input() candidates: ICandidate[];
 
-  constructor(
-    public candidateService: CandidateService,
-    public electionService: ElectionService
-  ) {}
+  constructor() {}
 
   ngOnInit() {}
-
-  onSelectedCandidate(candidate: Candidate) {
-    this.selectCandidate.emit(candidate);
-  }
-
-  onRemoveCandidate(candidateId: string) {
-    this.removeCandidate.emit(candidateId);
-  }
-
-  onEditCandidate(candidate: Candidate) {
-    this.editCandidate.emit(candidate);
-  }
 }

@@ -53,7 +53,7 @@ const routes: Routes = [
                 component: EditPositionComponent
               },
               {
-                path: 'view-position/:pid',
+                path: 'view-position',
                 component: ViewPositionComponent
               },
               ///Candidate ROutes
@@ -62,11 +62,11 @@ const routes: Routes = [
                 component: NewCandidateComponent
               },
               {
-                path: 'edit-candidate/:cid',
+                path: 'edit-candidate',
                 component: EditCandidateComponent
               },
               {
-                path: 'view-candidate/:cid',
+                path: 'view-candidate',
                 component: ViewCandidateComponent
               },
 

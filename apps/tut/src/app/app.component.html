@@ -1,2 +1,34 @@
-<h1>Welcome Oh!</h1>
-<my-web-space-users></my-web-space-users>
+<form [formGroup]="form">
+  <p formGroupName="name">
+    <label for="firstName">First Name</label>
+    <input type="text" name="firstName" id="firstName" formControlName="firstName">
+    <br>
+    <label for="lastName">Last Name</label>
+    <input type="text" name="lastName" id="lastName" formControlName="lastName">
+
+  </p>
+  <p>
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email" formControlName="email">
+  </p>
+  <p>
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" formControlName="password">
+  </p>
+
+  <p>
+    <label for="language">Language</label>
+    <select name="language" id="language" formControlName="language">
+      <option value="">Select Language</option>
+      <option value="Twi">Twi</option>
+      <option value="English">English</option>
+    </select>
+  </p>
+  <p>
+    <button type="submit">Submit</button>
+  </p>
+
+  <pre>
+    {{form.value |json}}
+  </pre>
+</form>

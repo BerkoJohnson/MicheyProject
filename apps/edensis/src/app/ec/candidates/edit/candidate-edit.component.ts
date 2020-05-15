@@ -12,6 +12,8 @@ import {
   CurrentCandidate,
   selectedElection
 } from '../../store/election.selector';
+import { ValidationMessage } from '../../../interfaces/validation-messages';
+import { CandidateValidation } from '../../validations/candidate.validation';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -27,6 +29,8 @@ export class EditCandidateComponent implements OnInit {
   errors: string;
   info: string;
   form: FormGroup;
+
+  validationMessages: ValidationMessage;
   isChangedPosition = false;
 
   currentCandidate$: Observable<ICandidate>;
@@ -41,37 +45,51 @@ export class EditCandidateComponent implements OnInit {
   ) {
     this.form = this.fb.group({
       room: ['', [Validators.required]],
-      name: ['', [Validators.required]],
+      name: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(/^[a-zA-Z ]+$/)
+        ])
+      ],
       dob: ['', [Validators.required]],
       gender: ['', [Validators.required]],
-      nickname: ['', [Validators.required]],
+      nickname: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(/^[a-zA-Z0-9 ]+$/)
+        ])
+      ],
       position: ['', [Validators.required]],
-      photo: [null, [Validators.required]]
+      photo: [null]
     });
   }
 
   ngOnInit() {
-    this.route.params.subscribe(p =>
-      this.store.dispatch(loadCandidate({ candidate: p['cid'] }))
-    );
     this.currentElection$ = this.store.select(selectedElection);
 
     this.currentCandidate$ = this.store.select(CurrentCandidate);
     this.buildUpdateForm();
+    this.validationMessages = CandidateValidation;
   }
 
   buildUpdateForm() {
     this.currentCandidate$.subscribe(c => {
-      this.form = this.fb.group({
-        room: [c.room, [Validators.required]],
-        name: [c.name, [Validators.required]],
-        dob: [c.dob, [Validators.required]],
-        gender: [c.gender, [Validators.required]],
-        nickname: [c.nickname, [Validators.required]],
-        position: [{ value: null, disabled: true }, [Validators.required]],
-        photo: [null, [Validators.required]]
+      this.form.patchValue({
+        room: c?.room || null,
+        name: c?.name || null,
+        dob: c?.dob || null,
+        gender: c?.gender || null,
+        nickname: c?.nickname || null,
+        position: c?.position || null,
+        photo: null
       });
-      this.imageUrl = `data:image/jpg;base64,${c.photo}`;
+      this.imageUrl = `data:image/jpg;base64,${c?.photo}`;
+      this.form.get('position').disable({
+        onlySelf: true,
+        emitEvent: true
+      });
     });
   }
 
@@ -80,11 +98,11 @@ export class EditCandidateComponent implements OnInit {
       this.errors = 'All fields are required.';
     } else {
       const formData = new FormData();
-      formData.append('name', this.form.get('name').value);
-      formData.append('room', this.form.get('room').value);
-      formData.append('dob', this.form.get('dob').value);
-      formData.append('gender', this.form.get('gender').value);
-      formData.append('nickname', this.form.get('nickname').value);
+      formData.append('name', this.name.value);
+      formData.append('room', this.room.value);
+      formData.append('dob', this.dob.value);
+      formData.append('gender', this.gender.value);
+      formData.append('nickname', this.nickname.value);
       formData.append('photo', this.image);
 
       if (this.isChangedPosition !== false) {
@@ -93,14 +111,6 @@ export class EditCandidateComponent implements OnInit {
         // submit update data
       }
     }
-  }
-
-  get position() {
-    return this.form.get('position');
-  }
-
-  get photo() {
-    return this.form.get('photo');
   }
 
   previewImage(event: Event) {
@@ -140,5 +150,27 @@ export class EditCandidateComponent implements OnInit {
 
   onAddNewCandidate() {
     // this.addNewCandidate.emit();
+  }
+
+  get name() {
+    return this.form.get('name');
+  }
+  get room() {
+    return this.form.get('room');
+  }
+  get nickname() {
+    return this.form.get('nickname');
+  }
+  get position() {
+    return this.form.get('position');
+  }
+  get photo() {
+    return this.form.get('photo');
+  }
+  get gender() {
+    return this.form.get('gender');
+  }
+  get dob() {
+    return this.form.get('dob');
   }
 }

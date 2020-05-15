@@ -2,7 +2,7 @@
 
 :host {
   padding: 20px;
-  background-color: $dark_complement;
+  background-color: invert($color: $primary_color);
   flex-basis: 20%;
 }
 
@@ -36,7 +36,7 @@ ul.sidebar_nav {
     }
 
     &.active {
-      color: $complement;
+      text-decoration: underline;
     }
 
   }

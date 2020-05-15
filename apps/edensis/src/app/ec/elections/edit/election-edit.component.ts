@@ -10,6 +10,8 @@ import { Store } from '@ngrx/store';
 import { ElectionState } from '../../store/election.reducer';
 import { addElection } from '../../store/election.actions';
 import IElection from '../../../models/election.model';
+import { electionValidation } from '../../validations/election.validation';
+import { ValidationMessage } from '../../../interfaces/validation-messages';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -19,15 +21,36 @@ import IElection from '../../../models/election.model';
 })
 export class EditElectionComponent implements OnInit, OnDestroy {
   electionForm: FormGroup;
+  validationMessages: ValidationMessage;
 
   constructor(private fb: FormBuilder, private store: Store<ElectionState>) {
     this.electionForm = this.fb.group({
-      title: ['', Validators.required],
-      school: ['', Validators.required],
-      academicYear: ['', Validators.required]
+      title: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(/^[a-zA-Z0-9 ]+$/)
+        ])
+      ],
+      school: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(/^[a-zA-Z ]+$/)
+        ])
+      ],
+      academicYear: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(/20[0-9]{2}\/20[0-9]{2}/)
+        ])
+      ]
     });
   }
-  ngOnInit() {}
+  ngOnInit() {
+    this.validationMessages = electionValidation;
+  }
   ngOnDestroy() {}
 
   submitForm() {

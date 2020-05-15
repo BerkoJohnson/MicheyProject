@@ -1,12 +1,23 @@
  <form [formGroup]="positionForm" (ngSubmit)="submitForm(election._id)" *ngIf="currentElection$ | async as election">
-   <fieldset>
-     <legend>Add New Position</legend>
+   <h4 class="title">Add New Position</h4>
+   <div class="body">
      <div class="fields">
        <div class="field">
-         <label for="title">Position's Title</label>
-         <input type="text" name="title" id="title" placeholder="Enter title" formControlName="title" />
+         <label class="label" for="title">Position's Title</label>
+         <div class="input">
+           <input type="text" name="title" id="title" placeholder="Enter title" formControlName="title" [ngClass]="{
+           invalid: (title.dirty || title.touched) && title.invalid,
+           valid: (title.dirty || title.touched) && title.valid
+           }" />
+           <div *ngIf="title.dirty || title.touched">
+             <div class="validation danger" *ngFor="let validation of validationMessages.title">
+               <small *ngIf="title.hasError(validation.type)">{{validation.message}}</small>
+             </div>
+           </div>
+         </div>
        </div>
      </div>
      <input type="submit" class="primary" value="Save Position" name="submit" [disabled]="positionForm.invalid" />
-   </fieldset>
+   </div>
+
  </form>

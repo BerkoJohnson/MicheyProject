@@ -1,21 +1,25 @@
  <table>
    <thead>
      <th align="center">Title</th>
-     <th align="center">Candidates</th>
+     <th align="center">Candidates Assigned</th>
+     <th align="center">Actions</th>
    </thead>
    <tbody>
-     <tr align="center" *ngFor="let pos of (currentElection$ | async)?.positions;">
-       <td [rowSpan]="pos?.candidates.length +1">
-         <a [routerLink]="'/ec/elections/'+ (currentElection$ |async)._id + '/view-position'">{{ pos?.title }}</a>
-       </td>
-       <ng-container>
-     <tr align="center" *ngFor="let cand of pos?.candidates">
+     <tr align="center" *ngFor="let pos of (currentElection$ | async)?.positions;" (click)="setCurrentPosition(pos)">
        <td>
-         <a
-           [routerLink]="'/ec/elections/'+ (currentElection$ |async)._id + '/view-candidate/' + cand._id">{{cand.name }}</a>
+         {{ pos?.title }}
        </td>
-     </tr>
-     </ng-container>
+       <td align="center">
+         {{pos?.candidates.length}}
+       </td>
+       <td>
+         <div class="action_buttons">
+           <a class="blue" [routerLink]="'/ec/elections/'+ (currentElection$ |async)._id + '/add-candidate'">Add
+             Candidate</a> |
+           <a class="green" [routerLink]="'/ec/elections/'+ (currentElection$ |async)._id + '/view-position/'">View
+             Position</a>
+         </div>
+       </td>
      </tr>
    </tbody>
  </table>

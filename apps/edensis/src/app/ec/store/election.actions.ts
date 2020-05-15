@@ -86,6 +86,12 @@ export const setCurrentElection = createAction(
   props<{ election: IElection }>()
 );
 
+// Set Current Position
+export const setCurrentPosition = createAction(
+  '[List Position Component] Set current position',
+  props<{ position: IPosition }>()
+);
+
 /// Load Candidate
 export const loadCandidate = createAction(
   '[Candidate View] Load Candidate',
