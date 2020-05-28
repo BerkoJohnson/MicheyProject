@@ -8,11 +8,11 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Election } from '../../../interfaces';
 import { Store } from '@ngrx/store';
-import { ElectionState } from '../../store/election.reducer';
-import { addElection } from '../../store/election.actions';
 import IElection from '../../../models/election.model';
 import { ValidationMessage } from '../../../interfaces/validation-messages';
 import { electionValidation } from '../../validations/election.validation';
+import { addElection } from '../../../store/actions/election.actions';
+import { Location } from '@angular/common';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -26,7 +26,11 @@ export class NewElectionComponent implements OnInit, OnDestroy {
 
   @Output() submitElection = new EventEmitter<Election>();
 
-  constructor(private fb: FormBuilder, private store: Store<ElectionState>) {
+  constructor(
+    private fb: FormBuilder,
+    private store: Store<any>,
+    private location: Location
+  ) {
     this.electionForm = this.fb.group({
       title: [
         '',
@@ -72,6 +76,8 @@ export class NewElectionComponent implements OnInit, OnDestroy {
         election: elec
       })
     );
+
+    this.location.back();
   }
 
   get title() {

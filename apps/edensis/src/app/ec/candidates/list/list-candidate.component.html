@@ -1,2 +1,5 @@
-<view-candidate *ngFor="let c of candidates" [candidate]="c">
+<div *ngIf="!(candidates$ | async).length">
+  No Candidate Added. Click Add Candidate to add one now
+</div>
+<view-candidate *ngFor="let c of candidates$ | async" [candidate]="c">
 </view-candidate>

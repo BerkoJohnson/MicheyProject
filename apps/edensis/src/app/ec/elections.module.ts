@@ -2,16 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { StoreModule } from '@ngrx/store';
 
-import { VotersComponent } from './voters/voters.component';
+import { ImportVotersComponent } from './voters/import/import-voters.component';
 import { ElectionsComponent } from './elections/elections.component';
 import { ElectionListComponent } from './elections/list/election-list.component';
 import { NewElectionComponent } from './elections/new/election-new.component';
 import { ViewElectionComponent } from './elections/view/election-view.component';
-import * as fromElection from './store/election.reducer';
-import { EffectsModule } from '@ngrx/effects';
-import { ElectionEffects } from './store/election.effects';
 import { EcComponent } from './ec.component';
 import { EditElectionComponent } from './elections/edit/election-edit.component';
 import { NewPositionComponent } from './positions/new/new-position.component';
@@ -22,66 +18,16 @@ import { ViewCandidateComponent } from './candidates/view/candidate-view.compnon
 import { ListCandidateComponent } from './candidates/list/list-candidate.component';
 import { NewCandidateComponent } from './candidates/new/new-candidate.component';
 import { EditCandidateComponent } from './candidates/edit/candidate-edit.component';
-
-const votersRoutes: Routes = [
-  { path: '', component: VotersComponent, children: [] }
-];
-
-const routes: Routes = [
-  {
-    path: '',
-    component: EcComponent,
-    children: [
-      {
-        path: 'elections',
-        component: ElectionsComponent,
-        children: [
-          { path: '', component: ElectionListComponent },
-          { path: 'new', component: NewElectionComponent },
-          {
-            path: ':id',
-            component: ViewElectionComponent,
-            children: [
-              { path: 'edit-election', component: EditElectionComponent },
-              ///Positions ROutes
-              {
-                path: 'add-position',
-                component: NewPositionComponent
-              },
-              {
-                path: 'edit-position/:pid',
-                component: EditPositionComponent
-              },
-              {
-                path: 'view-position',
-                component: ViewPositionComponent
-              },
-              ///Candidate ROutes
-              {
-                path: 'add-candidate',
-                component: NewCandidateComponent
-              },
-              {
-                path: 'edit-candidate',
-                component: EditCandidateComponent
-              },
-              {
-                path: 'view-candidate',
-                component: ViewCandidateComponent
-              },
-
-              { path: 'voters', children: votersRoutes }
-            ]
-          }
-        ]
-      }
-    ]
-  }
-];
+import { ElectionSelectedGuard } from '../guards/election-selected.guard';
+import { RemoveCandidateComponent } from './candidates/remove/remove-candidate.component';
+import { ElectionRoutingModule } from './election-routing.module';
+import { ListVotersComponent } from './voters/list/list-voters.component';
 
 @NgModule({
   declarations: [
-    VotersComponent,
+    ImportVotersComponent,
+    ListVotersComponent,
+
     ElectionsComponent,
     ElectionListComponent,
     NewElectionComponent,
@@ -98,19 +44,14 @@ const routes: Routes = [
     ViewCandidateComponent,
     ListCandidateComponent,
     NewCandidateComponent,
-    EditCandidateComponent
+    EditCandidateComponent,
+    RemoveCandidateComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild(routes),
-    StoreModule.forFeature(
-      fromElection.electionsFeatureKey,
-      fromElection.reducer
-    ),
-    EffectsModule.forFeature([ElectionEffects])
-  ],
-  exports: [RouterModule]
+    ElectionRoutingModule
+  ]
 })
 export class ElectionsModule {}

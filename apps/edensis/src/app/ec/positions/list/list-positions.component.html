@@ -5,7 +5,7 @@
      <th align="center">Actions</th>
    </thead>
    <tbody>
-     <tr align="center" *ngFor="let pos of (currentElection$ | async)?.positions;" (click)="setCurrentPosition(pos)">
+     <tr align="center" *ngFor="let pos of (positions$ | async);">
        <td>
          {{ pos?.title }}
        </td>
@@ -14,11 +14,18 @@
        </td>
        <td>
          <div class="action_buttons">
-           <a class="blue" [routerLink]="'/ec/elections/'+ (currentElection$ |async)._id + '/add-candidate'">Add
+           <a class="blue" [routerLink]="'/ec/elections/'+ currentELectionID + '/add-candidate'"
+             (click)="setCurrentPosition(pos._id)">Add
              Candidate</a> |
-           <a class="green" [routerLink]="'/ec/elections/'+ (currentElection$ |async)._id + '/view-position/'">View
+           <a class="green" [routerLink]="'/ec/elections/'+ currentELectionID + '/view-position/'"
+             (click)="setCurrentPosition(pos._id)">View
              Position</a>
          </div>
+       </td>
+     </tr>
+     <tr align="center" *ngIf="!(positions$ | async).length">
+       <td [colSpan]="3">
+         No Positions Added Yet. Click Add Position to add one now.
        </td>
      </tr>
    </tbody>

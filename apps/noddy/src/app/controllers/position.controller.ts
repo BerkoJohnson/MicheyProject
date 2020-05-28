@@ -61,11 +61,7 @@ class PositionController implements Controller {
 
     const positions = await this.PositionModel.find({
       election: electionInDB._id
-    }).populate('candidates');
-
-    // positions.map(p => {
-    //   p.candidates.map(c => console.log(c));
-    // });
+    });
 
     res.json(positions);
   };

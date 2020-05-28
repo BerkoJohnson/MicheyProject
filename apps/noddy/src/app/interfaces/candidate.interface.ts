@@ -5,10 +5,14 @@ interface Candidate {
   nickname: string;
   dob: string;
   room: string;
-  position: string;
+  position?: string;
   election?: string;
   photo: Buffer;
-
+  votes?: {
+    yes?: number;
+    no?: number;
+    thumbs?: number;
+  };
   createdAt?: string;
   updatedAt?: string;
 }

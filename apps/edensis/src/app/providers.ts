@@ -8,8 +8,11 @@ import {
   ElectionService,
   PositionService,
   AuthService,
-  CandidateService
+  CandidateService,
+  DialogService,
+  VoterService
 } from './services';
+import { ElectionSelectedGuard } from './guards/election-selected.guard';
 
 export const PROVIDERS = [
   {
@@ -30,5 +33,8 @@ export const PROVIDERS = [
   ElectionService,
   PositionService,
   AuthService,
-  CandidateService
+  CandidateService,
+  VoterService,
+  ElectionSelectedGuard,
+  DialogService
 ];

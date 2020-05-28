@@ -1,0 +1,37 @@
+<form [formGroup]="form" (ngSubmit)="importFile()">
+  <h4 class="title">Import New Voters</h4>
+  <div class="body">
+    <div class="field">
+      <label for="room" class="label">Class</label>
+      <div class="input">
+        <select formControlName="room" name="room" id="room">
+          <option value="">Choose Classroom</option>
+          <option value="2A1">2A1</option>
+          <option value="2A2">2A2</option>
+          <option value="2A3">2A3</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label class="label" for="import_file">Select File</label>
+      <div class="input">
+        <input
+          type="file"
+          name="import_file"
+          id="import_file"
+          formControlName="file"
+          (change)="selectFile($event)"
+        />
+      </div>
+    </div>
+    <input
+      type="submit"
+      value="Import File"
+      class="primary"
+      [disabled]="form.invalid"
+    />
+    <small class="numberLength" *ngIf="this.votersLength">
+      Number of Voters Found: <b>{{ this.votersLength }}</b>
+    </small>
+  </div>
+</form>

@@ -103,6 +103,21 @@ button,
       border: 1px solid $complement;
     }
   }
+
+  &.danger {
+    background: red;
+    color: white;
+
+    &:disabled {
+      background-color: #777;
+    }
+
+    &:not(:disabled):hover {
+      color: red;
+      background: white;
+      border: 1px solid red;
+    }
+  }
 }
 
 // Validation

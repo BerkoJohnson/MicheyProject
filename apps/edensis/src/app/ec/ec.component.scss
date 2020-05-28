@@ -2,3 +2,26 @@
   display: block;
   flex-basis: 80%;
 }
+
+ul {
+  list-style: none;
+}
+
+li a {
+  display: block;
+  padding: 2px 10px;
+  color: white;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  width: 77px;
+  transition: border-bottom 0.1s;
+
+  &:hover {
+    border-bottom: 1px solid;
+    color: rgba($color: #fff, $alpha: 0.8);
+  }
+
+  &.active {
+    border-bottom: 1px solid blue;
+  }
+}

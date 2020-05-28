@@ -14,7 +14,6 @@ import CandidateDto from '../dtos/candidate.dto';
 import candidateModel from '../models/candidate.model';
 import DuplicateItemException from '../exceptions/DuplicateItemException';
 import upload from '../middleware/multer.middleware';
-import Candidate from '../interfaces/candidate.interface';
 
 class CandidateController implements Controller {
   public path = '/candidates';
@@ -73,7 +72,21 @@ class CandidateController implements Controller {
       const candidates = await this.CandidateModel.find({
         position: positionInDB._id
       });
-      res.json(candidates);
+
+      const candidateArray = candidates.map(c => {
+        return {
+          _id: c._id,
+          name: c.name,
+          gender: c.gender,
+          dob: c.dob,
+          nickname: c.nickname,
+          room: c.room,
+          photo: c.photo !== null ? c.photo.toString('base64') : null,
+          position: c.position,
+          votes: c.votes
+        };
+      });
+      res.json(candidateArray);
     } catch (error) {
       next(error);
     }
@@ -186,8 +199,6 @@ class CandidateController implements Controller {
           .resize(200, 200)
           .toBuffer();
         updateData['photo'] = image;
-      } else {
-        updateData['photo'] = undefined;
       }
 
       // if a new position is sent change candidate's position
@@ -206,18 +217,23 @@ class CandidateController implements Controller {
         async (err, resDOc) => {
           if (err) return next(err);
 
-          // Get the Old Position candidate was assigned to
-          await this.PositionModel.findByIdAndUpdate(oldDoc.position, {
-            $pull: {
-              candidate: resDOc._id
-            }
-          });
+          // If Candidate's position's was changed, remove candidate from old
+          // position's candidates' array and add/push to new position
+          // candidates' array
 
-          /** Update the new Position candidate array */
-          await this.PositionModel.findByIdAndUpdate(updateData['position'], {
-            $push: { candidates: resDOc._id }
-          });
+          if (req.body['position'] !== undefined) {
+            // Get the Old Position candidate was assigned to
+            await this.PositionModel.findByIdAndUpdate(oldDoc.position, {
+              $pull: {
+                candidates: resDOc._id
+              }
+            });
 
+            /** Update the new Position candidate array */
+            await this.PositionModel.findByIdAndUpdate(updateData['position'], {
+              $push: { candidates: resDOc._id }
+            });
+          }
           res.json(resDOc);
         }
       );
@@ -242,15 +258,17 @@ class CandidateController implements Controller {
       }
 
       // Check if candidate exists
-      const candidateInDB = await this.CandidateModel.findOne({
-        _id: candidate
-      });
+      const candidateInDB = await this.CandidateModel.findByIdAndDelete(
+        candidate
+      );
       if (!candidateInDB) {
         return next(new ResourceNotFoundException(candidate, 'Candidate'));
       }
 
-      await candidateInDB.remove(); // now finally remove candidate
-      res.status(200).json({ success: true }); // send OK if no errors
+      await this.PositionModel.findByIdAndUpdate(candidateInDB.position, {
+        $pull: { candidates: candidateInDB._id }
+      });
+      res.status(200).json(candidateInDB); // send OK if no errors
     } catch (error) {
       if (error.name === 'CastError') {
         return next(new CastErrorException('Candidate', error));

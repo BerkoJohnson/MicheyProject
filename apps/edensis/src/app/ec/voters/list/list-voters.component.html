@@ -1,0 +1,72 @@
+<form [formGroup]="form" (ngSubmit)="loadVoters()">
+  <h4 class="title">Import New Voters</h4>
+  <div class="body">
+    <div class="field">
+      <label for="room" class="label">Class</label>
+      <div class="input">
+        <select formControlName="room" name="room" id="room">
+          <option value="">Choose Classroom</option>
+          <option value="2A1">2A1</option>
+          <option value="2A2">2A2</option>
+          <option value="2A3">2A3</option>
+        </select>
+      </div>
+    </div>
+    <input
+      type="submit"
+      value="Load Voters"
+      class="primary"
+      [disabled]="form.invalid"
+    />
+  </div>
+</form>
+<br />
+<table
+  border="1"
+  cellspacing="10"
+  cellpadding="5"
+  *ngIf="voters$ | async as voters"
+>
+  <thead>
+    <tr>
+      <th>
+        <input
+          id="checkAll"
+          type="checkbox"
+          [title]="titleStr"
+          (change)="checkAll($event)"
+        />
+      </th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="let voter of voters; let i = index"
+      [ngClass]="{ selected: thisChk.checked === true }"
+    >
+      <td align="center">
+        <input
+          type="checkbox"
+          class="chks"
+          [title]="
+            thisChk.checked ? 'Unselect ' + voter.name : 'Select ' + voter.name
+          "
+          #thisChk
+          [id]="voter._id"
+          (change)="checkThis($event)"
+        />
+      </td>
+      <td>{{ voter.name }}</td>
+    </tr>
+    <tr *ngIf="!voters.length">
+      <td align="center" colspan="2"><b>NO VOTERS YET FOR THIS CLASS</b></td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="voters$ | async">
+  <button class="danger" [disabled]="!this.selectedIDs.length">
+    Delete All
+  </button>
+</div>

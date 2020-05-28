@@ -1,5 +1,12 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import ICandidate from '../../../models/candidate.model';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import {
+  selectCandidates,
+  getSelectedPositionID
+} from '../../../store/reducers';
+import { loadCandidates } from '../../../store/actions/candidate.actions';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -8,9 +15,16 @@ import ICandidate from '../../../models/candidate.model';
   styleUrls: ['./list-candidate.component.scss']
 })
 export class ListCandidateComponent implements OnInit {
-  @Input() candidates: ICandidate[];
+  @Input() position: string;
+  candidates$: Observable<ICandidate[]>;
 
-  constructor() {}
+  constructor(private store: Store<any>) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.store
+      .select(getSelectedPositionID)
+      .subscribe(x => this.store.dispatch(loadCandidates({ position: x })));
+    this.candidates$ = this.store.select(selectCandidates);
+    // console.log(this.position);
+  }
 }

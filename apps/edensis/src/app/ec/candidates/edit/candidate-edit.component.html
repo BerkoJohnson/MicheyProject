@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="submit()" *ngIf="currentCandidate$ | async">
+<form [formGroup]="form" (ngSubmit)="submit(c._id)" *ngIf="currentCandidate$ | async as c">
   <h4 class="title">Update Candidate</h4>
   <div class="body">
 
@@ -42,7 +42,7 @@
       <div class="field">
 
         <label class="label" for="gender">Gender</label>
-        <div class="input"><select name="name" id="name" formControlName="gender" [ngClass]="{
+        <div class="input"><select name="gender" id="gender" formControlName="gender" [ngClass]="{
         invalid: (gender.dirty || gender.touched) && gender.invalid,
         valid: (gender.dirty || gender.touched) && gender.valid
         }">
@@ -100,7 +100,7 @@
         }">
             <option value="">Chose Position</option>
             <option *ngFor="
-        let position of (currentElection$ | async)?.positions
+        let position of positions$ | async
         " [value]="position?._id">
               {{ position?.title }}
             </option>
@@ -147,3 +147,5 @@
 <div *ngIf="!(currentCandidate$ | async)">
   <p>No Candidate to update, click 'View Candidates'</p>
 </div>
+
+<button type="button" (click)="goback()">Go Back</button>

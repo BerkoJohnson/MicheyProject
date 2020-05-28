@@ -1,34 +1,33 @@
-<h2 class="main-header">{{ (currentElection$ | async)?.title }}</h2>
+<h2 class="main-header">{{ election?.title }}</h2>
 <div class="columns">
   <div class="first-column">
     <div class="sub-details">
       <div class="sub-header">
         <span>School:</span>
-        <b>{{ (currentElection$ | async)?.school }}</b>
+        <b>{{ election?.school }}</b>
       </div>
       <div class="sub-header">
         <span>Academic Year:</span>
-        <b>{{ (currentElection$ | async)?.academicYear }}</b>
+        <b>{{ election?.academicYear }}</b>
       </div>
       <div class="sub-header">
         <span>Created On:</span>
-        <b>{{ (currentElection$ | async)?.createdAt | date: 'mediumDate' }}</b>
+        <b>{{ election?.createdAt | date: 'mediumDate' }},
+          {{ election?.createdAt | date: 'mediumTime' }} </b>
       </div>
       <div class="sub-header">
         <span>Last Updated: </span>
-        <b>{{ (currentElection$ | async)?.updatedAt | date: 'mediumDate' }}</b>
+        <b>{{ election?.updatedAt | date: 'mediumDate' }},
+          {{ election?.updatedAt | date: 'mediumTime' }}</b>
       </div>
-      <div class="links">
-        <a class="blue" [routerLink]="'/ec/elections/' + (currentElection$ | async)?._id + '/edit-election'">Update
-          Election</a> |
-        <a [routerLink]="'/ec/elections/' + (currentElection$ | async)?._id + '/add-position'">Add New Position</a>
-        | <a class="green" [routerLink]="'/ec/elections/' + (currentElection$ | async)?._id + '/add-candidate'">Add New
-          Candidate</a>
-      </div>
+      <select id="options_links" #s (change)="goto($event)">
+        <option value="">Choose Action</option>
+        <option *ngFor="let li of links" [value]="li.value">{{li.title}}</option>
+      </select>
     </div>
 
     <div class="addPadding">
-      <h4>Positions Assigned</h4>
+      <h4 class="sub-title">Positions Assigned</h4>
       <list-positions></list-positions>
     </div>
   </div>

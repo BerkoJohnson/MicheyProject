@@ -1,16 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { ElectionState } from '../../store/election.reducer';
-import { addPosition } from '../../store/election.actions';
-import { selectedElection } from '../../store/election.selector';
-import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import IElection from '../../../models/election.model';
 import IPosition from '../../../models/position.model';
-import { electionValidation } from '../../validations/election.validation';
 import { ValidationMessage } from '../../../interfaces/validation-messages';
 import { PositionValidation } from '../../validations/position.validation';
+import { getSelectedElection } from '../../../store/reducers';
+import { addPosition } from '../../../store/actions/position.actions';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -23,7 +20,7 @@ export class NewPositionComponent implements OnInit {
   currentElection$: Observable<IElection>;
   validationMessages: ValidationMessage;
 
-  constructor(private fb: FormBuilder, private store: Store<ElectionState>) {
+  constructor(private fb: FormBuilder, private store: Store<any>) {
     this.positionForm = this.fb.group({
       title: [
         '',
@@ -35,7 +32,7 @@ export class NewPositionComponent implements OnInit {
     });
   }
   ngOnInit() {
-    this.currentElection$ = this.store.select(selectedElection);
+    this.currentElection$ = this.store.select(getSelectedElection);
     this.validationMessages = PositionValidation;
   }
 

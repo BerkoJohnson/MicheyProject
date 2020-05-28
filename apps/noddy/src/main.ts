@@ -7,10 +7,8 @@ import UserController from './app/controllers/user.controller';
 import PositionController from './app/controllers/position.controller';
 import ElectionController from './app/controllers/election.controller';
 import CandidateController from './app/controllers/candidate.controller';
+import VoterController from './app/controllers/voter.controller';
 import { environment } from './environments/environment';
-
-// dotenv.config({ path: './app/.env' });
-// validateEnv();
 
 const app = new App(
   [
@@ -19,7 +17,8 @@ const app = new App(
     new UserController(),
     new PositionController(),
     new ElectionController(),
-    new CandidateController()
+    new CandidateController(),
+    new VoterController()
   ],
   environment.PORT
 );

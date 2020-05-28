@@ -1,23 +1,22 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Election, Candidate } from '../../../interfaces';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {
-  ElectionService,
-  CandidateService,
-  PositionService
-} from '../../../services';
-import { Store } from '@ngrx/store';
-import { ElectionState } from '../../store/election.reducer';
-import IElection from '../../../models/election.model';
 import { Observable } from 'rxjs';
-import {
-  selectedElection,
-  CurrentPosition
-} from '../../store/election.selector';
-import { addCandidate } from '../../store/election.actions';
+import { Store } from '@ngrx/store';
+
+import IElection from '../../../models/election.model';
 import IPosition from '../../../models/position.model';
 import { ValidationMessage } from '../../../interfaces/validation-messages';
 import { CandidateValidation } from '../../validations/candidate.validation';
+import {
+  getSelectedElection,
+  getSelectedPosition,
+  selectPositions,
+  getSelectedElectionID
+} from '../../../store/reducers';
+import { addCandidate } from '../../../store/actions/candidate.actions';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
+import { DialogService } from '../../../services';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -26,20 +25,27 @@ import { CandidateValidation } from '../../validations/candidate.validation';
   styleUrls: ['./new-candidate.component.scss']
 })
 export class NewCandidateComponent implements OnInit {
-  currentElection$: Observable<IElection>;
+  currentElection: string;
   currentPosition$: Observable<IPosition>;
   imageUrl: any;
   candidateImg: any;
   imageError: string;
-  image: string | File;
+  image: File;
   errors: string;
   info: string;
   form: FormGroup;
   validationMessages: ValidationMessage;
+  positions$: Observable<IPosition[]>;
 
+  isSubmitted = false;
   isImageChanged = false;
 
-  constructor(private fb: FormBuilder, private store: Store<ElectionState>) {
+  constructor(
+    private fb: FormBuilder,
+    private store: Store<any>,
+    private router: Router,
+    private dialogService: DialogService
+  ) {
     this.form = this.fb.group({
       room: ['', [Validators.required]],
       name: [
@@ -64,13 +70,18 @@ export class NewCandidateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.currentElection$ = this.store.select(selectedElection);
-    this.currentPosition$ = this.store.select(CurrentPosition);
+    this.store
+      .select(getSelectedElectionID)
+      .subscribe(x => (this.currentElection = x));
+
+    this.currentPosition$ = this.store.select(getSelectedPosition);
 
     this.currentPosition$.subscribe(p => {
       if (p) this.position.setValue(p?._id);
     });
     this.validationMessages = CandidateValidation;
+
+    this.positions$ = this.store.select(selectPositions);
   }
 
   submit() {
@@ -88,27 +99,18 @@ export class NewCandidateComponent implements OnInit {
 
       // Submit Data
       this.store.dispatch(addCandidate({ candidate: formData }));
+      this.isSubmitted = true;
+      setTimeout(
+        () =>
+          this.router.navigate([
+            'ec',
+            'elections',
+            this.currentElection,
+            'view-position'
+          ]),
+        100
+      );
     }
-  }
-
-  clearFields() {
-    // Reset Form
-    this.form.reset({
-      room: '',
-      name: '',
-      dob: '',
-      gender: '',
-      nickname: '',
-      position: '',
-      photo: null
-    });
-    this.imageUrl = '';
-    this.info = '';
-    this.errors = '';
-
-    this.position.enable({
-      emitEvent: true
-    });
   }
 
   previewImage(event: Event) {
@@ -152,5 +154,12 @@ export class NewCandidateComponent implements OnInit {
   }
   get dob() {
     return this.form.get('dob');
+  }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    if (this.form.dirty && this.form.touched && !this.isSubmitted) {
+      return this.dialogService.confirm('Discard changes for this candidate?');
+    }
+    return true;
   }
 }

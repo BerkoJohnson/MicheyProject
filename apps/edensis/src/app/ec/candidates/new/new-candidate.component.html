@@ -40,7 +40,7 @@
       </div>
       <div class="field">
         <label class="label" for="gender">Gender</label>
-        <div class="input"><select name="name" id="name" formControlName="gender" [ngClass]="{
+        <div class="input"><select name="gender" id="gender" formControlName="gender" [ngClass]="{
         invalid: (gender.dirty || gender.touched) && gender.invalid,
         valid: (gender.dirty || gender.touched) && gender.valid
         }">
@@ -98,7 +98,7 @@
         }">
             <option value="">Chose Position</option>
             <option *ngFor="
-        let position of (currentElection$ | async)?.positions
+        let position of positions$ | async
         " [value]="position?._id">
               {{ position?.title }}
             </option>
@@ -139,7 +139,6 @@
       </div>
     </div>
     <input type="submit" class="primary" [disabled]="form.invalid" value="Save Candidate" name="submit" />
-    <a class="cancelBtn" title="Click to add new candidate" (click)="clearFields()">Cancel</a>
   </div>
 
 </form>

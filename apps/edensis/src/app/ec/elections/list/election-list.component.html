@@ -1,7 +1,8 @@
 <h5>List of Elections</h5>
 <ul>
   <li *ngFor="let election of elections$ | async; let i = index" class="item">
-    <a [routerLink]="'/ec/elections/' + election._id">{{ election.title }}</a>
+    <a [routerLink]="'/ec/elections/' + election._id"
+      (click)="setCurrentElection(election._id)">{{ election.title }}</a>
   </li>
 </ul>
 <div class="links">

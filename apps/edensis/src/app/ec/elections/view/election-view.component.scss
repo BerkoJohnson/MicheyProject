@@ -22,6 +22,15 @@
   border-bottom: 1px solid $primary_color;
 }
 
+.sub-title {
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 10px 0;
+  border-bottom: 1px solid white;
+  background-color: rgba(#000, 0.1);
+}
+
 // 
 .sub-details {
   padding: 10px;
@@ -83,4 +92,24 @@
 
 .addPadding {
   padding: 10px;
+}
+
+
+select#options_links {
+  width: 100%;
+  padding: 10px;
+  color: white;
+  text-transform: uppercase;
+  background-color: rgba(#000, 0.1);
+  border: 1px solid;
+  margin-top: 10px;
+  outline: none;
+  cursor: pointer;
+
+  option {
+    color: rgba(#000, 0.7);
+    padding: 5px;
+    display: block;
+    text-transform: uppercase;
+  }
 }

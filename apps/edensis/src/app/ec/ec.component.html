@@ -1,6 +1,8 @@
 <ul>
   <li>
-    <a [routerLink]="'elections'">Elections</a>
+    <a [routerLink]="'elections'" [routerLinkActive]="'active'">Elections</a>
   </li>
 </ul>
+<button (click)="toggle()">Click Me</button>
+<div [@openClose]="isOpen ? 'open' : 'closed'">Me</div>
 <router-outlet></router-outlet>

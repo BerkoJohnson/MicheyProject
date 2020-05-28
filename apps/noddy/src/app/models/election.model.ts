@@ -19,6 +19,12 @@ const electionSchema = new mongoose.Schema<Election>(
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Position'
       }
+    ],
+    voters: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Voter'
+      }
     ]
   },
   {

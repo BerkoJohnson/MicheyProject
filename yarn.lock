@@ -9520,6 +9520,13 @@ next-tick@~1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
+ngx-csv-parser@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/ngx-csv-parser/-/ngx-csv-parser-0.0.2.tgz#4f5e1160f16186849f8db47c7814c4c3fee71780"
+  integrity sha512-63sZDuQ9Ym+hahUWH8yOTSVdku/913DcZINLIqcb8pBIhJhTf6ZFowX2nU6+23nT6aWp8tN1J5htWK/OKCGx+w==
+  dependencies:
+    tslib "^1.9.0"
+
 ngx-socket-io@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/ngx-socket-io/-/ngx-socket-io-3.0.1.tgz#6dc50144ef4c793ecc597955081ec5c5dd9ce033"

@@ -1,0 +1,10 @@
+<div *ngIf="candidate">
+  <p>Do you really want to remove/delete this candidate:
+    <b>{{ candidate.name}}?</b>
+  </p>
+
+  <div>
+    <button type="button" (click)="respond(false, candidate._id)">No, Go Back</button>
+    <button type="button" (click)="respond(true, candidate._id)">Yes, Delete</button>
+  </div>
+</div>

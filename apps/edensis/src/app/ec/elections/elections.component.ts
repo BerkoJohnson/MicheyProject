@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Election } from '../../interfaces';
-import { ElectionService } from '../../services/election.service';
-import IElection from '../../models/election.model';
-import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { ElectionState } from '../store/election.reducer';
+import { loadElections } from '../../store/actions/election.actions';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -13,19 +9,9 @@ import { ElectionState } from '../store/election.reducer';
   styleUrls: ['./elections.component.scss']
 })
 export class ElectionsComponent implements OnInit {
-  elections: Election[];
-  currentElection$: Observable<IElection>;
+  constructor(private store: Store<any>) {}
 
-  constructor(
-    public electionSrv: ElectionService,
-    private store: Store<ElectionState>
-  ) {}
-
-  ngOnInit(): void {}
-
-  onViewElection(el: Election) {}
-
-  onSubmitForm(elData: Election) {
-    console.log(elData);
+  ngOnInit(): void {
+    this.store.dispatch(loadElections());
   }
 }

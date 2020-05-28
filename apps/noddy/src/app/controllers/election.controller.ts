@@ -39,6 +39,7 @@ class ElectionController implements Controller {
     this.router
       .route(`${this.path}/:election`)
       .get(authMiddleware, this.getElection)
+      .put(authMiddleware, this.updateElection)
       .delete(authMiddleware, this.deleteElection);
   }
 
@@ -47,11 +48,7 @@ class ElectionController implements Controller {
     res: express.Response,
     next: express.NextFunction
   ) => {
-    const elections = await this.ElectionModel.find().populate({
-      path: 'positions',
-      select: 'title _id'
-    });
-
+    const elections = await this.ElectionModel.find();
     res.json(elections);
   };
 
@@ -114,12 +111,56 @@ class ElectionController implements Controller {
   ) => {
     try {
       const { election } = req.params;
-      const electionInDB = await this.ElectionModel.findById(election).populate(
-        {
-          path: 'positions',
-          select: 'title _id candidates'
-        }
+      const electionInDB = await this.ElectionModel.findById(election);
+
+      if (!electionInDB) {
+        return next(new ResourceNotFoundException(election, 'Election'));
+      }
+
+      res.json(electionInDB);
+    } catch (error) {
+      if (error.name === 'CastError') {
+        return next(new CastErrorException('Election', error));
+      }
+      console.error(error);
+    }
+  };
+
+  private updateElection = async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
+    try {
+      const { election } = req.params;
+
+      const electionInDB = await this.ElectionModel.findByIdAndUpdate(
+        election,
+        req.body,
+        { new: true }
       );
+
+      if (!electionInDB) {
+        return next(new ResourceNotFoundException(election, 'Election'));
+      }
+
+      res.json(electionInDB);
+    } catch (error) {
+      if (error.name === 'CastError') {
+        return next(new CastErrorException('Election', error));
+      }
+      console.error(error);
+    }
+  };
+
+  private getElectionMoreInfo = async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
+    try {
+      const { election } = req.params;
+      const electionInDB = await this.ElectionModel.findById(election);
 
       if (!electionInDB) {
         return next(new ResourceNotFoundException(election, 'Election'));

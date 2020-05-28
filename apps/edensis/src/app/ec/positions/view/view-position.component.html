@@ -1,11 +1,11 @@
-<div class="position_details" *ngIf="currentPosition$ | async as position">
-  <h3 class="title">{{ position.title  }} ({{position.candidates.length}})</h3>
+<div class="position_details" *ngIf="currentPosition">
+  <h3 class="title">{{ currentPosition.title  }} ({{currentPosition.candidates.length}})</h3>
   <div class="body">
-    <list-candidates [candidates]="position.candidates"></list-candidates>
+    <list-candidates [position]="currentPosition._id"></list-candidates>
   </div>
 </div>
 
 
-<div *ngIf="!(currentPosition$ | async)">
+<div *ngIf="!currentPosition">
   <p>No Position Selected for Viewing</p>
 </div>

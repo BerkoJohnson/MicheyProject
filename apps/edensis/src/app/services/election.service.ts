@@ -10,28 +10,12 @@ import IElection from '../models/election.model';
   providedIn: 'root'
 })
 export class ElectionService {
-  constructor(private http: HttpClient) {
-    this.getElections().subscribe();
-  }
-
-  // tslint:disable-next-line:variable-name
-  _election = new BehaviorSubject<Election>(null);
-  election$ = this._election.asObservable();
-  // tslint:disable-next-line:variable-name
-  private _elections = new BehaviorSubject<Election[]>(null);
-  elections$ = this._elections.asObservable();
-
-  setElection(elec: Election) {
-    this._election.next(elec);
-  }
-
+  constructor(private http: HttpClient) {}
   /////////////////////// ELECTION START HERE /////////////////////////
 
   /** Get single election */
   getElection(elec: string): Observable<IElection> {
-    return this.http
-      .get<IElection>(`/api/v1/elections/${elec}`)
-      .pipe(tap(el => this._election.next(el)));
+    return this.http.get<IElection>(`/api/v1/elections/${elec}`);
   }
 
   /** Get elections */
@@ -45,18 +29,12 @@ export class ElectionService {
   }
 
   /** Update election */
-  updateElection(elec: string, update: any): Observable<Election | boolean> {
-    return this.http
-      .put<Election>(`/api/v1/elections/${elec}`, update)
-      .pipe(tap(_ => this.getElections().subscribe()));
+  updateElection(elec: string, update: any): Observable<IElection> {
+    return this.http.put<IElection>(`/api/v1/elections/${elec}`, update);
   }
 
   /** Delete election */
-  deleteElection(elec: string): Observable<Election | boolean> {
-    return this.http
-      .delete<Election>(`/api/v1/elections/${elec}`)
-      .pipe(tap(_ => this.getElections().subscribe()));
+  deleteElection(elec: string): Observable<IElection> {
+    return this.http.delete<IElection>(`/api/v1/elections/${elec}`);
   }
-
-  /////////////////////// ELECTION ENDS HERE /////////////////////////
 }

@@ -1,8 +1,8 @@
-import { plainToClass } from "class-transformer";
-import { validate, ValidationError } from "class-validator";
-import * as express from "express";
+import { plainToClass } from 'class-transformer';
+import { validate, ValidationError } from 'class-validator';
+import * as express from 'express';
 
-import HttpException from "../exceptions/HttpException";
+import HttpException from '../exceptions/HttpException';
 
 function validateMiddleware<T>(
   type: any,
@@ -13,8 +13,8 @@ function validateMiddleware<T>(
       (errors: ValidationError[]) => {
         if (errors.length > 0) {
           const message = errors
-            .map((errors, ValidationError) => Object.values(errors.constraints))
-            .join(", ");
+            .map((errs, validationError) => Object.values(errs.constraints))
+            .join(', ');
           next(new HttpException(400, message));
         } else {
           next();

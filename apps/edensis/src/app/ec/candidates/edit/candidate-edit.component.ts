@@ -1,19 +1,23 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
-import { Observable } from 'rxjs';
-import IElection from '../../../models/election.model';
-import { Store } from '@ngrx/store';
-import { ElectionState } from '../../store/election.reducer';
-import ICandidate from '../../../models/candidate.model';
 import { ActivatedRoute } from '@angular/router';
-import { loadCandidate } from '../../store/election.actions';
-import {
-  CurrentCandidate,
-  selectedElection
-} from '../../store/election.selector';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+
+import IElection from '../../../models/election.model';
+import ICandidate from '../../../models/candidate.model';
+
+import { Location } from '@angular/common';
 import { ValidationMessage } from '../../../interfaces/validation-messages';
 import { CandidateValidation } from '../../validations/candidate.validation';
+import {
+  getSelectedElection,
+  getSelectedCandidate,
+  selectPositions
+} from '../../../store/reducers';
+import IPosition from '../../../models/position.model';
+import { DialogService } from '../../../services';
+import { updateCandidate } from '../../../store/actions/candidate.actions';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -29,19 +33,22 @@ export class EditCandidateComponent implements OnInit {
   errors: string;
   info: string;
   form: FormGroup;
+  isSubmitted = false;
 
   validationMessages: ValidationMessage;
   isChangedPosition = false;
 
   currentCandidate$: Observable<ICandidate>;
   currentElection$: Observable<IElection>;
-
+  positions$: Observable<IPosition[]>;
+  details: ICandidate;
   isImageChanged = false;
 
   constructor(
     private fb: FormBuilder,
-    private store: Store<ElectionState>,
-    private route: ActivatedRoute
+    private store: Store<any>,
+    private location: Location,
+    private dialogService: DialogService
   ) {
     this.form = this.fb.group({
       room: ['', [Validators.required]],
@@ -66,51 +73,60 @@ export class EditCandidateComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.currentElection$ = this.store.select(selectedElection);
+  goback() {
+    this.location.back();
+  }
 
-    this.currentCandidate$ = this.store.select(CurrentCandidate);
-    this.buildUpdateForm();
+  ngOnInit() {
+    this.positions$ = this.store.select(selectPositions);
+    this.currentElection$ = this.store.select(getSelectedElection);
+    this.currentCandidate$ = this.store.select(getSelectedCandidate);
     this.validationMessages = CandidateValidation;
+
+    this.buildUpdateForm();
+
+    const { photo, ...otherDetails } = this.details;
+    this.imageUrl = `data:image/jpg;base64,${photo}`;
+    this.form.patchValue(otherDetails);
   }
 
   buildUpdateForm() {
     this.currentCandidate$.subscribe(c => {
-      this.form.patchValue({
-        room: c?.room || null,
-        name: c?.name || null,
-        dob: c?.dob || null,
-        gender: c?.gender || null,
-        nickname: c?.nickname || null,
-        position: c?.position || null,
-        photo: null
-      });
-      this.imageUrl = `data:image/jpg;base64,${c?.photo}`;
-      this.form.get('position').disable({
-        onlySelf: true,
-        emitEvent: true
-      });
+      this.details = c;
     });
   }
 
-  submit() {
+  submit(c: string) {
     if (this.form.invalid) {
       this.errors = 'All fields are required.';
     } else {
-      const formData = new FormData();
-      formData.append('name', this.name.value);
-      formData.append('room', this.room.value);
-      formData.append('dob', this.dob.value);
-      formData.append('gender', this.gender.value);
-      formData.append('nickname', this.nickname.value);
-      formData.append('photo', this.image);
+      // changes
+      const changes = new FormData();
 
-      if (this.isChangedPosition !== false) {
-        formData.append('position', this.position.value);
-
-        // submit update data
+      // tslint:disable-next-line: forin
+      for (const field in this.f) {
+        if (this.form.get(field).dirty && this.form.get(field).touched) {
+          if (field !== 'photo') {
+            changes.append(field, this.f[field]);
+          } else {
+            changes.append('photo', this.image);
+          }
+        }
       }
+
+      const update = {
+        id: c,
+        changes: changes
+      };
+
+      // Submit Update
+      this.store.dispatch(updateCandidate({ payload: update }));
+      this.isSubmitted = true;
     }
+  }
+
+  get f() {
+    return this.form.value;
   }
 
   previewImage(event: Event) {
@@ -172,5 +188,12 @@ export class EditCandidateComponent implements OnInit {
   }
   get dob() {
     return this.form.get('dob');
+  }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    if (this.form.dirty && this.form.touched && !this.isSubmitted) {
+      return this.dialogService.confirm('Discard changes for this candidate?');
+    }
+    return true;
   }
 }
