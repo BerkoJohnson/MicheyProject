@@ -1,5 +1,5 @@
 <form [formGroup]="form" (ngSubmit)="loadVoters()">
-  <h4 class="title">Import New Voters</h4>
+  <h4 class="title">Voters By Class</h4>
   <div class="body">
     <div class="field">
       <label for="room" class="label">Class</label>
@@ -59,14 +59,29 @@
       </td>
       <td>{{ voter.name }}</td>
     </tr>
-    <tr *ngIf="!voters.length">
-      <td align="center" colspan="2"><b>NO VOTERS YET FOR THIS CLASS</b></td>
+    <tr *ngIf="!voters.length && lastClass">
+      <td align="center" colspan="2">
+        <b>NO VOTERS YET FOR CLASS {{ lastClass }}</b>
+      </td>
     </tr>
   </tbody>
 </table>
 
 <div *ngIf="voters$ | async">
-  <button class="danger" [disabled]="!this.selectedIDs.length">
+  <button
+    class="danger"
+    (click)="deleteAll()"
+    type="button"
+    [disabled]="this.selectedIDs.length === 0"
+  >
     Delete All
   </button>
+  <span class="count" *ngIf="!isDeleteSent"
+    >{{ this.selectedIDs.length }}
+    {{ this.selectedIDs.length === 1 ? 'Voter' : 'Voters' }} Selected</span
+  >
+  <span class="deleted" *ngIf="isDeleteSent"
+    >{{ this.selectedIDs.length }}
+    {{ this.selectedIDs.length === 1 ? 'Voter' : 'Voters' }} Deleted.</span
+  >
 </div>

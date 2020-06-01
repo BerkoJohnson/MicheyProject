@@ -4,7 +4,7 @@ import IVoter from '../../../models/voter.model';
 import { selectVoters, getSelectedElectionID } from '../../../store/reducers';
 import { Observable } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { loadVoters } from '../../../store/actions/voter.actions';
+import { loadVoters, deleteMany } from '../../../store/actions/voter.actions';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -17,9 +17,10 @@ export class ListVotersComponent implements OnInit {
   electionID: string;
   form: FormGroup;
   titleStr = 'Select All';
+  lastClass;
 
   selectedIDs: string[] = [];
-
+  isDeleteSent = false;
   constructor(private store: Store<any>, private fb: FormBuilder) {
     this.form = this.fb.group({
       room: ['', Validators.required]
@@ -34,6 +35,7 @@ export class ListVotersComponent implements OnInit {
 
   loadVoters() {
     if (this.form.invalid) return;
+    this.lastClass = this.room;
 
     this.store.dispatch(
       loadVoters({
@@ -57,6 +59,11 @@ export class ListVotersComponent implements OnInit {
     const allChecks = document.querySelectorAll('.chks');
     const target = e.target as HTMLInputElement;
 
+    if (this.isDeleteSent) {
+      this.selectedIDs = [];
+      this.isDeleteSent = false;
+    }
+
     allChecks.forEach((i: HTMLInputElement) => {
       i.checked = target.checked;
       const idx = this.selectedIDs.findIndex(s => s === i.id);
@@ -75,12 +82,23 @@ export class ListVotersComponent implements OnInit {
   checkThis(e: Event) {
     const target = e.target as HTMLInputElement;
     const idx = this.selectedIDs.findIndex(i => i === target.id);
-
+    if (this.isDeleteSent) {
+      this.selectedIDs = [];
+      this.isDeleteSent = false;
+    }
     if (target.checked && idx < 0) {
+      //Check this for error
       this.selectedIDs.push(target.id);
     } else {
       this.selectedIDs.splice(idx, 1);
     }
+    (document.getElementById('checkAll') as HTMLInputElement).checked = false;
+  }
+
+  deleteAll() {
+    if (!this.selectedIDs.length) return;
+    this.store.dispatch(deleteMany({ ids: this.selectedIDs }));
+    this.isDeleteSent = true;
     (document.getElementById('checkAll') as HTMLInputElement).checked = false;
   }
 }

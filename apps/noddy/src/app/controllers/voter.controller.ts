@@ -22,7 +22,8 @@ export default class VoterController implements Controller {
       .route(this.path)
       .get(authMiddleware, this.getMany)
       .post(authMiddleware, this.createMany)
-      .patch(authMiddleware, this.updateMany);
+      .patch(authMiddleware, this.updateMany)
+      .delete(authMiddleware, this.deleteMany);
 
     this.router
       .route(`${this.path}/:voter`)
@@ -31,6 +32,28 @@ export default class VoterController implements Controller {
       .patch(authMiddleware, this.updateOne)
       .delete(authMiddleware, this.deleteOne);
   }
+
+  private deleteMany = async (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
+    try {
+      const { ids } = req.query;
+      if (!ids) {
+        return next(new InvalidRequestException());
+      }
+      const idsToDelete = ids.toString().split(',');
+      const removedVoters = await this.VoterModel.deleteMany({
+        _id: {
+          $in: idsToDelete
+        }
+      });
+      res.json(removedVoters);
+    } catch (error) {
+      next(error);
+    }
+  };
 
   private getMany = async (
     req: express.Request,
