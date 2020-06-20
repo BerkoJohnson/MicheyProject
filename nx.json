@@ -98,6 +98,22 @@
     },
     "angsoc": {
       "tags": []
+    },
+    "tailapp": {
+      "tags": [
+        "tailwind"
+      ]
+    },
+    "tailapp-e2e": {
+      "tags": [],
+      "implicitDependencies": [
+        "tailapp"
+      ]
+    },
+    "serverwithrole": {
+      "tags": [
+        "role based node api"
+      ]
     }
   }
 }

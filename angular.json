@@ -23,10 +23,12 @@
               "optimization": true,
               "extractLicenses": true,
               "inspect": false,
-              "fileReplacements": [ {
-                "replace": "apps/api/src/environments/environment.ts",
-                "with": "apps/api/src/environments/environment.prod.ts"
-              } ]
+              "fileReplacements": [
+                {
+                  "replace": "apps/api/src/environments/environment.ts",
+                  "with": "apps/api/src/environments/environment.prod.ts"
+                }
+              ]
             }
           }
         },
@@ -119,10 +121,12 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [ {
-                "replace": "apps/edensis/src/environments/environment.ts",
-                "with": "apps/edensis/src/environments/environment.prod.ts"
-              } ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/edensis/src/environments/environment.ts",
+                  "with": "apps/edensis/src/environments/environment.prod.ts"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -131,7 +135,8 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [ {
+              "budgets": [
+                {
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
@@ -272,10 +277,12 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [ {
-                "replace": "apps/annex/src/environments/environment.ts",
-                "with": "apps/annex/src/environments/environment.prod.ts"
-              } ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/annex/src/environments/environment.ts",
+                  "with": "apps/annex/src/environments/environment.prod.ts"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -284,7 +291,8 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [ {
+              "budgets": [
+                {
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
@@ -425,10 +433,12 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [ {
-                "replace": "apps/app2/src/environments/environment.ts",
-                "with": "apps/app2/src/environments/environment.prod.ts"
-              } ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/app2/src/environments/environment.ts",
+                  "with": "apps/app2/src/environments/environment.prod.ts"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -437,7 +447,8 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [ {
+              "budgets": [
+                {
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
@@ -547,10 +558,12 @@
               "optimization": true,
               "extractLicenses": true,
               "inspect": false,
-              "fileReplacements": [ {
-                "replace": "apps/noddy/src/environments/environment.ts",
-                "with": "apps/noddy/src/environments/environment.prod.ts"
-              } ]
+              "fileReplacements": [
+                {
+                  "replace": "apps/noddy/src/environments/environment.ts",
+                  "with": "apps/noddy/src/environments/environment.prod.ts"
+                }
+              ]
             }
           }
         },
@@ -636,10 +649,12 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [ {
-                "replace": "apps/tut/src/environments/environment.ts",
-                "with": "apps/tut/src/environments/environment.prod.ts"
-              } ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/tut/src/environments/environment.ts",
+                  "with": "apps/tut/src/environments/environment.prod.ts"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -648,7 +663,8 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [ {
+              "budgets": [
+                {
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
@@ -788,10 +804,12 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [ {
-                "replace": "apps/banana/src/environments/environment.ts",
-                "with": "apps/banana/src/environments/environment.prod.ts"
-              } ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/banana/src/environments/environment.ts",
+                  "with": "apps/banana/src/environments/environment.prod.ts"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -800,7 +818,8 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [ {
+              "budgets": [
+                {
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
@@ -940,10 +959,12 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [ {
-                "replace": "apps/newapp/src/environments/environment.ts",
-                "with": "apps/newapp/src/environments/environment.prod.ts"
-              } ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/newapp/src/environments/environment.ts",
+                  "with": "apps/newapp/src/environments/environment.prod.ts"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -952,7 +973,8 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [ {
+              "budgets": [
+                {
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
@@ -1092,10 +1114,12 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [ {
-                "replace": "apps/learn/src/environments/environment.ts",
-                "with": "apps/learn/src/environments/environment.prod.ts"
-              } ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/learn/src/environments/environment.ts",
+                  "with": "apps/learn/src/environments/environment.prod.ts"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -1104,7 +1128,8 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [ {
+              "budgets": [
+                {
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
@@ -1167,10 +1192,12 @@
           "configurations": {
             "production": {
               "outputHashing": "media",
-              "fileReplacements": [ {
-                "replace": "apps/learn/src/environments/environment.ts",
-                "with": "apps/learn/src/environments/environment.prod.ts"
-              } ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/learn/src/environments/environment.ts",
+                  "with": "apps/learn/src/environments/environment.prod.ts"
+                }
+              ],
               "sourceMap": false,
               "optimization": true
             }
@@ -1258,10 +1285,12 @@
               "optimization": true,
               "extractLicenses": true,
               "inspect": false,
-              "fileReplacements": [ {
-                "replace": "apps/angsoc/src/environments/environment.ts",
-                "with": "apps/angsoc/src/environments/environment.prod.ts"
-              } ]
+              "fileReplacements": [
+                {
+                  "replace": "apps/angsoc/src/environments/environment.ts",
+                  "with": "apps/angsoc/src/environments/environment.prod.ts"
+                }
+              ]
             }
           }
         },
@@ -1289,6 +1318,223 @@
           "options": {
             "jestConfig": "apps/angsoc/jest.config.js",
             "tsConfig": "apps/angsoc/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "tailapp": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:interceptor": {
+          "skipTests": true
+        },
+        "@nrwl/angular:class": {
+          "skipTests": true
+        },
+        "@nrwl/angular:component": {
+          "skipTests": true
+        },
+        "@nrwl/angular:directive": {
+          "skipTests": true
+        },
+        "@nrwl/angular:guard": {
+          "skipTests": true
+        },
+        "@nrwl/angular:module": {
+          "skipTests": true
+        },
+        "@nrwl/angular:pipe": {
+          "skipTests": true
+        },
+        "@nrwl/angular:service": {
+          "skipTests": true
+        }
+      },
+      "root": "apps/tailapp",
+      "sourceRoot": "apps/tailapp/src",
+      "prefix": "tail",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/tailapp",
+            "index": "apps/tailapp/src/index.html",
+            "main": "apps/tailapp/src/main.ts",
+            "polyfills": "apps/tailapp/src/polyfills.ts",
+            "tsConfig": "apps/tailapp/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/tailapp/src/favicon.ico",
+              "apps/tailapp/src/assets"
+            ],
+            "styles": [
+              "apps/tailapp/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/tailapp/src/environments/environment.ts",
+                  "with": "apps/tailapp/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "tailapp:build",
+            "proxyConfig": "apps/tailapp/proxy.conf.json"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "tailapp:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "tailapp:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/tailapp/tsconfig.app.json",
+              "apps/tailapp/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/tailapp/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/tailapp/jest.config.js",
+            "tsConfig": "apps/tailapp/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/tailapp/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "tailapp-e2e": {
+      "root": "apps/tailapp-e2e",
+      "sourceRoot": "apps/tailapp-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/tailapp-e2e/cypress.json",
+            "tsConfig": "apps/tailapp-e2e/tsconfig.e2e.json",
+            "devServerTarget": "tailapp:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "tailapp:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/tailapp-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/tailapp-e2e/**"
+            ]
+          }
+        }
+      }
+    },
+    "serverwithrole": {
+      "root": "apps/serverwithrole",
+      "sourceRoot": "apps/serverwithrole/src",
+      "projectType": "application",
+      "prefix": "serverwithrole",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/serverwithrole",
+            "main": "apps/serverwithrole/src/main.ts",
+            "tsConfig": "apps/serverwithrole/tsconfig.app.json",
+            "assets": [
+              "apps/serverwithrole/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/serverwithrole/src/environments/environment.ts",
+                  "with": "apps/serverwithrole/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "serverwithrole:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "apps/serverwithrole/.eslintrc",
+            "tsConfig": [
+              "apps/serverwithrole/tsconfig.app.json",
+              "apps/serverwithrole/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/serverwithrole/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/serverwithrole/jest.config.js",
+            "tsConfig": "apps/serverwithrole/tsconfig.spec.json",
             "passWithNoTests": true
           }
         }

@@ -1,0 +1,14 @@
+@tailwind base;
+
+html,
+body {
+  @apply h-full;
+}
+
+.link-active {
+  @apply text-gray-100 bg-gray-800;
+}
+
+@tailwind components;
+
+@tailwind utilities;
