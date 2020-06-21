@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -15,6 +16,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/about/about.component';
 import { LinkComponent } from './components/link/link.component';
 import { AuthService } from './services/auth.service';
+import { AuthInterceptorInterceptor } from './services/auth-interceptor.interceptor';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -30,8 +33,14 @@ import { AuthService } from './services/auth.service';
     AboutComponent,
     LinkComponent,
   ],
-  imports: [BrowserModule, HttpClientModule, AppRoutingModule],
-  providers: [AuthService],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    AppRoutingModule,
+  ],
+  providers: [AuthService, AuthInterceptorInterceptor, AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

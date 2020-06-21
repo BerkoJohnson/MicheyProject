@@ -11,7 +11,7 @@
   <nav class="md:flex transition-all duration-100" [ngClass]="{ hidden: isOpen === false }">
     <ul class="flex flex-col w-full md:flex-row md:justify-between md:items-center">
       <li>
-        <tail-link [linkRef]="['/']" [linkText]="'Home'"></tail-link>
+        <!-- <tail-link [linkRef]="['/']" [linkText]="''"></tail-link> -->
       </li>
       <li>
         <tail-link
@@ -33,6 +33,15 @@
       </li>
       <li>
         <tail-link [linkRef]="['/about']" [linkText]="'About'"></tail-link>
+      </li>
+      <!-- <li *ngIf="authService._user | async" class="w-16">
+        
+      </li> -->
+      <li *ngIf="authService._user | async">
+        <a 
+          class="ml-2 text-red-600 font-semibold py-2 md:bg-red-600 md:text-white md:py-1 px-5 hover:bg-red-700 rounded-md cursor-pointer"
+          (click)="authService.logout()"
+        >Logout</a>
       </li>
     </ul>
   </nav>

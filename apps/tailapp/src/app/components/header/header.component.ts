@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'tail-header',
@@ -9,16 +10,17 @@ export class HeaderComponent implements OnInit {
 
   isOpen = false;
   showMenu = true;
+  isLoggedIn: boolean;
 
   showNav() {
     this.isOpen = !this.isOpen;
     this.showMenu = !this.showMenu;
   }
-
-
-  constructor() { }
+  
+  constructor(public authService: AuthService) {}
 
   ngOnInit(): void {
+    this.isLoggedIn = this.authService.isLoggedIn();
   }
 
 }
