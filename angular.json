@@ -1323,129 +1323,6 @@
         }
       }
     },
-    "tailapp": {
-      "projectType": "application",
-      "schematics": {
-        "@schematics/angular:interceptor": {
-          "skipTests": true
-        },
-        "@nrwl/angular:class": {
-          "skipTests": true
-        },
-        "@nrwl/angular:component": {
-          "skipTests": true
-        },
-        "@nrwl/angular:directive": {
-          "skipTests": true
-        },
-        "@nrwl/angular:guard": {
-          "skipTests": true
-        },
-        "@nrwl/angular:module": {
-          "skipTests": true
-        },
-        "@nrwl/angular:pipe": {
-          "skipTests": true
-        },
-        "@nrwl/angular:service": {
-          "skipTests": true
-        }
-      },
-      "root": "apps/tailapp",
-      "sourceRoot": "apps/tailapp/src",
-      "prefix": "tail",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/apps/tailapp",
-            "index": "apps/tailapp/src/index.html",
-            "main": "apps/tailapp/src/main.ts",
-            "polyfills": "apps/tailapp/src/polyfills.ts",
-            "tsConfig": "apps/tailapp/tsconfig.app.json",
-            "aot": true,
-            "assets": [
-              "apps/tailapp/src/favicon.ico",
-              "apps/tailapp/src/assets"
-            ],
-            "styles": [
-              "apps/tailapp/src/styles.css"
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/tailapp/src/environments/environment.ts",
-                  "with": "apps/tailapp/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "tailapp:build",
-            "proxyConfig": "apps/tailapp/proxy.conf.json"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "tailapp:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "tailapp:build"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "apps/tailapp/tsconfig.app.json",
-              "apps/tailapp/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/tailapp/**"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "apps/tailapp/jest.config.js",
-            "tsConfig": "apps/tailapp/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "apps/tailapp/src/test-setup.ts"
-          }
-        }
-      }
-    },
     "tailapp-e2e": {
       "root": "apps/tailapp-e2e",
       "sourceRoot": "apps/tailapp-e2e/src",
@@ -1456,11 +1333,11 @@
           "options": {
             "cypressConfig": "apps/tailapp-e2e/cypress.json",
             "tsConfig": "apps/tailapp-e2e/tsconfig.e2e.json",
-            "devServerTarget": "tailapp:serve"
+            "devServerTarget": "bode-front:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "tailapp:serve:production"
+              "devServerTarget": "bode-front:serve:production"
             }
           }
         },
@@ -1536,6 +1413,189 @@
             "jestConfig": "apps/serverwithrole/jest.config.js",
             "tsConfig": "apps/serverwithrole/tsconfig.spec.json",
             "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "bode-end": {
+      "root": "apps/bode-end",
+      "sourceRoot": "apps/bode-end/src",
+      "projectType": "application",
+      "prefix": "bode-end",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/bode-end",
+            "main": "apps/bode-end/src/main.ts",
+            "tsConfig": "apps/bode-end/tsconfig.app.json",
+            "assets": [
+              "apps/bode-end/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/bode-end/src/environments/environment.ts",
+                  "with": "apps/bode-end/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "bode-end:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/bode-end/tsconfig.app.json",
+              "apps/bode-end/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/bode-end/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/bode-end/jest.config.js",
+            "tsConfig": "apps/bode-end/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "bode-front": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:interceptor": {
+          "skipTests": true
+        },
+        "@nrwl/angular:class": {
+          "skipTests": true
+        },
+        "@nrwl/angular:component": {
+          "skipTests": true
+        },
+        "@nrwl/angular:directive": {
+          "skipTests": true
+        },
+        "@nrwl/angular:guard": {
+          "skipTests": true
+        },
+        "@nrwl/angular:module": {
+          "skipTests": true
+        },
+        "@nrwl/angular:pipe": {
+          "skipTests": true
+        },
+        "@nrwl/angular:service": {
+          "skipTests": true
+        }
+      },
+      "root": "apps/bode-front",
+      "sourceRoot": "apps/bode-front/src",
+      "prefix": "tail",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/bode-front",
+            "index": "apps/bode-front/src/index.html",
+            "main": "apps/bode-front/src/main.ts",
+            "polyfills": "apps/bode-front/src/polyfills.ts",
+            "tsConfig": "apps/bode-front/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/bode-front/src/favicon.ico",
+              "apps/bode-front/src/assets"
+            ],
+            "styles": [
+              "apps/bode-front/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/bode-front/src/environments/environment.ts",
+                  "with": "apps/bode-front/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "bode-front:build",
+            "proxyConfig": "apps/bode-front/proxy.conf.json"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "bode-front:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "bode-front:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/bode-front/tsconfig.app.json",
+              "apps/bode-front/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/bode-front/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/bode-front/jest.config.js",
+            "tsConfig": "apps/bode-front/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/bode-front/src/test-setup.ts"
           }
         }
       }

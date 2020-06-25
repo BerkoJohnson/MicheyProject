@@ -1,0 +1,83 @@
+<header
+  class="pb-1 h-full md:flex md:justify-between md:items-center bg-gray-900 text-gray-100 md:h-16 shadow-md"
+>
+  <div class="px-5">
+    <a
+      class="tracking-wider text-2xl font-semibold text-gray-900 bg-orange-400 py-1 px-2"
+      [routerLink]="['/']"
+      >bode</a
+    >
+  </div>
+  <nav class="md:flex transition-all duration-100" [ngClass]="{ hidden: isOpen === false }">
+    <ul class="flex flex-col w-full md:flex-row md:justify-between md:items-center">
+      <li>
+        <!-- <tail-link [linkRef]="['/']" [linkText]="''"></tail-link> -->
+      </li>
+      <li>
+        <tail-link
+          [linkRef]="['/products']"
+          [linkText]="'Products'"
+        ></tail-link>
+      </li>
+      <li>
+        <tail-link
+          [linkRef]="['/services']"
+          [linkText]="'Services'"
+        ></tail-link>
+      </li>
+      <li>
+        <tail-link
+          [linkRef]="['/contacts']"
+          [linkText]="'Contacts'"
+        ></tail-link>
+      </li>
+      <li *ngIf="(authService._user | async).role === 'Admin'">
+        <tail-link
+          [linkRef]="['/admins']"
+          [linkText]="'Admin'"
+        ></tail-link>
+      </li>
+      <li>
+        <tail-link [linkRef]="['/about']" [linkText]="'About'"></tail-link>
+      </li>
+      <!-- <li *ngIf="authService._user | async" class="w-16">
+        
+      </li> -->
+      <li *ngIf="authService._user | async">
+        <a 
+          class="mx-2 text-red-600 font-semibold py-2 md:bg-red-600 md:text-white md:py-1 px-5 hover:bg-red-700 rounded-md cursor-pointer"
+          (click)="authService.logout()"
+        >Logout</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="md:hidden absolute right-0 top-0">
+    <button
+      type="button"
+      (click)="showNav()"
+      class="p-2 text-gray-500 focus:outline-none focus:text-gray-700"
+    >
+      <span [ngClass]="{ hidden: showMenu === false }">
+        <svg
+          class="fill-current w-4 h-4"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+        >
+          <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+        </svg>
+      </span>
+
+      <span [ngClass]="{ hidden: showMenu === true }">
+        <svg
+          class="fill-current w-4 h-4"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+        >
+          <path
+            d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z"
+          ></path>
+        </svg>
+      </span>
+    </button>
+  </div>
+</header>

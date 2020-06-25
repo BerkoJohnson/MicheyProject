@@ -1,0 +1,14 @@
+# GET http://localhost:7701/api/products
+# Content-Type: application/json
+# Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWYyNGVlOWM5YWNjNTFlOWU4Yzk2ZTciLCJuYW1lIjoiQmVya28gSm9obnNvbiIsInVzZXJuYW1lIjoiY2hpZWYxIiwiZW1haWwiOiJjaGllZjFAZ21haWwuY29tIiwicm9sZSI6IkFkbWluIiwiaWF0IjoxNTkyOTM5NjYxLCJleHAiOjE1OTM1NDQ0NjF9.peZZvHmBwASwd3G3Ojp-Bo03x-KjRUR_8SUTkVFJgqo
+
+POST http://localhost:7701/api/products
+Content-Type: application/json
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZWYyNGVlOWM5YWNjNTFlOWU4Yzk2ZTciLCJuYW1lIjoiQmVya28gSm9obnNvbiIsInVzZXJuYW1lIjoiY2hpZWYxIiwiZW1haWwiOiJjaGllZjFAZ21haWwuY29tIiwicm9sZSI6IkFkbWluIiwiaWF0IjoxNTkyOTM5NjYxLCJleHAiOjE1OTM1NDQ0NjF9.peZZvHmBwASwd3G3Ojp-Bo03x-KjRUR_8SUTkVFJgqo
+
+{
+  "title":"Manchis",
+  "category": "Yams",
+  "qty": 0,
+  "price": 5.50
+}

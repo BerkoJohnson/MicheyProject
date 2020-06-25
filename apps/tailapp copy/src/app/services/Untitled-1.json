@@ -1,0 +1,13 @@
+{
+  "type": "user",
+  "data": {
+    "_id": "5eed0cea98f4022dcc3003a9",
+    "name": "Berko Johnson",
+    "username": "chiefb",
+    "email": "berkojohnson@gmail.com",
+    "password": "$2b$10$E3DW0lV8RPM4W7RwOCII/eZzUVFuQWRNjC9b7QQ9VlnquSqkZ57bG",
+    "contact": "0248160391"
+  },
+  "iat": 1592602492,
+  "exp": 1593207292
+}

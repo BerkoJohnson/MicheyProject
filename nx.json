@@ -99,11 +99,6 @@
     "angsoc": {
       "tags": []
     },
-    "tailapp": {
-      "tags": [
-        "tailwind"
-      ]
-    },
     "tailapp-e2e": {
       "tags": [],
       "implicitDependencies": [
@@ -113,6 +108,16 @@
     "serverwithrole": {
       "tags": [
         "role based node api"
+      ]
+    },
+    "bode-end": {
+      "tags": [
+        "tail app backend node"
+      ]
+    },
+    "bode-front": {
+      "tags": [
+        "tailwind"
       ]
     }
   }
